@@ -139,28 +139,19 @@ export default function Header() {
             <div className="hidden md:flex items-center gap-3">
               <Link
                 href="/auth/login"
-                className="flex px-4 py-2 border-2 h-12 items-center justify-center border-purple-600 text-purple-600 rounded-full hover:bg-purple-50 transition-colors font-medium text-sm"
+                className="flex px-6 border-2 h-12 items-center top-1/2 justify-center border-purple-600 text-purple-600 rounded-full hover:bg-purple-50 transition-colors font-medium text-base"
               >
                 Student Login
               </Link>
 
-              {/* 
               <Link
                 href="/courses"
-                className="px-4 py-2 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-colors font-medium text-sm flex items-center gap-2"
-              >
-                Browse Courses
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </Link> */}
-              <Link
-                href="/courses">
+                className="flex items-center">
                 <button
-                  className="bg-[#704FE6] text-left w-48 rounded-full h-12 relative text-white text-base group overflow-hidden cursor-pointer"
+                  className="bg-[#704FE6]  text-left w-48 rounded-full h-12 relative text-white text-base group overflow-hidden cursor-pointer"
                   type="button"
                 >
-                  
+
                   <p className="absolute left-4 top-1/2 -translate-y-1/2">Browse Courses</p>
 
                   <div
@@ -277,24 +268,19 @@ export default function Header() {
                     Student Login
                   </Link>
 
-                  {/* <Link
-                    href="/courses"
-                    className="px-4 py-2 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-colors font-medium text-sm flex items-center justify-center gap-2"
-                  >
-                    Browse Courses
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
-                  </Link> */}
+
 
                   <Link
                     href="/courses">
                     <button
-                      className="bg-white text-center w-48 rounded-2xl h-14 relative text-black text-xl font-semibold group"
+                      className="bg-[#704FE6] text-center w-full rounded-full h-12 relative text-white text-base group overflow-hidden cursor-pointer"
                       type="button"
                     >
+
+                      <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">Browse Courses</p>
+
                       <div
-                        className="bg-green-400 rounded-xl h-12 w-1/4 flex items-center justify-center absolute left-1 top-[4px] group-hover:w-[184px] z-10 duration-500"
+                        className="bg-[#785DD7] rounded-full h-12 w-1/4 flex items-center justify-center absolute right-0 top-0 group-hover:w-full z-10 duration-500"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -304,15 +290,15 @@ export default function Header() {
                         >
                           <path
                             d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"
-                            fill="#000000"
+                            fill="#ffffffff"
                           ></path>
                           <path
                             d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"
-                            fill="#000000"
+                            fill="#ffffffff"
+                            transform="scale(-1, 1) translate(-1024, 0)"
                           ></path>
                         </svg>
                       </div>
-                      <p className="translate-x-2">Go Back</p>
                     </button>
 
                   </Link>
