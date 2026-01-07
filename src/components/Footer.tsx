@@ -9,7 +9,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <div className="w-15 h-15  flex items-center justify-center">
-                <img src="logo.png" alt="" />
+                <img src="/logo.png" alt="" />
               </div>
               <h3 className="text-2xl font-bold">IDEA</h3>
             </div>

@@ -73,7 +73,7 @@ export default function Header() {
             {/* Logo */}
             <Link href="/" className="flex items-center">
               <div className="relative w-12 h-12 sm:w-16 sm:h-18">
-                <img src="logo.png" alt="" />
+                <img src="/logo.png" alt="" />
               </div>
             </Link>
 
