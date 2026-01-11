@@ -12,7 +12,7 @@ export default function Header() {
     <header className="w-full">
       {/* Top Bar */}
       <div className="bg-[#1e3a8a] text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1540px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row justify-between items-center  gap-2 sm:gap-4">
             {/* Contact Info */}
             <div className="flex flex-wrap py-3 items-center justify-center sm:justify-start gap-4 text-xs sm:text-sm">
@@ -68,17 +68,17 @@ export default function Header() {
 
       {/* Main Navigation */}
       <div className="bg-white shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-2">
-            {/* Logo */}
+        <div className="max-w-[1540px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center py-2">
+            {/* Logo Section */}
             <Link href="/" className="flex items-center">
               <div className="relative w-12 h-12 sm:w-16 sm:h-18">
                 <img src="/logo.png" alt="" />
               </div>
             </Link>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex  items-center space-x-1">
+            {/* Desktop Navigation - with custom left padding */}
+            <nav className="hidden lg:flex items-center space-x-1 pl-6 xl:pl-8 flex-1">
               <Link
                 href="/"
                 className={`transition-colors font-medium px-4 py-2 rounded-full ${pathname === '/'
@@ -135,8 +135,8 @@ export default function Header() {
               </Link>
             </nav>
 
-            {/* CTA Buttons */}
-            <div className="hidden md:flex items-center gap-3">
+            {/* CTA Buttons - positioned to the right */}
+            <div className="hidden md:flex items-center gap-3 ml-auto">
               <Link
                 href="/auth/login"
                 className="flex px-6 border-2 h-12 items-center top-1/2 justify-center border-purple-600 text-purple-600 rounded-full hover:bg-purple-50 transition-colors font-medium text-base"

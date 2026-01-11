@@ -19,7 +19,7 @@ export default function WhoIsItFor() {
   ]
 
   return (
-    <section className="py-16 md:py-24 bg-white">
+    <section className="py-20 md:py-24 lg:py-32  bg-white">
       <div className="container mx-auto px-4 ">
         {/* First Row - Flex Layout with 3 items */}
         <div className="flex flex-col md:flex-row gap-6 lg:gap-8 items-start mb-6 lg:mb-8">

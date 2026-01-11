@@ -24,7 +24,7 @@ export default function WhatYouWillLearn() {
   ]
 
   return (
-    <section className="relative py-16 md:py-24 overflow-hidden">
+    <section className="relative py-20  md:py-24 lg:py-32 overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -34,7 +34,7 @@ export default function WhatYouWillLearn() {
           className="object-cover"
         />
       </div>
-      <div className="relative z-10 container mx-auto px-4 max-w-6xl">
+      <div className="relative z-10 container mx-auto px-4 ">
         {/* Heading */}
         <motion.div
           className="text-center mb-12"
