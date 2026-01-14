@@ -30,7 +30,7 @@ export default function DashboardSidebar({
   const isActive = (href: string) => pathname === href;
 
   return (
-    <aside className="w-80 bg-white rounded-3xl shadow-lg p-6 h-fit">
+    <aside className="w-full lg:w-90 bg-white rounded-3xl shadow-lg p-6 h-fit">
       {/* User Profile Section */}
       <div className="flex items-center gap-4 pb-6 border-b border-gray-200 mb-6">
         <div className="w-14 h-14 bg-purple-200 rounded-full flex items-center justify-center flex-shrink-0">

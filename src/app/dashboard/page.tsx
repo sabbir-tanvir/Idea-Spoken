@@ -10,7 +10,7 @@ export default function DashboardPage() {
         </div>
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar */}
-          <div className="lg:w-80 flex-shrink-0">
+          <div className="lg:w-90 flex-shrink-0">
             <DashboardSidebar />
           </div>
 
