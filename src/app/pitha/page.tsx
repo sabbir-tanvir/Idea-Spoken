@@ -7,6 +7,8 @@ import PhotoGallery from '@/components/pitha/PPhotoGallery';
 import OurImpact from '@/components/pitha/OurImpact';
 import PReview from '@/components/pitha/PReview';
 import Wcontact from '@/components/pitha/PContact';
+import PMission from '@/components/pitha/PMission';
+import PEvent from '@/components/pitha/PEvent';
 
 function PithaPatsala() {
   return (
@@ -18,6 +20,8 @@ function PithaPatsala() {
     <OurImpact />
     <PReview />
     <Wcontact />
+    <PMission />
+    <PEvent />
     </>
   )
 }
