@@ -16,6 +16,14 @@ interface ResearchAreaProps {
 }
 
 export default function ResearchArea({ heading, subheading, cards }: ResearchAreaProps) {
+  // Determine grid columns based on number of cards
+  const getGridCols = () => {
+    if (cards.length === 1) return 'lg:grid-cols-1';
+    if (cards.length === 2) return 'lg:grid-cols-2';
+    if (cards.length === 3) return 'lg:grid-cols-3';
+    return 'lg:grid-cols-4';
+  };
+
   return (
     <section className="py-16 md:py-24 bg-gray-50">
       <div className="container mx-auto px-4 ">
@@ -36,7 +44,7 @@ export default function ResearchArea({ heading, subheading, cards }: ResearchAre
         </motion.div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div className={`grid grid-cols-1 md:grid-cols-2 ${getGridCols()} gap-6 lg:gap-8`}>
           {cards.map((card, index) => (
             <motion.div
               key={index}
