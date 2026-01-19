@@ -1,28 +1,37 @@
 import DashboardSidebar from '@/components/DashboardSidebar';
+import CertificateList from '@/components/dashborad/CertificateList';
+import { mockCertificatesEmpty, mockCertificates } from '@/lib/data';
 
+/**
+ * Certificates Page - Server Component
+ * This page remains server-rendered and can easily integrate with API
+ * Replace mockCertificates with API call: const certificates = await fetchCertificates();
+ * 
+ * To test empty state, use: mockCertificatesEmpty
+ * To test with data, use: mockCertificates
+ */
 export default function CertificatesPage() {
+  // TODO: Replace with actual API call when ready
+  // const certificates = await fetch('/api/certificates').then(res => res.json());
+  
+  // Switch between mockCertificatesEmpty and mockCertificates to test both states
+  const certificates = mockCertificatesEmpty; // Change to mockCertificates to see certificate cards
+
   return (
-    <div className="flex min-h-screen">
-      <DashboardSidebar />
-      <main className="flex-1 p-8">
-        <h1 className="text-3xl font-bold mb-6">My Certificates</h1>
-        <div className="space-y-4">
-          <div className="p-6 bg-white rounded-lg shadow">
-            <h3 className="text-xl font-semibold">IDEA Spoken English</h3>
-            <p className="text-gray-600 mt-2">Completed on: January 15, 2025</p>
-            <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-              Download Certificate
-            </button>
+    <div className="flex bg-gray-50 min-h-screen py-16">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Sidebar */}
+          <div className="lg:w-90 shrink-0">
+            <DashboardSidebar />
           </div>
-          <div className="p-6 bg-white rounded-lg shadow">
-            <h3 className="text-xl font-semibold">English Debate Course</h3>
-            <p className="text-gray-600 mt-2">Completed on: December 20, 2024</p>
-            <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-              Download Certificate
-            </button>
-          </div>
+
+          {/* Main Content */}
+          <main className="flex-1 ">
+            <CertificateList certificates={certificates} />
+          </main>
         </div>
-      </main>
+      </div>
     </div>
   );
 }
