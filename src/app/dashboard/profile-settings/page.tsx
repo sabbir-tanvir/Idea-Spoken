@@ -7,14 +7,11 @@ export default function ProfileSettingsPage() {
   return (
     <div className="min-h-screen bg-gray-50 py-16">
       <div className="container mx-auto px-4">
-        <div className="mb-8 flex flex-col justify-center lg:justify-start">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">My Courses</h1>
-          <p className="text-gray-600">Continue Your Learning Journey</p>
-        </div>
+
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar */}
 
-          <div className="lg:w-90 flex-shrink-0">
+          <div className="lg:w-90 shrink-0">
             <DashboardSidebar />
           </div>
 

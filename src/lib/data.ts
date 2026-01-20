@@ -125,3 +125,119 @@ export const wings = [
     ]
   }
 ];
+
+/**
+ * Payment transaction interface and mock data
+ */
+export interface PaymentTransaction {
+  id: string;
+  courseTitle: string;
+  date: string;
+  amount: string;
+  method: string;
+  status: 'paid' | 'pending' | 'failed';
+  transactionId: string;
+}
+
+export const mockPaymentHistory: PaymentTransaction[] = [
+  {
+    id: '1',
+    courseTitle: 'IDEA SPOKEN – The Game Method',
+    date: '15 Nov 2024',
+    amount: '৳ 2,500',
+    method: 'Bkash',
+    status: 'paid',
+    transactionId: 'PAY-001'
+  },
+  {
+    id: '2',
+    courseTitle: 'English Debate Course',
+    date: '20 Dec 2024',
+    amount: '৳ 3,000',
+    method: 'Nagad',
+    status: 'paid',
+    transactionId: 'PAY-002'
+  },
+  {
+    id: '3',
+    courseTitle: 'Leadership Development',
+    date: '10 Jan 2025',
+    amount: '৳ 4,000',
+    method: 'Rocket',
+    status: 'paid',
+    transactionId: 'PAY-003'
+  },
+  {
+    id: '4',
+    courseTitle: 'IDEA Spoken English',
+    date: '5 Jan 2025',
+    amount: '৳ 2,500',
+    method: 'Bkash',
+    status: 'pending',
+    transactionId: 'PAY-004'
+  }
+];
+
+/**
+ * Certificate interface and mock data
+ */
+export interface Certificate {
+  id: string;
+  courseTitle: string;
+  courseName: string;
+  completionDate: string;
+  issueDate: string;
+  certificateId: string;
+  instructorName: string;
+  grade?: string;
+  score?: number;
+  validUntil?: string;
+  certificateUrl?: string;
+  thumbnailUrl?: string;
+}
+
+export const mockCertificates: Certificate[] = [
+  {
+    id: '1',
+    courseTitle: 'IDEA SPOKEN – The Game Method',
+    courseName: 'Spoken English Mastery',
+    completionDate: '15 Nov 2024',
+    issueDate: '16 Nov 2024',
+    certificateId: 'CERT-2024-001',
+    instructorName: 'Hamidul Huq',
+    grade: 'A+',
+    score: 95,
+    certificateUrl: '/certificates/cert-001.pdf',
+    thumbnailUrl: '/images/certificates/cert-001-thumb.jpg'
+  },
+  {
+    id: '2',
+    courseTitle: 'English Debate Course',
+    courseName: 'Advanced Debate Techniques',
+    completionDate: '20 Dec 2024',
+    issueDate: '21 Dec 2024',
+    certificateId: 'CERT-2024-002',
+    instructorName: 'Hamidul Huq',
+    grade: 'A',
+    score: 88,
+    certificateUrl: '/certificates/cert-002.pdf',
+    thumbnailUrl: '/images/certificates/cert-002-thumb.jpg'
+  },
+  {
+    id: '3',
+    courseTitle: 'Leadership Development',
+    courseName: 'Professional Leadership Skills',
+    completionDate: '10 Jan 2025',
+    issueDate: '11 Jan 2025',
+    certificateId: 'CERT-2025-001',
+    instructorName: 'Hamidul Huq',
+    grade: 'A+',
+    score: 92,
+    validUntil: '10 Jan 2027',
+    certificateUrl: '/certificates/cert-003.pdf',
+    thumbnailUrl: '/images/certificates/cert-003-thumb.jpg'
+  }
+];
+
+// Empty array for testing empty state
+export const mockCertificatesEmpty: Certificate[] = [];
