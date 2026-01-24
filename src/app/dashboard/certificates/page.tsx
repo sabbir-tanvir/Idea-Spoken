@@ -26,7 +26,6 @@ export default function CertificatesPage() {
             <DashboardSidebar />
           </div>
 
-          {/* Main Content */}
           <main className="flex-1 ">
             <CertificateList certificates={certificates} />
           </main>
