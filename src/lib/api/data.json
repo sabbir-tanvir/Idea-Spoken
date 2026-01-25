@@ -58,6 +58,42 @@
         "lessons": "10",
         "duration": "19h 30m",
         "students": "20+",
-        "price": "৳2,500"
+        "price": "৳2,500",
+        "philosophy": {
+            "title": "Course Philosophy",
+            "description": "এই মেথডটি তৈরি করেছেন জনাব মোঃ হামিদুল হক (Md. Hamidul Huq) তিনি Chomsky-র ধারণা থেকে অনুপ্রাণিত—মানুষের মস্তিষ্ক স্বাভাবিকভাবেই ভাষা অধিগ্রহণ করতে পারে তাঁর ডিজাইন করা গেমগুলো এমনভাবে সাজানো, যাতে শেখার প্রক্রিয়াটি বেশি \"acquisition\" আর কম \"boring learning\" হয়"
+        },
+        "learningOutcomes": [
+            {
+                "id": 1,
+                "text": "English argument structure: Claim, Reason, Evidence",
+                "icon": "lightbulb",
+                "color": "blue"
+            },
+            {
+                "id": 2,
+                "text": "Formal ও informal debate formats",
+                "icon": "book",
+                "color": "pink"
+            },
+            {
+                "id": 3,
+                "text": "Critical thinking ও rebuttal techniques",
+                "icon": "volume",
+                "color": "green"
+            },
+            {
+                "id": 4,
+                "text": "Public speaking skills ও stage confidence",
+                "icon": "users",
+                "color": "yellow"
+            },
+            {
+                "id": 5,
+                "text": "Team work, time management এবং constructive disagreement",
+                "icon": "chat",
+                "color": "purple"
+            }
+        ]
     }
 }

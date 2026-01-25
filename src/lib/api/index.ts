@@ -23,6 +23,16 @@ export interface EnglishDebateData {
     duration: string;
     students: string;
     price: string;
+    philosophy: {
+        title: string;
+        description: string;
+    };
+    learningOutcomes: {
+        id: number;
+        text: string;
+        icon: string;
+        color: string;
+    }[];
 }
 
 export interface Workshop {
