@@ -94,6 +94,78 @@
                 "icon": "chat",
                 "color": "purple"
             }
-        ]
+        ],
+        "skillsHighlights": [
+            {
+                "id": 1,
+                "title": "Critical Thinking",
+                "description": "যেকোনো বিষয়ে গভীরভাবে চিন্তা করার ক্ষমতা",
+                "icon": "brain"
+            },
+            {
+                "id": 2,
+                "title": "Public Speaking",
+                "description": "মানুষের সামনে আত্মবিশ্বাসের সাথে কথা বলা",
+                "icon": "speech"
+            },
+            {
+                "id": 3,
+                "title": "Leadership",
+                "description": "নেতৃত্ব দেওয়ার দক্ষতা অর্জন",
+                "icon": "trophy"
+            }
+        ],
+        "courseModules": [
+            {
+                "id": 1,
+                "title": "What is IDEA SPOKEN – The Game Method?",
+                "isLocked": false,
+                "previewLabel": "Free Preview"
+            },
+            {
+                "id": 2,
+                "prefix": "Module 1",
+                "title": "Vocabulary Games – Level 1",
+                "isLocked": true
+            },
+            {
+                "id": 3,
+                "prefix": "Module 2",
+                "title": "Grammar Through Games",
+                "isLocked": true
+            },
+            {
+                "id": 4,
+                "prefix": "Module 3",
+                "title": "Understanding Game Method & Mindset",
+                "isLocked": true
+            },
+            {
+                "id": 5,
+                "prefix": "Module 4",
+                "title": "Social Interaction Games",
+                "isLocked": true
+            },
+            {
+                "id": 6,
+                "prefix": "Module 5",
+                "title": "Debate & Drama for Fluency",
+                "isLocked": true
+            },
+            {
+                "id": 7,
+                "prefix": "Module 6",
+                "title": "Final Assessment & Practice Session",
+                "isLocked": true
+            }
+        ],
+        "offer": {
+            "title": "Ready to Start Learning?",
+            "subtitle": "আজই শুরু করুন আপনার English learning journey – gamified method এ!",
+            "originalPrice": "৳3,500",
+            "discountedPrice": "৳2,500",
+            "paymentText": "Payment: Bkash, Nagad, Bank, Card",
+            "buttonText": "Pay & Unlock Course"
+        }
     }
 }

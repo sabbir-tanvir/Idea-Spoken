@@ -33,6 +33,27 @@ export interface EnglishDebateData {
         icon: string;
         color: string;
     }[];
+    skillsHighlights: {
+        id: number;
+        title: string;
+        description: string;
+        icon: string;
+    }[];
+    courseModules: {
+        id: number;
+        title: string;
+        prefix?: string;
+        isLocked: boolean;
+        previewLabel?: string;
+    }[];
+    offer: {
+        title: string;
+        subtitle: string;
+        originalPrice: string;
+        discountedPrice: string;
+        paymentText: string;
+        buttonText: string;
+    };
 }
 
 export interface Workshop {

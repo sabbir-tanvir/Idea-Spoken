@@ -34,7 +34,7 @@ export default function CoursePhilosophy({ data }: CoursePhilosophyProps) {
     if (!data.philosophy || !data.learningOutcomes) return null;
 
     return (
-        <section className="bg-white w-full">
+        <section className="  bg-blue-50 w-full">
             <div className="container mx-auto px-4 py-20 lg:py-32">
                 {/* Philosophy Section */}
                 <motion.div
@@ -85,6 +85,7 @@ export default function CoursePhilosophy({ data }: CoursePhilosophyProps) {
                     </div>
                 </div>
             </div>
+
         </section>
     );
 }
