@@ -16,15 +16,18 @@ export default function OfferCard({ data }: OfferCardProps) {
         <section className="bg-white w-full pb-20 px-4 md:px-8">
             <div className="container mx-auto">
                 <motion.div
-                    className="relative bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-purple-100 overflow-hidden mx-auto p-8 md:p-12 py-10 px-10 text-center"
+                    className="relative bg-white rounded-3xl shadow-lg border border-purple-100 overflow-hidden mx-auto p-8 md:p-12 lg:p-16 text-center"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
                 >
                     {/* Decorative Background Circles */}
-                    <div className="absolute top-0 left-0 w-64 h-64 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 -translate-x-1/2 -translate-y-1/2"></div>
-                    <div className="absolute bottom-0 right-0 w-64 h-64 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 translate-x-1/2 translate-y-1/2"></div>
+                    {/* Top Left Quarter Circle */}
+                    <div className="absolute top-0 left-0 w-32 md:w-48 h-32 md:h-48 bg-purple-200 rounded-br-full"></div>
+
+                    {/* Bottom Right Quarter Circle */}
+                    <div className="absolute bottom-0 right-0 w-32 md:w-48 h-32 md:h-48 bg-purple-200 rounded-tl-full"></div>
 
                     {/* Content */}
                     <div className="relative z-10">
