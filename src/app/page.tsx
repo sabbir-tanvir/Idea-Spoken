@@ -1,12 +1,12 @@
 import Hero from "@/components/home/Hero";
+import { getHomeHeroData } from "@/lib/api";
 
-export default function Home() {
+export default async function Home() {
+  const heroData = await getHomeHeroData();
+
   return (
     <>
-    <Hero />
-      
-
+      <Hero data={heroData} />
     </>
-
   );
 }

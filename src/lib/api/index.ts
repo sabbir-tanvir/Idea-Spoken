@@ -108,6 +108,15 @@ export interface ActivitiesData {
     }[];
 }
 
+export interface HomeHeroData {
+    tagline: string;
+    title: string;
+    description: string;
+    ctaText: string;
+    exploreText: string;
+    image: string;
+}
+
 export interface Workshop {
     id: number;
     title: string;
@@ -178,6 +187,14 @@ export async function getTimelineData(): Promise<TimelineEvent[]> {
 export async function getActivitiesData(): Promise<ActivitiesData> {
     await delay(200);
     return data.activities;
+}
+
+/**
+ * Fetches home hero data.
+ */
+export async function getHomeHeroData(): Promise<HomeHeroData> {
+    await delay(200);
+    return data.homeHero;
 }
 
 /**

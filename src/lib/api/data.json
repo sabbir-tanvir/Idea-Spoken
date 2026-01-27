@@ -266,5 +266,13 @@
                 "icon": "calendar"
             }
         ]
+    },
+    "homeHero": {
+        "tagline": "শিক্ষা, সেবা ও উন্নয়নের প্ল্যাটফর্ম",
+        "title": "IDEA – Learn, Serve & Rise Together",
+        "description": "IDEA SPOKEN & English Debate কোর্সের মাধ্যমে ভাষা দক্ষতা, আর এটি অংশগ্রহণের মাধ্যমে চরিত্র ও সমাজ উন্নয়ন",
+        "ctaText": "Find Courses",
+        "exploreText": "Explore Our Wings",
+        "image": "/images/hero-students.jpg"
     }
 }
