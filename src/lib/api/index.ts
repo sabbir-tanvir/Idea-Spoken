@@ -56,6 +56,24 @@ export interface EnglishDebateData {
     };
 }
 
+export interface CourseCardData {
+    tag: string;
+    rating: number;
+    reviewCount: string;
+    title: string;
+    description: string;
+    price: string;
+    lessons: string;
+    duration: string;
+    students: string;
+    features: string[];
+    instructor: {
+        name: string;
+        avatar: string;
+    };
+    image: string;
+}
+
 export interface Workshop {
     id: number;
     title: string;
@@ -94,6 +112,14 @@ export async function getWorkshopsData(): Promise<Workshop[]> {
 export async function getEnglishDebateData(): Promise<EnglishDebateData> {
     await delay(200);
     return data.englishDebate;
+}
+
+/**
+ * Fetches featured course data for the card.
+ */
+export async function getFeaturedCourse(): Promise<CourseCardData> {
+    await delay(200);
+    return data.featuredCourse;
 }
 
 /**

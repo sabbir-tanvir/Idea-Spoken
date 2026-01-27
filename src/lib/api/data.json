@@ -167,5 +167,27 @@
             "paymentText": "Payment: Bkash, Nagad, Bank, Card",
             "buttonText": "Pay & Unlock Course"
         }
+    },
+    "featuredCourse": {
+        "tag": "Idea Spoken",
+        "rating": 4.5,
+        "reviewCount": "4.5k",
+        "title": "IDEA SPOKEN – The Game Method",
+        "description": "English শেখো গেম খেলে খেলে – সম্পূর্ণ Research-Based Gamified Method Vocabulary, Grammar আর Fluency সবকিছু গেম ও Activity-এর মাধ্যমে শেখানো হয়",
+        "price": "৳2,500",
+        "lessons": "10",
+        "duration": "19h 30m",
+        "students": "20+",
+        "features": [
+            "Subconscious ভাবে English শেখার অভ্যাস",
+            "দৈনন্দিন কথাবার্তার Vocabulary",
+            "Group Activity ও Role Play",
+            "Certificate Of Completion"
+        ],
+        "instructor": {
+            "name": "Samantha",
+            "avatar": "/images/instructor.jpg"
+        },
+        "image": "/images/course-thumb.jpg"
     }
 }

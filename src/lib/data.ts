@@ -2,14 +2,19 @@
  * Mock data for courses, wings, and other content
  */
 
-export const courses = [
+import { CourseCardData } from './api';
+
+export const courses: CourseCardData[] = [
   {
-    id: 1,
+    tag: 'Spoken English',
+    rating: 4.8,
+    reviewCount: '2.5k',
     title: 'IDEA Spoken English',
-    slug: 'idea-spoken',
     description: 'Master spoken English with our comprehensive course designed for all levels.',
     price: '৳2,500',
+    lessons: '48',
     duration: '3 months',
+    students: '1.2k',
     image: '/images/courses/spoken-english.jpg',
     features: [
       'Interactive live sessions',
@@ -17,15 +22,22 @@ export const courses = [
       'Pronunciation training',
       'Real-world conversation practice',
       'Certificate upon completion'
-    ]
+    ],
+    instructor: {
+      name: 'John Smith',
+      avatar: '/images/instructors/john.jpg'
+    }
   },
   {
-    id: 2,
+    tag: 'Debate',
+    rating: 4.9,
+    reviewCount: '1.8k',
     title: 'English Debate Course',
-    slug: 'english-debate',
     description: 'Develop critical thinking and public speaking skills through structured debate training.',
     price: '৳3,000',
+    lessons: '36',
     duration: '4 months',
+    students: '850',
     image: '/images/courses/debate.jpg',
     features: [
       'Parliamentary debate format',
@@ -33,15 +45,22 @@ export const courses = [
       'Research skills',
       'Public speaking practice',
       'Competition preparation'
-    ]
+    ],
+    instructor: {
+      name: 'Sarah Johnson',
+      avatar: '/images/instructors/sarah.jpg'
+    }
   },
   {
-    id: 3,
+    tag: 'Leadership',
+    rating: 4.7,
+    reviewCount: '1.2k',
     title: 'Leadership Development',
-    slug: 'leadership',
     description: 'Build essential leadership skills for personal and professional growth.',
     price: '৳4,000',
+    lessons: '24',
     duration: '2 months',
+    students: '650',
     image: '/images/courses/leadership.jpg',
     features: [
       'Leadership fundamentals',
@@ -49,7 +68,11 @@ export const courses = [
       'Decision making',
       'Conflict resolution',
       'Project management basics'
-    ]
+    ],
+    instructor: {
+      name: 'Michael Chen',
+      avatar: '/images/instructors/michael.jpg'
+    }
   }
 ];
 
