@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function HeroAbout() {
     return (
-        <section className="relative overflow-hidden bg-gradient-to-r from-pink-50 via-purple-50 to-blue-50 py-32 md:py-40">
+        <section className="relative overflow-hidden bg-gradient-to-r from-pink-200 via-purple-200 to-blue-200 py-32 md:py-40">
             {/* Decorative Elements */}
 
             {/* Left Orange Circles */}

@@ -189,5 +189,82 @@
             "avatar": "/images/instructor.jpg"
         },
         "image": "/images/course-thumb.jpg"
+    },
+    "about": {
+        "title": "Benefit From Our Online Learning Expertise Earn Professional",
+        "subtitle": "Institute of Development, Education and Achievement (IDEA)",
+        "description": "একটি শিক্ষা ও উন্নয়নমুখী প্ল্যাটফর্ম, যা ২০১৪ সালে এক ঝাঁক স্বপ্নবাজ শিক্ষার্থীর বৃক্ষরোপণ অভিযানের মাধ্যমে ধারণা হিসেবে শুরু হয় এবং ২০১৫ সালে আনুষ্ঠানিকভাবে আত্মপ্রকাশ করে",
+        "mission": {
+            "title": "OUR MISSION:",
+            "text": "যুব সমাজকে দক্ষ, সচেতন ও আত্মবিশ্বাসী করে গড়ে তোলা এবং সমাজের উন্নয়নে অবদান রাখা"
+        },
+        "vision": {
+            "title": "OUR VISSION:",
+            "text": "শিক্ষা, উদ্যোক্তা সৃষ্টি ও চরিত্র গঠনের এক সমন্বিত প্ল্যাটফর্ম তৈরি করা"
+        },
+        "yearsExperience": 8,
+        "images": [
+            "/images/about-1.jpg",
+            "/images/about-2.jpg"
+        ],
+        "buttonText": "Admission Open"
+    },
+    "timeline": [
+        {
+            "year": "2014",
+            "title": "বৃক্ষরোপণ অভিযান",
+            "description": "একদণীক স্বপ্নবাজ শিক্ষার্থীর বৃক্ষরোপণ অভিযানের মাধ্যমে IDEA-র ধারণার তৈরি",
+            "icon": "seedling"
+        },
+        {
+            "year": "2015",
+            "title": "আনুষ্ঠানিক যাত্রা",
+            "description": "IDEA Youth Development Center-এর মাধ্যমে আনুষ্ঠানিক কার্যক্রম শুরু",
+            "icon": "flag"
+        },
+        {
+            "year": "2017",
+            "title": "আইডিয়া পিঠা পাঠশালা",
+            "description": "মাত্র ৫০,০০০ আগার ০৬ জন শিক্ষাবৃত্তি নিয়ে পিঠা পাঠশালার যাত্রা",
+            "icon": "book"
+        },
+        {
+            "year": "2020",
+            "title": "WIDEN প্ল্যাটফর্ম",
+            "description": "Covid-১৯ এ অনলাইন প্ল্যাটফর্মের মাধ্যমে ০০ হাজার শিক্ষার্থীকে সেবা",
+            "icon": "laptop"
+        },
+        {
+            "year": "2024",
+            "title": "Online Courses",
+            "description": "IDEA SPOKEN ও English Debate Mastery কোর্সের মাধ্যমে দেশব্যাপী পৌঁছানো",
+            "icon": "graduation"
+        }
+    ],
+    "activities": {
+        "title": "আমাদের কর্মকাণ্ড",
+        "description": "বর্তমানে IDEA-র কর্মকাণ্ড শিক্ষা, ভাষা উন্নয়ন, যুব উন্নয়ন, সামাজিক কল্যাণ, উদ্যোক্তা উন্নয়ন এবং মাইন্ড প্রোগ্রামিংসহ নানামুখী ক্ষেত্রে বিস্তৃত",
+        "stats": [
+            {
+                "value": "30K+",
+                "label": "Students Reached",
+                "icon": "users"
+            },
+            {
+                "value": "7+",
+                "label": "Wings",
+                "icon": "handshake"
+            },
+            {
+                "value": "43+",
+                "label": "Districts",
+                "icon": "map"
+            },
+            {
+                "value": "10+",
+                "label": "Years Of Service",
+                "icon": "calendar"
+            }
+        ]
     }
 }

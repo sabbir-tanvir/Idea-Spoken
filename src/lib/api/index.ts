@@ -74,6 +74,40 @@ export interface CourseCardData {
     image: string;
 }
 
+export interface AboutData {
+    title: string;
+    subtitle: string;
+    description: string;
+    mission: {
+        title: string;
+        text: string;
+    };
+    vision: {
+        title: string;
+        text: string;
+    };
+    yearsExperience: number;
+    images: string[];
+    buttonText: string;
+}
+
+export interface TimelineEvent {
+    year: string;
+    title: string;
+    description: string;
+    icon: string;
+}
+
+export interface ActivitiesData {
+    title: string;
+    description: string;
+    stats: {
+        value: string;
+        label: string;
+        icon: string;
+    }[];
+}
+
 export interface Workshop {
     id: number;
     title: string;
@@ -120,6 +154,30 @@ export async function getEnglishDebateData(): Promise<EnglishDebateData> {
 export async function getFeaturedCourse(): Promise<CourseCardData> {
     await delay(200);
     return data.featuredCourse;
+}
+
+/**
+ * Fetches about page data.
+ */
+export async function getAboutData(): Promise<AboutData> {
+    await delay(200);
+    return data.about;
+}
+
+/**
+ * Fetches timeline data.
+ */
+export async function getTimelineData(): Promise<TimelineEvent[]> {
+    await delay(200);
+    return data.timeline;
+}
+
+/**
+ * Fetches activities/stats data.
+ */
+export async function getActivitiesData(): Promise<ActivitiesData> {
+    await delay(200);
+    return data.activities;
 }
 
 /**

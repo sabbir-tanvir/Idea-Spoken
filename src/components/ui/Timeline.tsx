@@ -1,53 +1,116 @@
-export default function Timeline() {
-  const events = [
-    {
-      year: '2020',
-      title: 'Foundation',
-      description: 'Our organization was founded with a vision to empower through education.'
-    },
-    {
-      year: '2021',
-      title: 'First Programs Launched',
-      description: 'Launched our first spoken English and debate courses.'
-    },
-    {
-      year: '2022',
-      title: 'Expansion',
-      description: 'Expanded to include youth development and social welfare programs.'
-    },
-    {
-      year: '2023',
-      title: 'Community Impact',
-      description: 'Reached over 1,000 students and beneficiaries across various programs.'
-    },
-    {
-      year: '2024',
-      title: 'Digital Transformation',
-      description: 'Launched online learning platform to reach students nationwide.'
-    }
-  ];
+"use client";
+
+import { TimelineEvent } from "@/lib/api";
+import { motion } from "framer-motion";
+import { Sprout, Flag, BookOpen, Laptop, GraduationCap, X } from "lucide-react";
+
+interface TimelineProps {
+  events: TimelineEvent[];
+}
+
+const getIcon = (iconName: string) => {
+  switch (iconName) {
+    case "seedling": return <Sprout className="w-6 h-6" />;
+    case "flag": return <Flag className="w-6 h-6" />;
+    case "book": return <BookOpen className="w-6 h-6" />;
+    case "laptop": return <Laptop className="w-6 h-6" />;
+    case "graduation": return <GraduationCap className="w-6 h-6" />;
+    default: return <X className="w-6 h-6" />;
+  }
+};
+
+export default function Timeline({ events }: TimelineProps) {
+  if (!events || events.length === 0) return null;
 
   return (
-    <div className="relative">
-      <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-blue-200"></div>
-      
-      {events.map((event, index) => (
-        <div key={index} className={`mb-8 flex justify-between items-center w-full ${
-          index % 2 === 0 ? 'flex-row-reverse' : ''
-        }`}>
-          <div className="order-1 w-5/12"></div>
-          
-          <div className="z-20 flex items-center order-1 bg-blue-600 shadow-xl w-12 h-12 rounded-full">
-            <h1 className="mx-auto font-semibold text-lg text-white">{index + 1}</h1>
-          </div>
-          
-          <div className="order-1 bg-white rounded-lg shadow-lg w-5/12 px-6 py-4">
-            <h3 className="mb-1 font-bold text-blue-600 text-xl">{event.year}</h3>
-            <h4 className="mb-2 font-semibold text-lg">{event.title}</h4>
-            <p className="text-sm text-gray-700">{event.description}</p>
-          </div>
+    <section
+      className="py-20 md:py-32 relative"
+      style={{
+        backgroundImage: `url('/images/map.jpg')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      {/* Overlay for better text readability */}
+      <div className="absolute inset-0 "></div>
+
+      <div className="container mx-auto px-4 relative z-10">
+        {/* Heading */}
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="inline-block text-3xl md:text-4xl font-bold text-slate-800 border-b-4 border-purple-300 pb-2">
+            Our Journey
+          </h2>
+        </motion.div>
+
+        {/* Timeline */}
+        <div className="relative max-w-5xl mx-auto">
+          {/* Vertical Line */}
+          <div className="absolute left-1/2 top-0 bottom-0 w-px border-l-2 border-dashed border-purple-400 transform -translate-x-1/2"></div>
+
+          {events.map((event, index) => {
+            const isLeft = index % 2 === 0;
+            return (
+              <motion.div
+                key={index}
+                className={`relative flex items-center justify-center mb-16 last:mb-0`}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                {/* Left Content */}
+                <div className={`w-5/12 flex items-center ${isLeft ? 'justify-end' : 'invisible'}`}>
+                  {isLeft && (
+                    <>
+                      <div className="text-right pr-4">
+                        <span className="text-2xl md:text-3xl font-bold text-slate-600">{event.year}</span>
+                        <h3 className="text-lg md:text-xl font-bold text-purple-700 mt-1">{event.title}</h3>
+                        <p className="text-sm text-slate-500 mt-2">{event.description}</p>
+                      </div>
+                      {/* Dotted Line Connector */}
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 rounded-full bg-purple-500"></div>
+                        <div className="w-16 md:w-24 border-t-2 border-dashed border-purple-400"></div>
+                      </div>
+                    </>
+                  )}
+                </div>
+
+                {/* Icon */}
+                <div className="z-10">
+                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-purple-100 border-2 border-purple-200 flex items-center justify-center text-purple-600 shadow-lg">
+                    {getIcon(event.icon)}
+                  </div>
+                </div>
+
+                {/* Right Content */}
+                <div className={`w-5/12 flex items-center ${!isLeft ? 'justify-start' : 'invisible'}`}>
+                  {!isLeft && (
+                    <>
+                      {/* Dotted Line Connector */}
+                      <div className="flex items-center">
+                        <div className="w-16 md:w-24 border-t-2 border-dashed border-purple-400"></div>
+                        <div className="w-2 h-2 rounded-full bg-purple-500"></div>
+                      </div>
+                      <div className="text-left pl-4">
+                        <span className="text-2xl md:text-3xl font-bold text-slate-600">{event.year}</span>
+                        <h3 className="text-lg md:text-xl font-bold text-purple-700 mt-1">{event.title}</h3>
+                        <p className="text-sm text-slate-500 mt-2">{event.description}</p>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
-      ))}
-    </div>
+      </div>
+    </section>
   );
 }

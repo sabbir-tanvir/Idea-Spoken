@@ -1,27 +1,12 @@
-import Contact from "@/components/Contact";
-import CountUpSection from "@/components/home/CountUp";
-import HeroSection from "@/components/home/HeroSection";
-import HomeResearch from "@/components/home/HomeResearch";
-import PhotoGallery from "@/components/home/PhotoGallery";
-import Review from "@/components/home/Review";
-import UpcomingWorkshop from "@/components/home/UpcomingWorkshop";
-import WhatYouWillLearn from "@/components/home/WhatUwillLearn";
-import WhoIsItFor from "@/components/home/Whoisthisfor";
-import Image from "next/image";
+import Hero from "@/components/home/Hero";
 
 export default function Home() {
   return (
     <>
-    <HeroSection />
-    <CountUpSection />
-    <WhoIsItFor />
-    <WhatYouWillLearn />
-    <PhotoGallery />
-    <HomeResearch />
-    <UpcomingWorkshop />
-    <Review />
-    <Contact />
+    <Hero />
+      
+
     </>
-    
+
   );
 }
