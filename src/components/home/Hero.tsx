@@ -14,7 +14,7 @@ export default function Hero({ data }: HeroProps) {
     if (!data) return null;
 
     return (
-        <section className="relative bg-gradient-to-b min-h-[80vh] from-purple-50 to-white overflow-hidden py-16 md:py-24">
+        <section className="relative bg-gradient-to-b min-h-[80vh] from-purple-50 to-white overflow-hidden py-16 md:py-24" style={{ backgroundImage: "url('/images/dhew.png')" }}>
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
@@ -88,7 +88,7 @@ export default function Hero({ data }: HeroProps) {
                     >
                         <div className="relative h-[400px] md:h-[500px] rounded-3xl overflow-hidden shadow-2xl">
                             <Image
-                                src={data.image}
+                                src="/images/cing.jpg"
                                 alt="Students"
                                 fill
                                 className="object-cover"
@@ -97,7 +97,7 @@ export default function Hero({ data }: HeroProps) {
 
                         {/* Explore Our Wings Card */}
                         <motion.div
-                            className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-white rounded-2xl shadow-xl px-8 py-5 flex items-center gap-4"
+                            className="absolute -bottom-2 left-30 transform -translate-x-1/2 bg-white rounded-2xl shadow-xl px-8 py-5 flex items-center gap-4"
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.8 }}
@@ -111,19 +111,8 @@ export default function Hero({ data }: HeroProps) {
                         </motion.div>
 
                         {/* Decorative curve arrow (SVG) */}
-                        <svg
-                            className="absolute -left-20 bottom-10 w-32 h-20 text-slate-400 hidden lg:block"
-                            viewBox="0 0 100 50"
-                            fill="none"
-                        >
-                            <path
-                                d="M0 25 Q 50 0, 100 25"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeDasharray="5,5"
-                                fill="none"
-                            />
-                        </svg>
+                        <Image src="/images/aroww.png" alt="Arrow" width={500} height={100} className="absolute -left-130 bottom-1 text-slate-400 hidden lg:block" />
+
                     </motion.div>
                 </div>
             </div>

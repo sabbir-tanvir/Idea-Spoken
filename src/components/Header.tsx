@@ -3,9 +3,23 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { ChevronDown } from 'lucide-react';
+
+// Wings dropdown items
+const wingsDropdownItems = [
+  { title: 'IDEA Youth Development Center', slug: 'youth-development' },
+  { title: 'IDEA Social Welfare Organization', slug: 'social-welfare' },
+  { title: 'IDEA SPOKEN – The Game Method', slug: '/english-debate' },
+  { title: 'IDEA Pitha Pathshala', slug: 'pitha-pathshala' },
+  { title: 'WIDEN', slug: '/widen' },
+  { title: 'Bangla Pitha Research Institute', slug: '/pitha' },
+  { title: 'Rise and Thrive', slug: 'rise-and-thrive' },
+];
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [wingsDropdownOpen, setWingsDropdownOpen] = useState(false);
+  const [mobileWingsOpen, setMobileWingsOpen] = useState(false);
   const pathname = usePathname();
 
   return (
@@ -67,7 +81,7 @@ export default function Header() {
       </div>
 
       {/* Main Navigation */}
-      <div className="bg-white shadow-md">
+      <div className="bg-white ">
         <div className="max-w-[1540px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center py-2">
             {/* Logo Section */}
@@ -106,15 +120,40 @@ export default function Header() {
               >
                 Courses
               </Link>
-              <Link
-                href="/our-wings"
-                className={`transition-colors font-medium px-4 py-2 rounded-full ${pathname?.startsWith('/our-wings')
-                  ? 'text-purple-600 border-2 border-purple-600'
-                  : 'text-gray-700 hover:text-purple-600 hover:border-2 hover:border-purple-200'
-                  }`}
+              
+              {/* Our Wings with Dropdown */}
+              <div 
+                className="relative"
+                onMouseEnter={() => setWingsDropdownOpen(true)}
+                onMouseLeave={() => setWingsDropdownOpen(false)}
               >
-                Our Wings
-              </Link>
+                <button
+                  className={`transition-colors font-medium px-4 py-2 rounded-full flex items-center gap-1 ${
+                    pathname?.startsWith('/our-wings') || pathname?.startsWith('/widen') || pathname?.startsWith('/pitha') || pathname?.startsWith('/english-debate')
+                      ? 'text-purple-600 border-2 border-purple-600'
+                      : 'text-gray-700 hover:text-purple-600 hover:border-2 hover:border-purple-200'
+                  }`}
+                >
+                  Our Wings
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${wingsDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+                
+                {/* Dropdown Menu */}
+                {wingsDropdownOpen && (
+                  <div className="absolute top-full left-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-gray-100 py-3 z-50">
+                    {wingsDropdownItems.map((item, index) => (
+                      <Link
+                        key={index}
+                        href={item.slug.startsWith('/') ? item.slug : `/our-wings/${item.slug}`}
+                        className="block px-5 py-3 text-base text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors"
+                      >
+                        {item.title}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+              
               <Link
                 href="/blog"
                 className={`transition-colors font-medium px-4 py-2 rounded-full ${pathname?.startsWith('/blog')
@@ -233,15 +272,37 @@ export default function Header() {
                 >
                   Courses
                 </Link>
-                <Link
-                  href="/our-wings"
-                  className={`transition-colors font-medium px-4 py-2 rounded-full text-center ${pathname?.startsWith('/our-wings')
-                    ? 'text-purple-600 border-2 border-purple-600'
-                    : 'text-gray-700 hover:text-purple-600'
+                
+                {/* Our Wings Mobile Dropdown */}
+                <div className="flex flex-col">
+                  <button
+                    onClick={() => setMobileWingsOpen(!mobileWingsOpen)}
+                    className={`transition-colors font-medium px-4 py-2 rounded-full text-center flex items-center justify-center gap-1 ${
+                      pathname?.startsWith('/our-wings') || pathname?.startsWith('/widen') || pathname?.startsWith('/pitha') || pathname?.startsWith('/english-debate')
+                        ? 'text-purple-600 border-2 border-purple-600'
+                        : 'text-gray-700 hover:text-purple-600'
                     }`}
-                >
-                  Our Wings
-                </Link>
+                  >
+                    Our Wings
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileWingsOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  
+                  {mobileWingsOpen && (
+                    <div className="mt-2 bg-gray-50 rounded-xl py-2">
+                      {wingsDropdownItems.map((item, index) => (
+                        <Link
+                          key={index}
+                          href={item.slug.startsWith('/') ? item.slug : `/our-wings/${item.slug}`}
+                          className="block px-6 py-2.5 text-base text-gray-600 hover:text-purple-600 transition-colors"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {item.title}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                
                 <Link
                   href="/blog"
                   className={`transition-colors font-medium px-4 py-2 rounded-full text-center ${pathname?.startsWith('/blog')
