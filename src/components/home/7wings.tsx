@@ -3,8 +3,10 @@
 import { SevenWingsData } from "@/lib/api";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import IdeaCard from "@/components/ui/cards/IdeaCard";
+import { useState } from "react";
 
 interface SevenWingsProps {
     data: SevenWingsData | null;
@@ -72,6 +74,7 @@ const fallbackData: SevenWingsData = {
 export default function SevenWings({ data }: SevenWingsProps) {
     // Use fallback if data is null or empty
     const content = data && data.wings?.length > 0 ? data : fallbackData;
+    const [avatarError, setAvatarError] = useState(false);
 
     return (
         <section className="py-20 md:py-24 lg:py-32 bg-white">
@@ -135,6 +138,50 @@ export default function SevenWings({ data }: SevenWingsProps) {
                         </div>
                     </motion.div>
                 )}
+
+                {/* Founder Quote Card */}
+                <motion.div
+                    className="mt-20 md:mt-30 px-30"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                >
+                    <div className="relative bg-linear-to-br from-purple-50 via-slate-50 to-purple-50/50 border border-gray-700 shadow-2xl shadow-purple-300 rounded-3xl p-8 md:p-12 overflow-hidden">
+                        {/* Decorative shape on right */}
+                        <div className="absolute right-0 bottom-0 w-48 h-48 md:w-64 md:h-64">
+                            <div className="absolute right-0 bottom-0 w-full h-full bg-purple-200/40 rounded-tl-full" />
+                        </div>
+
+                        {/* Quote */}
+                        <blockquote className="relative z-10 text-xl md:text-2xl lg:text-3xl font-medium text-slate-800 leading-relaxed mb-8 max-w-4xl">
+                            &ldquo;আইডিয়ার যাত্রা শুরু হয়েছিল একঝাঁক শিক্ষার্থীর স্বপ্ন আর একটি বৃক্ষরোপণ অভিযান দিয়ে  আজ এটি শিক্ষা, উন্নয়ন, উদ্যোক্তা সৃষ্টি ও চরিত্র গঠনের এক সমন্বিত প্ল্যাটফর্ম &rdquo;
+                        </blockquote>
+
+                        {/* Author */}
+                        <div className="relative z-10 flex items-center gap-4">
+                            <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-purple-200">
+                                {!avatarError ? (
+                                    <Image
+                                        src="/images/founder.jpg"
+                                        alt="Md. Hamidul Huq"
+                                        fill
+                                        className="object-cover"
+                                        onError={() => setAvatarError(true)}
+                                    />
+                                ) : (
+                                    <div className="w-full h-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold text-xl">
+                                        MH
+                                    </div>
+                                )}
+                            </div>
+                            <div>
+                                <p className="text-lg md:text-xl font-bold text-slate-900">Md. Hamidul Huq</p>
+                                <p className="text-base text-slate-500">Founder, IDEA</p>
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
             </div>
         </section>
     );

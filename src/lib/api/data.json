@@ -366,5 +366,56 @@
                 "slug": "/rise-and-thrive"
             }
         ]
+    },
+    "topCourses": {
+        "badge": "TOP POPULAR COURSE",
+        "title": "দুটি স্পেশালাইজড কোর্স যা আপনার English দক্ষতাকে নতুন উচ্চতায় নিয়ে যাবে",
+        "buttonText": "Load More Course",
+        "courses": [
+            {
+                "tag": "Idea Spoken",
+                "rating": 4.5,
+                "reviewCount": "4.5k",
+                "title": "IDEA SPOKEN – The Game Method",
+                "description": "English শেখো গেম খেলে খেলে – সম্পূর্ণ Research-Based Gamified Method",
+                "price": "৳2,500",
+                "lessons": "10",
+                "duration": "19h 30m",
+                "students": "20+",
+                "features": [
+                    "Subconscious ভাবে English শেখার অভ্যাস",
+                    "দৈনন্দিন কথাবার্তার Vocabulary",
+                    "Group Activity ও Role Play",
+                    "Certificate Of Completion"
+                ],
+                "instructor": {
+                    "name": "Samantha",
+                    "avatar": "/images/instructor.jpg"
+                },
+                "image": "/images/course-spoken.jpg"
+            },
+            {
+                "tag": "English Debate",
+                "rating": 4.5,
+                "reviewCount": "4.5k",
+                "title": "English Debate Mastery",
+                "description": "শুধু English বললেই হবে না, যুক্তি দিয়ে বোঝাতে হবে",
+                "price": "৳3,000",
+                "lessons": "10",
+                "duration": "19h 30m",
+                "students": "20+",
+                "features": [
+                    "Critical Thinking Development",
+                    "Public Speaking Skills",
+                    "Debate Format Training",
+                    "Certificate Of Completion"
+                ],
+                "instructor": {
+                    "name": "Charles",
+                    "avatar": "/images/instructor-2.jpg"
+                },
+                "image": "/images/course-debate.jpg"
+            }
+        ]
     }
 }

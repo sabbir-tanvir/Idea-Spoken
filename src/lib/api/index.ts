@@ -148,6 +148,13 @@ export interface SevenWingsData {
     wings: WingCardData[];
 }
 
+export interface TopCoursesData {
+    badge: string;
+    title: string;
+    buttonText: string;
+    courses: CourseCardData[];
+}
+
 export interface Workshop {
     id: number;
     title: string;
@@ -242,6 +249,14 @@ export async function getWhyIdeaData(): Promise<WhyIdeaData> {
 export async function getSevenWingsData(): Promise<SevenWingsData> {
     await delay(200);
     return data.sevenWings;
+}
+
+/**
+ * Fetches Top Courses section data.
+ */
+export async function getTopCoursesData(): Promise<TopCoursesData> {
+    await delay(200);
+    return data.topCourses;
 }
 
 /**
