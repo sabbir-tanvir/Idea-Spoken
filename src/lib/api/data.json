@@ -274,5 +274,97 @@
         "ctaText": "Find Courses",
         "exploreText": "Explore Our Wings",
         "image": "/images/hero-students.jpg"
+    },
+    "whyIdea": {
+        "badge": "কেন IDEA?",
+        "title": "Why Learn With IDEA?",
+        "description": "আমাদের শিক্ষা পদ্ধতি অন্যদের থেকে আলাদা কারণ আমরা বিশ্বাস করি শেখা হওয়া উচিত আনন্দময়",
+        "cards": [
+            {
+                "id": 1,
+                "title": "গেম মেথডে শেখা",
+                "description": "গেম মেথডে Spoken English শেখার ইউনিক পদ্ধতি যা শেখাকে করে সহজ ও মজাদার",
+                "icon": "gamepad",
+                "bgColor": "blue"
+            },
+            {
+                "id": 2,
+                "title": "বাস্তব অভিজ্ঞতা",
+                "description": "বাস্তব জীবনের অভিজ্ঞতায় ভিত্তিক কোর্স ডিজাইন যা সরাসরি কাজে লাগে",
+                "icon": "seedling",
+                "bgColor": "purple"
+            },
+            {
+                "id": 3,
+                "title": "Debate স্কিল",
+                "description": "Debate-এর মাধ্যমে ভাবনা, যুক্তি ও প্রেজেন্টেশন স্কিল ডেভেলপমেন্ট",
+                "icon": "code",
+                "bgColor": "green"
+            },
+            {
+                "id": 4,
+                "title": "সমন্বিত প্ল্যাটফর্ম",
+                "description": "যুব উন্নয়ন, সোস্যাল ওয়েলফেয়ার, পিঠা উদ্যোক্তা, মাইন্ড প্রোগ্রামিং – সব এক প্ল্যাটফর্মে",
+                "icon": "home",
+                "bgColor": "pink"
+            }
+        ]
+    },
+    "sevenWings": {
+        "badge": "আমাদের ৭টি WING",
+        "title": "Our 7 Wings Of IDEA",
+        "description": "শিক্ষা, সেবা ও উন্নয়নের বিভিন্ন দিক নিয়ে কাজ করছে IDEA-র ৭টি অঙ্গসংগঠন",
+        "buttonText": "All Blog Post",
+        "wings": [
+            {
+                "id": 1,
+                "title": "IDEA Youth Development Center",
+                "description": "যুব সমাজকে দক্ষ, সচেতন ও আত্মবিশ্বাসী করে গড়ে তোলা",
+                "image": "/images/wings/youth-development.jpg",
+                "slug": "youth-development"
+            },
+            {
+                "id": 2,
+                "title": "IDEA Social Welfare Organization",
+                "description": "সমাজের অসহায় মানুষের পাশে দাঁড়ানো ও স্বেচ্ছাসেবী কাজ",
+                "image": "/images/wings/social-welfare.jpg",
+                "slug": "social-welfare"
+            },
+            {
+                "id": 3,
+                "title": "IDEA SPOKEN – The Game Method",
+                "description": "গেম-ভিত্তিক English শেখার অভিনব পদ্ধতি",
+                "image": "/images/wings/spoken-english.jpg",
+                "slug": "/english-debate"
+            },
+            {
+                "id": 4,
+                "title": "IDEA Pitha Pathshala",
+                "description": "পিঠা তৈরির আদ্যোগ শত তৈরি করা সুযোগের জন্য",
+                "image": "/images/wings/pitha-pathshala.jpg",
+                "slug": "pitha-pathshala"
+            },
+            {
+                "id": 5,
+                "title": "WIDEN",
+                "description": "Bangladeshi Students & Entrepreneurs এর অনলাইন প্ল্যাটফর্ম",
+                "image": "/images/wings/widen.jpg",
+                "slug": "/widen"
+            },
+            {
+                "id": 6,
+                "title": "Bangla Pitha Research Institute",
+                "description": "বাংলার ঐতিহ্য পিঠা সংস্কৃতির গবেষণা ও সংরক্ষণ",
+                "image": "/images/wings/pitha-research.jpg",
+                "slug": "/pitha"
+            },
+            {
+                "id": 7,
+                "title": "Rise and Thrive with Hamidul Huq",
+                "description": "আত্ম-উন্নয়ন ও Mind Programming এর intensive প্রোগ্রাম",
+                "image": "/images/wings/rise-thrive.jpg",
+                "slug": "/rise-and-thrive"
+            }
+        ]
     }
 }

@@ -117,6 +117,37 @@ export interface HomeHeroData {
     image: string;
 }
 
+export interface WhyIdeaCard {
+    id: number;
+    title: string;
+    description: string;
+    icon: string;
+    bgColor: string;
+}
+
+export interface WhyIdeaData {
+    badge: string;
+    title: string;
+    description: string;
+    cards: WhyIdeaCard[];
+}
+
+export interface WingCardData {
+    id: number;
+    title: string;
+    description: string;
+    image: string;
+    slug: string;
+}
+
+export interface SevenWingsData {
+    badge: string;
+    title: string;
+    description: string;
+    buttonText: string;
+    wings: WingCardData[];
+}
+
 export interface Workshop {
     id: number;
     title: string;
@@ -195,6 +226,22 @@ export async function getActivitiesData(): Promise<ActivitiesData> {
 export async function getHomeHeroData(): Promise<HomeHeroData> {
     await delay(200);
     return data.homeHero;
+}
+
+/**
+ * Fetches Why IDEA section data.
+ */
+export async function getWhyIdeaData(): Promise<WhyIdeaData> {
+    await delay(200);
+    return data.whyIdea;
+}
+
+/**
+ * Fetches 7 Wings section data.
+ */
+export async function getSevenWingsData(): Promise<SevenWingsData> {
+    await delay(200);
+    return data.sevenWings;
 }
 
 /**
