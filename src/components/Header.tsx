@@ -1,19 +1,22 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { ChevronDown } from 'lucide-react';
 
-// Wings dropdown items
+// Wings dropdown items - routes that have dedicated pages use absolute paths
 const wingsDropdownItems = [
-  { title: 'IDEA Youth Development Center', slug: 'youth-development' },
-  { title: 'IDEA Social Welfare Organization', slug: 'social-welfare' },
-  { title: 'IDEA SPOKEN – The Game Method', slug: '/english-debate' },
-  { title: 'IDEA Pitha Pathshala', slug: 'pitha-pathshala' },
-  { title: 'WIDEN', slug: '/widen' },
-  { title: 'Bangla Pitha Research Institute', slug: '/pitha' },
-  { title: 'Rise and Thrive', slug: 'rise-and-thrive' },
+  { title: 'Rise and Thrive', slug: '/rise-and-thrive', hasPage: true },
+  { title: 'WIDEN', slug: '/widen', hasPage: true },
+  { title: 'IDEA Pitha Pathshala', slug: '/pitha', hasPage: true },
+  { title: 'IDEA SPOKEN – The Game Method', slug: '/idea-spoken', hasPage: true },
+  { title: 'English Debate Mastery', slug: '/english-debate', hasPage: true },
+  { title: 'Bangla Pitha Research Institute', slug: '/pitha', hasPage: true },
+
+
+  { title: 'IDEA Youth Development Center', slug: 'youth-development', hasPage: false },
+  { title: 'IDEA Social Welfare Organization', slug: 'social-welfare', hasPage: false },
 ];
 
 export default function Header() {
@@ -21,15 +24,44 @@ export default function Header() {
   const [wingsDropdownOpen, setWingsDropdownOpen] = useState(false);
   const [mobileWingsOpen, setMobileWingsOpen] = useState(false);
   const pathname = usePathname();
+  const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Handle dropdown open with delay clear
+  const handleDropdownEnter = () => {
+    if (dropdownTimeoutRef.current) {
+      clearTimeout(dropdownTimeoutRef.current);
+      dropdownTimeoutRef.current = null;
+    }
+    setWingsDropdownOpen(true);
+  };
+
+  // Handle dropdown close with delay
+  const handleDropdownLeave = () => {
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setWingsDropdownOpen(false);
+    }, 300); // 300ms delay before closing
+  };
+
+  // Get the href for a wing item
+  const getWingHref = (item: typeof wingsDropdownItems[0]) => {
+    return item.slug.startsWith('/') ? item.slug : `/our-wings/${item.slug}`;
+  };
+
+  // Check if current path is one of the wings
+  const isWingsActive = pathname?.startsWith('/our-wings') ||
+    pathname?.startsWith('/widen') ||
+    pathname?.startsWith('/pitha') ||
+    pathname?.startsWith('/english-debate') ||
+    pathname?.startsWith('/rise-and-thrive');
 
   return (
     <header className="w-full">
       {/* Top Bar */}
       <div className="bg-[#1e3a8a] text-white">
         <div className="max-w-[1540px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row justify-between items-center  gap-2 sm:gap-4">
-            {/* Contact Info */}
-            <div className="flex flex-wrap py-3 items-center justify-center sm:justify-start gap-4 text-xs sm:text-sm">
+          <div className="flex justify-between items-center">
+            {/* Contact Info - Hidden on mobile, visible on sm+ */}
+            <div className="hidden sm:flex flex-wrap py-3 items-center gap-4 text-xs sm:text-sm">
               <a href="tel:+8801949212679" className="flex items-center gap-2 hover:text-yellow-300 transition-colors">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -43,8 +75,8 @@ export default function Header() {
                 </svg>
                 <span>info@idea-bd.com</span>
               </a>
-              <span className="border-r-2 border-white/30 h-5"></span>
-              <div className="flex items-center gap-2">
+              <span className="border-r-2 border-white/30 h-5 hidden lg:block"></span>
+              <div className="hidden lg:flex items-center gap-2">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -53,8 +85,18 @@ export default function Header() {
               </div>
             </div>
 
+            {/* Mobile: Phone number on left */}
+            <div className="flex sm:hidden py-2 items-center text-xs">
+              <a href="tel:+8801949212679" className="flex items-center gap-1.5 hover:text-yellow-300 transition-colors">
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                <span>+880 1949-212679</span>
+              </a>
+            </div>
+
             {/* Social Media Icons */}
-            <div className="flex items-center py-3 gap-3 bg-[#fbbf24] px-4 py-1 ">
+            <div className="flex items-center gap-3 bg-[#fbbf24] px-3 sm:px-4 py-2 sm:py-3">
               <a href="#" className="text-gray-800 hover:text-blue-600 transition-colors" aria-label="Facebook">
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
@@ -120,40 +162,50 @@ export default function Header() {
               >
                 Courses
               </Link>
-              
+
               {/* Our Wings with Dropdown */}
-              <div 
+              <div
                 className="relative"
-                onMouseEnter={() => setWingsDropdownOpen(true)}
-                onMouseLeave={() => setWingsDropdownOpen(false)}
+                onMouseEnter={handleDropdownEnter}
+                onMouseLeave={handleDropdownLeave}
               >
                 <button
-                  className={`transition-colors font-medium px-4 py-2 rounded-full flex items-center gap-1 ${
-                    pathname?.startsWith('/our-wings') || pathname?.startsWith('/widen') || pathname?.startsWith('/pitha') || pathname?.startsWith('/english-debate')
+                  className={`transition-colors font-medium px-4 py-2 rounded-full flex items-center gap-1 ${isWingsActive
                       ? 'text-purple-600 border-2 border-purple-600'
                       : 'text-gray-700 hover:text-purple-600 hover:border-2 hover:border-purple-200'
-                  }`}
+                    }`}
                 >
                   Our Wings
                   <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${wingsDropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
-                
+
                 {/* Dropdown Menu */}
                 {wingsDropdownOpen && (
-                  <div className="absolute top-full left-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-gray-100 py-3 z-50">
-                    {wingsDropdownItems.map((item, index) => (
-                      <Link
-                        key={index}
-                        href={item.slug.startsWith('/') ? item.slug : `/our-wings/${item.slug}`}
-                        className="block px-5 py-3 text-base text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors"
-                      >
-                        {item.title}
-                      </Link>
-                    ))}
+                  <div
+                    className="absolute top-full left-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-gray-100 py-3 z-50"
+                    onMouseEnter={handleDropdownEnter}
+                    onMouseLeave={handleDropdownLeave}
+                  >
+                    {wingsDropdownItems.map((item, index) => {
+                      const href = getWingHref(item);
+                      const isActive = pathname === href || pathname?.startsWith(href + '/');
+                      return (
+                        <Link
+                          key={index}
+                          href={href}
+                          className={`block px-5 py-3 text-base transition-colors ${isActive
+                              ? 'bg-purple-50 text-purple-600 font-medium'
+                              : 'text-gray-700 hover:bg-purple-50 hover:text-purple-600'
+                            }`}
+                        >
+                          {item.title}
+                        </Link>
+                      );
+                    })}
                   </div>
                 )}
               </div>
-              
+
               <Link
                 href="/blog"
                 className={`transition-colors font-medium px-4 py-2 rounded-full ${pathname?.startsWith('/blog')
@@ -218,15 +270,12 @@ export default function Header() {
               </Link>
 
 
-
-
-
             </div>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button - moved to right with ml-auto */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 text-gray-700 hover:text-purple-600 transition-colors"
+              className="lg:hidden p-2 text-gray-700 hover:text-purple-600 transition-colors ml-auto"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? (
@@ -272,37 +321,43 @@ export default function Header() {
                 >
                   Courses
                 </Link>
-                
+
                 {/* Our Wings Mobile Dropdown */}
                 <div className="flex flex-col">
                   <button
                     onClick={() => setMobileWingsOpen(!mobileWingsOpen)}
-                    className={`transition-colors font-medium px-4 py-2 rounded-full text-center flex items-center justify-center gap-1 ${
-                      pathname?.startsWith('/our-wings') || pathname?.startsWith('/widen') || pathname?.startsWith('/pitha') || pathname?.startsWith('/english-debate')
+                    className={`transition-colors font-medium px-4 py-2 rounded-full text-center flex items-center justify-center gap-1 ${isWingsActive
                         ? 'text-purple-600 border-2 border-purple-600'
                         : 'text-gray-700 hover:text-purple-600'
-                    }`}
+                      }`}
                   >
                     Our Wings
                     <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileWingsOpen ? 'rotate-180' : ''}`} />
                   </button>
-                  
+
                   {mobileWingsOpen && (
                     <div className="mt-2 bg-gray-50 rounded-xl py-2">
-                      {wingsDropdownItems.map((item, index) => (
-                        <Link
-                          key={index}
-                          href={item.slug.startsWith('/') ? item.slug : `/our-wings/${item.slug}`}
-                          className="block px-6 py-2.5 text-base text-gray-600 hover:text-purple-600 transition-colors"
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          {item.title}
-                        </Link>
-                      ))}
+                      {wingsDropdownItems.map((item, index) => {
+                        const href = getWingHref(item);
+                        const isActive = pathname === href || pathname?.startsWith(href + '/');
+                        return (
+                          <Link
+                            key={index}
+                            href={href}
+                            className={`block px-6 py-2.5 text-base transition-colors ${isActive
+                                ? 'text-purple-600 font-medium bg-purple-50'
+                                : 'text-gray-600 hover:text-purple-600'
+                              }`}
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            {item.title}
+                          </Link>
+                        );
+                      })}
                     </div>
                   )}
                 </div>
-                
+
                 <Link
                   href="/blog"
                   className={`transition-colors font-medium px-4 py-2 rounded-full text-center ${pathname?.startsWith('/blog')

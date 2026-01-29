@@ -41,7 +41,7 @@ export default function HeroSection() {
               transition={{ duration: 0.6, delay: 0.3 }}
             >
               <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-              <span className="text-sm font-medium">Mind Programming</span>
+              <span className="text-sm font-medium">Online Platform</span>
             </motion.div>
 
             {/* Main Heading */}
@@ -51,9 +51,9 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
             >
-              Rise And Thrive With
-              <br />
-              Hamidul Huq
+              Bangladeshi Students & 
+Entrepreneurs Group 
+(WIDEN)
             </motion.h1>
 
             {/* Description in Bengali */}
@@ -63,10 +63,7 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7 }}
             >
-              "Rise And Thrive With Hamidul Huq" বলতে এমনকিছুগো আয়—
-              উন্নয়ন, Mind Programming ও Life Transformation—এর
-              Intensive কোর্স, যে যারে অব্যাহতভাবে নিজেদেরে মানসিক বাধা
-              মিটিয়ে কাঙ্ক্ষিতভাবে এগিয়ে যাওয়ার পথ খুঁজে পান
+              Covid–১৯ এর কঠিন সময়ে যখন যুব সমাজ হতাশায় ডুবে যাচ্ছিল, তখন অনলাইনে ইতিবাচক প্ল্যাটফর্ম হিসেবে গড়ে ওঠে WIDEN, যার মাধ্যমে প্রায় ৩০ হাজার শিক্ষার্থী বিভিন্ন অনলাইন প্রোগ্রামে উপকৃত হয়েছে।
             </motion.p>
 
             {/* Bottom Badges */}

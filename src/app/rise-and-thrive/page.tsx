@@ -7,7 +7,6 @@ import Review from "@/components/rise-and-thrive/Review";
 import UpcomingWorkshop from "@/components/rise-and-thrive/UpcomingWorkshop";
 import WhatYouWillLearn from "@/components/rise-and-thrive/WhatUwillLearn";
 import WhoIsItFor from "@/components/rise-and-thrive/Whoisthisfor";
-import Image from "next/image";
 
 export default function Home() {
     return (
