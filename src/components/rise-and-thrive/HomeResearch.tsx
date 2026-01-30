@@ -1,4 +1,3 @@
-"use client"
 
 import { img } from "motion/react-client"
 import ResearchArea from "../ResearchArea"
