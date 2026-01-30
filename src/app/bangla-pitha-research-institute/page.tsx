@@ -1,23 +1,18 @@
 import React from 'react'
-import page from '../page'
 import HeroSection from '@/components/pitha/PheroSection';
 import CountUpSection from '@/components/pitha/PCountUp';
-import OurJourney from '@/components/pitha/OurJourney';
 import PhotoGallery from '@/components/pitha/PPhotoGallery';
-import OurImpact from '@/components/pitha/OurImpact';
-import PReview from '@/components/pitha/PReview';
-import Wcontact from '@/components/pitha/PContact';
+import PMission from '@/components/bangla-pitha-research-institute/BanglaPithaMission';
+import BanglaPithaContact from '@/components/bangla-pitha-research-institute/BanglaPithaContact';
 
 function PithaPatsala() {
   return (
     <>
     <HeroSection />
     <CountUpSection />
-    <OurJourney />
     <PhotoGallery />
-    <OurImpact />
-    <PReview />
-    <Wcontact />
+    <PMission />
+    <BanglaPithaContact />
 
     </>
   )

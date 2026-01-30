@@ -23,29 +23,7 @@ export default function CourseStructure({ data }: CourseStructureProps) {
     return (
         <section className="bg-white w-full">
             <div className="container mx-auto px-4 py-20">
-                {/* Skills Highlights */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-24 max-w-5xl mx-auto">
-                    {data.skillsHighlights.map((skill, index) => (
-                        <motion.div
-                            key={skill.id}
-                            className="flex flex-col items-center text-center space-y-4"
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
-                        >
-                            <div className="w-20 h-20 bg-purple-100 rounded-2xl flex items-center justify-center mb-2">
-                                {getIcon(skill.icon)}
-                            </div>
-                            <h3 className="text-2xl font-bold text-slate-900">
-                                {skill.title}
-                            </h3>
-                            <p className="text-slate-500 font-medium">
-                                {skill.description}
-                            </p>
-                        </motion.div>
-                    ))}
-                </div>
+               
 
                 {/* Course Structure List */}
                 <motion.div

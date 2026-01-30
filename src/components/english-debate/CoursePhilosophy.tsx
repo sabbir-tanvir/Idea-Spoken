@@ -68,7 +68,7 @@ export default function CoursePhilosophy({ data }: CoursePhilosophyProps) {
                         {data.learningOutcomes.map((item, index) => (
                             <motion.div
                                 key={item.id}
-                                className={`p-6 rounded-2xl flex items-start gap-4 ${getColorClasses(item.color)}`}
+                                className={`p-6 rounded-2xl flex items-start shadow-xl gap-4 ${getColorClasses(item.color)}`}
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}

@@ -12,7 +12,7 @@ const wingsDropdownItems = [
   { title: 'IDEA Pitha Pathshala', slug: '/pitha', hasPage: true },
   { title: 'IDEA SPOKEN – The Game Method', slug: '/idea-spoken', hasPage: true },
   { title: 'English Debate Mastery', slug: '/english-debate', hasPage: true },
-  { title: 'Bangla Pitha Research Institute', slug: '/pitha', hasPage: true },
+  { title: 'Bangla Pitha Research Institute', slug: '/bangla-pitha-research-institute', hasPage: true },
 
 
   { title: 'IDEA Youth Development Center', slug: 'youth-development', hasPage: false },
