@@ -2,13 +2,15 @@ import { courses } from '@/lib/data';
 import { notFound } from 'next/navigation';
 
 export async function generateStaticParams() {
-  return courses.map((course) => ({
-    slug: course.slug,
-  }));
+  // TODO: Add proper slug support to courses data
+  return [];
 }
 
-export default function CourseDetailPage({ params }: { params: { slug: string } }) {
-  const course = courses.find((c) => c.slug === params.slug);
+export default async function CourseDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  
+  // TODO: Update courses data to include slug field
+  const course = courses.find((c) => c.title.toLowerCase().replace(/\s+/g, '-') === slug);
 
   if (!course) {
     notFound();
@@ -34,7 +36,7 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
               </div>
             </div>
 
-            <h2 className="text-2xl font-bold mb-4">What You'll Learn</h2>
+            <h2 className="text-2xl font-bold mb-4">What You&apos;ll Learn</h2>
             <ul className="space-y-2 mb-8">
               {course.features.map((feature, index) => (
                 <li key={index} className="flex items-start">
