@@ -1,5 +1,4 @@
 import React from 'react'
-import HeroSection from '@/components/pitha/PheroSection';
 import CountUpSection from '@/components/pitha/PCountUp';
 import PhotoGallery from '@/components/pitha/PPhotoGallery';
 import PMission from '@/components/bangla-pitha-research-institute/BanglaPithaMission';
@@ -7,11 +6,12 @@ import BanglaPithaContact from '@/components/bangla-pitha-research-institute/Ban
 import BanglaPithaResearch from '@/components/bangla-pitha-research-institute/Banglaresearch';
 import BanglaPithaInovation from '@/components/bangla-pitha-research-institute/BanglaPithaInovation';
 import BanglaPithaActivation from '@/components/bangla-pitha-research-institute/BanglaPithaActivation';
+import BanglaPithaHeroSection from '@/components/bangla-pitha-research-institute/BanglaPithaheroSection';
 
 function PithaPatsala() {
   return (
     <>
-    <HeroSection />
+    <BanglaPithaHeroSection />
     <CountUpSection />
     <BanglaPithaResearch />
     <BanglaPithaInovation />
