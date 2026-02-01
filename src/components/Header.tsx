@@ -44,11 +44,11 @@ export default function Header() {
 
   // Get the href for a wing item
   const getWingHref = (item: typeof wingsDropdownItems[0]) => {
-    return item.slug.startsWith('/') ? item.slug : `/our-wings/${item.slug}`;
+    return item.slug.startsWith('/') ? item.slug : `/${item.slug}`;
   };
 
   // Check if current path is one of the wings
-  const isWingsActive = pathname?.startsWith('/our-wings') ||
+  const isWingsActive = pathname?.startsWith('') ||
     pathname?.startsWith('/widen') ||
     pathname?.startsWith('/pitha') ||
     pathname?.startsWith('/english-debate') ||
