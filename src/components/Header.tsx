@@ -10,8 +10,6 @@ const wingsDropdownItems = [
   { title: 'Rise and Thrive', slug: '/rise-and-thrive', hasPage: true },
   { title: 'WIDEN', slug: '/widen', hasPage: true },
   { title: 'IDEA Pitha Pathshala', slug: '/pitha', hasPage: true },
-  { title: 'IDEA SPOKEN – The Game Method', slug: '/idea-spoken', hasPage: true },
-  { title: 'English Debate Mastery', slug: '/english-debate', hasPage: true },
   { title: 'Bangla Pitha Research Institute', slug: '/bangla-pitha-research-institute', hasPage: true },
 
 
