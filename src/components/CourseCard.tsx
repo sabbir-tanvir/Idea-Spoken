@@ -23,7 +23,10 @@ export default function CourseCard({ course }: CourseCardProps) {
   }, [course.rating]);
 
   return (
-    <div className="max-w-md w-full bg-slate-50 rounded-3xl overflow-hidden shadow-lg border border-slate-100 relative group hover:shadow-xl transition-shadow duration-300">
+    <Link 
+      href={`/${course.slug}`}
+      className="block max-w-md w-full bg-slate-50 rounded-3xl overflow-hidden shadow-lg border border-slate-100 relative group hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+    >
       {/* Background Watermark Logo */}
       <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center opacity-[0.03]">
         <div className="relative w-80 h-80">
@@ -125,14 +128,20 @@ export default function CourseCard({ course }: CourseCardProps) {
             </span>
           </div>
 
-          <Link href="#">
-            <button className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-6 py-2.5 rounded-full font-medium transition-colors shadow-md shadow-purple-200 hover:shadow-purple-300">
-              Enroll
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </Link>
+          <button 
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              // Enroll logic will be added here
+              console.log('Enroll clicked for:', course.title);
+            }}
+            className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-6 py-2.5 rounded-full font-medium transition-colors shadow-md shadow-purple-200 hover:shadow-purple-300"
+          >
+            Enroll
+            <ArrowRight className="w-4 h-4" />
+          </button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

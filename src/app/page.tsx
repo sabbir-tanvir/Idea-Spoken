@@ -14,7 +14,6 @@ export default async function Home() {
     <>
       <Hero data={heroData} />
       <TopCourse data={topCoursesData} />
-
       <WhichIdea data={whyIdeaData} />
       <SevenWings data={sevenWingsData} />
     </>

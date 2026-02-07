@@ -58,6 +58,7 @@ export interface EnglishDebateData {
 
 export interface CourseCardData {
     tag: string;
+    slug: string;
     rating: number;
     reviewCount: string;
     title: string;

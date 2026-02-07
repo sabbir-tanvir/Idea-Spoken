@@ -374,6 +374,7 @@
         "courses": [
             {
                 "tag": "Idea Spoken",
+                "slug": "idea-spoken",
                 "rating": 4.5,
                 "reviewCount": "4.5k",
                 "title": "IDEA SPOKEN – The Game Method",
@@ -396,6 +397,7 @@
             },
             {
                 "tag": "English Debate",
+                "slug": "english-debate",
                 "rating": 4.5,
                 "reviewCount": "4.5k",
                 "title": "English Debate Mastery",
