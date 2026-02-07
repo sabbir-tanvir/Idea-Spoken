@@ -38,14 +38,14 @@ const fallbackData: SevenWingsData = {
             title: "IDEA SPOKEN – The Game Method",
             description: "গেম-ভিত্তিক English শেখার অভিনব পদ্ধতি",
             image: "/images/wings/spoken-english.jpg",
-            slug: "/english-debate"
+            slug: "/idea-spoken"
         },
         {
             id: 4,
             title: "IDEA Pitha Pathshala",
             description: "পিঠা তৈরির আদ্যোগ শত তৈরি করা সুযোগের জন্য",
             image: "/images/wings/pitha-pathshala.jpg",
-            slug: "pitha-pathshala"
+            slug: "pitha"
         },
         {
             id: 5,
@@ -59,7 +59,7 @@ const fallbackData: SevenWingsData = {
             title: "Bangla Pitha Research Institute",
             description: "বাংলার ঐতিহ্য পিঠা সংস্কৃতির গবেষণা ও সংরক্ষণ",
             image: "/images/wings/pitha-research.jpg",
-            slug: "/pitha"
+            slug: "/bangla-pitha-research-institute"
         },
         {
             id: 7,

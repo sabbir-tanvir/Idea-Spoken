@@ -14,7 +14,7 @@ export default function IdeaCard({ wing }: IdeaCardProps) {
     const [imageError, setImageError] = useState(false);
     
     // Determine the correct link path
-    const href = wing.slug.startsWith('/') ? wing.slug : `/our-wings/${wing.slug}`;
+    const href = wing.slug.startsWith('/') ? wing.slug : `/${wing.slug}`;
 
     return (
         <div className="bg-[#f7f4f4] border border-red-200 gap-4 min-h-[420px] h-full p-7 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group">
