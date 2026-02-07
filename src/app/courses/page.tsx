@@ -2,11 +2,20 @@
 
 import Image from 'next/image';
 import CourseCard from '@/components/CourseCard';
-import { courses } from '@/lib/data';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getTopCoursesData, CourseCardData } from '@/lib/api';
 
 export default function CoursesPage() {
   const [imageError, setImageError] = useState(false);
+  const [courses, setCourses] = useState<CourseCardData[]>([]);
+  
+  useEffect(() => {
+    async function fetchCourses() {
+      const data = await getTopCoursesData();
+      setCourses(data.courses);
+    }
+    fetchCourses();
+  }, []);
   
   return (
     <div className="min-h-screen bg-white">
@@ -143,7 +152,7 @@ export default function CoursesPage() {
             </p>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-2 max-w-5xl mx-auto">
             {courses.map((course, index) => (
               <CourseCard key={index} course={course} />
             ))}
