@@ -36,7 +36,7 @@ export default function RegisterPage() {
                 type="text"
                 required
                 disabled={isPending}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#704FE6] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                className="w-full px-4 py-3 border text-gray-700 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#704FE6] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
                 placeholder="Enter your full name"
               />
               {state?.errors?.name && (
@@ -54,7 +54,7 @@ export default function RegisterPage() {
                 type="tel"
                 required
                 disabled={isPending}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#704FE6] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                className="w-full px-4 py-3 border border-gray-300 text-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#704FE6] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
                 placeholder="Enter your phone number"
               />
               {state?.errors?.phone && (
@@ -72,7 +72,7 @@ export default function RegisterPage() {
                 type="email"
                 required
                 disabled={isPending}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#704FE6] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                className="w-full px-4 py-3 border text-gray-700 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#704FE6] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
                 placeholder="Enter your email"
               />
               {state?.errors?.email && (
@@ -90,7 +90,7 @@ export default function RegisterPage() {
                 type="password"
                 required
                 disabled={isPending}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#704FE6] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                className="w-full px-4 py-3 border text-gray-700  border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#704FE6] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
                 placeholder="Enter your password"
               />
               {state?.errors?.password && (
