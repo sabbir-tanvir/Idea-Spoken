@@ -13,6 +13,10 @@ export interface LoginRequest {
   password: string;
 }
 
+export interface ForgotPasswordRequest {
+  email: string;
+}
+
 export interface AuthResponse {
   success: boolean;
   token?: string;

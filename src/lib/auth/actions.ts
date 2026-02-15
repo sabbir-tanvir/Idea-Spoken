@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation';
 import { setAuthToken } from './session';
-import { ActionResult, AuthResponse, RegisterRequest, LoginRequest } from './types';
+import { ActionResult, AuthResponse, RegisterRequest, LoginRequest, ForgotPasswordRequest } from './types';
 
 const BASE_URL = process.env.BASE_URL;
 
@@ -167,4 +167,72 @@ export async function loginUser(
 
   // Redirect to dashboard on success
   redirect('/dashboard');
+}
+
+/**
+ * Server Action: Forgot Password
+ */
+export async function forgotPassword(
+  prevState: ActionResult | null,
+  formData: FormData
+): Promise<ActionResult> {
+  // Extract form data
+  const email = formData.get('email') as string;
+
+  // Basic validation
+  const errors: ActionResult['errors'] = {};
+
+  if (!email || !email.includes('@')) {
+    errors.email = ['Please enter a valid email address'];
+  }
+
+  // Return errors if validation fails
+  if (Object.keys(errors).length > 0) {
+    return {
+      success: false,
+      errors,
+    };
+  }
+
+  // Prepare request body
+  const requestBody: ForgotPasswordRequest = {
+    email: email.trim().toLowerCase(),
+  };
+
+  try {
+    // Call backend API
+    const response = await fetch(`${BASE_URL}/auth/forgotpassword`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    const data: AuthResponse = await response.json();
+    console.log('Forgot password response:', response);
+
+    if (!response.ok || !data.success) {
+      return {
+        success: false,
+        errors: {
+          general: [data.error || data.message || 'Failed to send reset link. Please try again.'],
+        },
+      };
+    }
+
+    // Return success message
+    return {
+      success: true,
+      message: 'A password reset link has been sent to your account',
+    };
+  } catch (error) {
+    console.error('Forgot password error:', error);
+    return {
+      success: false,
+      errors: {
+        general: ['Network error. Please check your connection and try again.'],
+      },
+    };
+  }
 }
