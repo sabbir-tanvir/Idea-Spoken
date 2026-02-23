@@ -52,16 +52,22 @@ export default function CourseCard({ course }: CourseCardProps) {
       </div>
 
       {/* Thumbnail Image */}
-      <div className="relative h-64 w-full bg-purple-100">
-        <Image
-          src={course.thumbnail || '/images/course-placeholder.jpg'}
-          alt={course.title}
-          fill
-          className="object-cover"
-          onError={(e) => {
-            (e.target as HTMLImageElement).src = '/images/course-placeholder.jpg';
-          }}
-        />
+      <div className="relative h-64 w-full overflow-hidden bg-gradient-to-br from-purple-100 to-blue-100">
+        {course.thumbnail ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={course.thumbnail}
+            alt={course.title}
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-purple-300">
+            <svg viewBox="0 0 24 24" className="h-16 w-16" fill="none" stroke="currentColor" strokeWidth={1.2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+            </svg>
+            <span className="text-sm font-medium text-purple-400">No Preview</span>
+          </div>
+        )}
 
         {/* Badge Overlay */}
         <div className="absolute bottom-4 left-4 bg-slate-900/90 text-white px-4 py-2 rounded-lg backdrop-blur-sm">
