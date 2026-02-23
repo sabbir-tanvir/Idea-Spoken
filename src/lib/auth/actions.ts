@@ -1,7 +1,7 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { setAuthToken } from './session';
+import { setAuthToken, removeAuthToken } from './session';
 import { ActionResult, AuthResponse, RegisterRequest, LoginRequest, ForgotPasswordRequest } from './types';
 
 const BASE_URL = process.env.BASE_URL;
@@ -235,4 +235,12 @@ export async function forgotPassword(
       },
     };
   }
+}
+
+/**
+ * Server Action: Logout user
+ */
+export async function logoutUser(): Promise<void> {
+  await removeAuthToken();
+  redirect('/auth/login');
 }

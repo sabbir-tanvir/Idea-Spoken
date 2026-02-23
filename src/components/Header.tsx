@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { ChevronDown } from 'lucide-react';
+import UserMenu from './UserMenu';
 
 // Wings dropdown items - routes that have dedicated pages use absolute paths
 const wingsDropdownItems = [
@@ -11,13 +12,16 @@ const wingsDropdownItems = [
   { title: 'WIDEN', slug: '/widen', hasPage: true },
   { title: 'IDEA Pitha Pathshala', slug: '/pitha', hasPage: true },
   { title: 'Bangla Pitha Research Institute', slug: '/bangla-pitha-research-institute', hasPage: true },
-
-
   { title: 'IDEA Youth Development Center', slug: 'youth-development', hasPage: false },
   { title: 'IDEA Social Welfare Organization', slug: 'social-welfare', hasPage: false },
 ];
 
-export default function Header() {
+interface HeaderProps {
+  isLoggedIn?: boolean;
+  userName?: string;
+}
+
+export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [wingsDropdownOpen, setWingsDropdownOpen] = useState(false);
   const [mobileWingsOpen, setMobileWingsOpen] = useState(false);
@@ -226,12 +230,14 @@ export default function Header() {
 
             {/* CTA Buttons - positioned to the right */}
             <div className="hidden md:flex items-center gap-3 ml-auto">
-              <Link
-                href="/auth/login"
-                className="flex px-6 border-2 h-12 items-center top-1/2 justify-center border-purple-600 text-purple-600 rounded-full hover:bg-purple-50 transition-colors font-medium text-base"
-              >
-                Student Login
-              </Link>
+              {!isLoggedIn && (
+                <Link
+                  href="/auth/login"
+                  className="flex px-6 border-2 h-12 items-center top-1/2 justify-center border-purple-600 text-purple-600 rounded-full hover:bg-purple-50 transition-colors font-medium text-base"
+                >
+                  Student Login
+                </Link>
+              )}
 
               <Link
                 href="/courses"
@@ -267,6 +273,9 @@ export default function Header() {
 
               </Link>
 
+              {isLoggedIn && (
+                <UserMenu userName={userName} />
+              )}
 
             </div>
 
@@ -375,14 +384,18 @@ export default function Header() {
                   Contact
                 </Link>
                 <div className="flex flex-col gap-3 pt-4 border-t border-gray-200">
-                  <Link
-                    href="/auth/login"
-                    className="px-4 py-2 border-2 border-purple-600 text-purple-600 rounded-full hover:bg-purple-50 transition-colors font-medium text-sm text-center"
-                  >
-                    Student Login
-                  </Link>
-
-
+                  {!isLoggedIn ? (
+                    <Link
+                      href="/auth/login"
+                      className="px-4 py-2 border-2 border-purple-600 text-purple-600 rounded-full hover:bg-purple-50 transition-colors font-medium text-sm text-center"
+                    >
+                      Student Login
+                    </Link>
+                  ) : (
+                    <div className="flex items-center justify-center">
+                      <UserMenu userName={userName} />
+                    </div>
+                  )}
 
                   <Link
                     href="/courses">
@@ -416,8 +429,6 @@ export default function Header() {
                     </button>
 
                   </Link>
-
-
 
                 </div>
               </nav>
