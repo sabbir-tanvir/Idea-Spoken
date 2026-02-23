@@ -1,15 +1,26 @@
 "use client";
 
 import { EnglishDebateData } from "@/lib/api";
+import { ApiCourseDetail } from "@/lib/api/courses";
 import { motion } from "framer-motion";
-import { Play, Users, Clock, BookOpen, User } from "lucide-react";
+import { Play, Users, Clock, BookOpen } from "lucide-react";
 import Link from "next/link";
 
 interface DebateHeroProps {
     data: EnglishDebateData;
+    courseDetail?: ApiCourseDetail | null;
 }
 
-export default function DebateHero({ data }: DebateHeroProps) {
+export default function DebateHero({ data, courseDetail }: DebateHeroProps) {
+    const title = courseDetail?.title ?? "IDEA SPOKEN – The Game Method";
+    const description = courseDetail?.description ?? "English শেখা কঠিন না, যদি শিখো গেমের মতো করে। IDEA SPOKEN – The Game Method এমন একটি কোর্স, যেখানে Vocabulary, Grammar আর Fluency সবকিছু গেম ও Activity–এর মাধ্যমে শেখানো হয়।";
+    const price = courseDetail?.price ? `৳${courseDetail.price}` : data.price;
+    const lessonCount = courseDetail
+        ? courseDetail.modules.reduce((sum, m) => sum + m.lessons.length, 0)
+        : data.lessons;
+    const durationHrs = courseDetail?.duration
+        ? `${Math.round(courseDetail.duration / 3600)} Hours`
+        : data.duration;
     // Animation variants
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -56,7 +67,7 @@ export default function DebateHero({ data }: DebateHeroProps) {
                         className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight"
                         variants={itemVariants}
                     >
-                        IDEA SPOKEN – The Game Method
+                        {title}
                     </motion.h1>
 
                     {/* Description */}
@@ -64,7 +75,7 @@ export default function DebateHero({ data }: DebateHeroProps) {
                         className="text-slate-600 text-lg md:text-xl leading-relaxed max-w-xl"
                         variants={itemVariants}
                     >
-                        English শেখা কঠিন না, যদি শিখো গেমের মতো করে। IDEA SPOKEN – The Game Method এমন একটি কোর্স, যেখানে Vocabulary, Grammar আর Fluency সবকিছু গেম ও Activity–এর মাধ্যমে শেখানো হয়। শিখন প্রক্রিয়া এখানে বেশি "subconscious" – অর্থাৎ খেলতে খেলতেই ভাষা নিজের মধ্যে চলে আসে।
+                        {description}
                     </motion.p>
 
                     {/* Course Meta Info */}
@@ -74,12 +85,12 @@ export default function DebateHero({ data }: DebateHeroProps) {
                     >
                         <div className="flex items-center gap-2 text-slate-700">
                             <BookOpen className="w-5 h-5 text-purple-600" />
-                            <span className="font-medium">Lesson {data.lessons}</span>
+                            <span className="font-medium">Lesson {lessonCount}</span>
                         </div>
                         <div className="w-px h-6 bg-slate-200 hidden sm:block"></div>
                         <div className="flex items-center gap-2 text-slate-700">
                             <Clock className="w-5 h-5 text-purple-600" />
-                            <span className="font-medium">{data.duration}</span>
+                            <span className="font-medium">{durationHrs}</span>
                         </div>
                         <div className="w-px h-6 bg-slate-200 hidden sm:block"></div>
                         <div className="flex items-center gap-2 text-slate-700">
@@ -94,7 +105,7 @@ export default function DebateHero({ data }: DebateHeroProps) {
                         variants={itemVariants}
                     >
                         <div className="px-6 py-3 bg-purple-100 text-purple-700 text-2xl font-bold rounded-xl">
-                            {data.price}
+                            {price}
                         </div>
                         <Link
                             href="#"

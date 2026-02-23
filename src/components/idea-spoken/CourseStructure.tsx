@@ -1,11 +1,13 @@
 "use client";
 
 import { EnglishDebateData } from "@/lib/api";
+import { ApiCourseDetail } from "@/lib/api/courses";
 import { motion } from "framer-motion";
 import { Brain, Mic, Trophy, Play, Lock } from "lucide-react";
 
 interface CourseStructureProps {
     data: EnglishDebateData;
+    courseDetail?: ApiCourseDetail | null;
 }
 
 const getIcon = (iconName: string) => {
@@ -17,8 +19,25 @@ const getIcon = (iconName: string) => {
     }
 };
 
-export default function CourseStructure({ data }: CourseStructureProps) {
+export default function CourseStructure({ data, courseDetail }: CourseStructureProps) {
     if (!data.skillsHighlights || !data.courseModules) return null;
+
+    // Build module list: prefer API modules, fall back to static data
+    const apiModules = courseDetail?.modules
+        ? [...courseDetail.modules].sort((a, b) => a.sortOrder - b.sortOrder)
+        : [];
+    const hasApiModules = apiModules.length > 0;
+
+    const moduleList = hasApiModules
+        ? apiModules.map((m, i) => ({
+              id: m.id,
+              title: m.title,
+              isLocked: i !== 0,
+              previewLabel: i === 0 ? 'Preview' : undefined,
+              prefix: `Module ${m.sortOrder}`,
+              lessonCount: m.lessons.length,
+          }))
+        : data.courseModules;
 
     return (
         <section className="bg-white w-full">
@@ -38,7 +57,7 @@ export default function CourseStructure({ data }: CourseStructureProps) {
                     </h2>
 
                     <div className="space-y-4">
-                        {data.courseModules.map((module, index) => (
+                        {moduleList.map((module, index) => (
                             <motion.div
                                 key={module.id}
                                 className={`flex items-center gap-4 p-4 md:p-6 rounded-2xl transition-all duration-300 ${module.isLocked
@@ -75,6 +94,11 @@ export default function CourseStructure({ data }: CourseStructureProps) {
                                     <h3 className="text-lg md:text-xl font-bold text-slate-900 truncate">
                                         {module.title}
                                     </h3>
+                                    {'lessonCount' in module && (
+                                        <p className="text-slate-500 text-sm mt-0.5">
+                                            {(module as {lessonCount: number}).lessonCount} lesson{(module as {lessonCount: number}).lessonCount !== 1 ? 's' : ''}
+                                        </p>
+                                    )}
                                 </div>
 
                                 {/* Status Badge (Locked) */}

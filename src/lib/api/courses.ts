@@ -22,11 +22,64 @@ export interface ApiCourse {
   updatedAt: string;
 }
 
+export interface ApiLesson {
+  id: number;
+  title: string;
+  videoUrl: string;
+  duration: number;
+  sortOrder: number;
+  isPreview: boolean;
+  createdAt: string;
+  moduleId: number;
+}
+
+export interface ApiModule {
+  id: number;
+  title: string;
+  sortOrder: number;
+  createdAt: string;
+  courseId: number;
+  lessons: ApiLesson[];
+}
+
+export interface ApiCourseDetail {
+  id: number;
+  title: string;
+  description: string;
+  thumbnail: string;
+  duration: number;
+  level: string;
+  language: string;
+  price: string;
+  rating: number | null;
+  status: string;
+  instructorId: number | null;
+  modules: ApiModule[];
+}
+
 interface CoursesApiResponse {
   success: boolean;
   message: string;
   count: number;
   data: ApiCourse[];
+}
+
+/**
+ * Fetch a single course with full module/lesson details
+ */
+export async function getCourseById(id: number): Promise<ApiCourseDetail | null> {
+  try {
+    const response = await fetch(`${BASE_URL}/courses/${id}`, {
+      next: { revalidate: 60 },
+    });
+    if (!response.ok) return null;
+    const data = await response.json();
+    if (data.success) return data.data as ApiCourseDetail;
+    return null;
+  } catch (error) {
+    console.error('Failed to fetch course by id:', error);
+    return null;
+  }
 }
 
 /**
