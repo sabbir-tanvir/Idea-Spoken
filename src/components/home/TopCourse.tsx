@@ -1,28 +1,18 @@
 "use client";
 
-import { TopCoursesData } from "@/lib/api";
+import { ApiCourse } from "@/lib/api/courses";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Pencil } from "lucide-react";
 import CourseCard from "@/components/CourseCard";
 
 interface TopCourseProps {
-    data: TopCoursesData | null;
+    courses: ApiCourse[];
 }
 
-// Fallback data
-const fallbackData: TopCoursesData = {
-    badge: "TOP POPULAR COURSE",
-    title: "দুটি স্পেশালাইজড কোর্স যা আপনার English দক্ষতাকে নতুন উচ্চতায় নিয়ে যাবে",
-    buttonText: "Load More Course",
-    courses: []
-};
-
-export default function TopCourse({ data }: TopCourseProps) {
-    const content = data && data.courses?.length > 0 ? data : fallbackData;
-
-    // Split title to highlight "English"
-    const titleParts = content.title.split("English");
+export default function TopCourse({ courses }: TopCourseProps) {
+    const title = "দুটি স্পেশালাইজড কোর্স যা আপনার English দক্ষতাকে নতুন উচ্চতায় নিয়ে যাবে";
+    const titleParts = title.split("English");
 
     return (
         <section className="py-20 md:py-24 lg:py-32 bg-linear-to-b from-slate-50 to-white relative overflow-hidden">
@@ -67,7 +57,7 @@ export default function TopCourse({ data }: TopCourseProps) {
                 >
                     <div className="relative">
                         <span className="inline-flex items-center rounded-full bg-purple-100 px-5 py-2 text-base font-semibold text-purple-700 mb-4">
-                            {content.badge}
+                            TOP POPULAR COURSE
                         </span>
                         
                         {/* Pencil decoration */}
@@ -87,14 +77,14 @@ export default function TopCourse({ data }: TopCourseProps) {
                         href="/courses"
                         className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-purple-600 text-white font-medium text-base transition-all duration-300 hover:bg-purple-700 shrink-0"
                     >
-                        {content.buttonText}
+                        Load More Course
                         <ArrowRight className="w-5 h-5" />
                     </Link>
                 </motion.div>
 
                 {/* Course Cards Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto items-stretch">
-                    {content.courses.map((course, index) => (
+                    {courses.map((course, index) => (
                         <motion.div
                             key={index}
                             className="flex [&>*]:w-full [&>*]:max-w-none [&>*]:h-full"

@@ -1,21 +1,9 @@
-'use client';
-
 import Image from 'next/image';
 import CourseCard from '@/components/CourseCard';
-import { useState, useEffect } from 'react';
-import { getTopCoursesData, CourseCardData } from '@/lib/api';
+import { getCourses } from '@/lib/api/courses';
 
-export default function CoursesPage() {
-  const [imageError, setImageError] = useState(false);
-  const [courses, setCourses] = useState<CourseCardData[]>([]);
-  
-  useEffect(() => {
-    async function fetchCourses() {
-      const data = await getTopCoursesData();
-      setCourses(data.courses);
-    }
-    fetchCourses();
-  }, []);
+export default async function CoursesPage() {
+  const courses = await getCourses();
   
   return (
     <div className="min-h-screen bg-white">
@@ -41,26 +29,14 @@ export default function CoursesPage() {
               <div className="relative">
                 {/* Main Image - positioned at bottom */}
                 <div className="relative z-10">
-                  {!imageError ? (
-                    <Image
-                      src="/images/courses-hero.png"
-                      alt="Student learning online"
-                      width={550}
-                      height={650}
-                      className="h-auto w-full max-w-lg object-contain"
-                      priority
-                      onError={() => setImageError(true)}
-                    />
-                  ) : (
-                    <div className="flex h-125 w-100 items-center justify-center rounded-3xl bg-linear-to-br from-blue-100 to-purple-100 md:h-150 md:w-125">
-                      <div className="text-center text-slate-400">
-                        <svg className="mx-auto h-24 w-24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                        <p className="mt-4 text-lg">Student Image</p>
-                      </div>
-                    </div>
-                  )}
+                  <Image
+                    src="/images/courses-hero.png"
+                    alt="Student learning online"
+                    width={550}
+                    height={650}
+                    className="h-auto w-full max-w-lg object-contain"
+                    priority
+                  />
                 </div>
 
                 {/* 250k Card - Left side, positioned higher */}
@@ -148,15 +124,34 @@ export default function CoursesPage() {
             </h2>
             <p className="mx-auto mt-5 max-w-3xl text-lg text-slate-600 md:text-xl">
               IDEA-র দুটি স্পেশালাইজড কোর্স যা আপনার English দক্ষতা এবং আত্মবিশ্বাসকে
-              নতুন উচ্চতায় নিয়ে যাবে
+              নতুন উচ্চতায় নিয়ে যাবে 
             </p>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-2 max-w-5xl mx-auto">
-            {courses.map((course, index) => (
-              <CourseCard key={index} course={course} />
-            ))}
-          </div>
+          {courses.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-24 gap-6">
+              <div className="relative flex items-center justify-center w-32 h-32 rounded-full bg-purple-50 border-2 border-dashed border-purple-200">
+                <svg viewBox="0 0 24 24" className="w-14 h-14 text-purple-300" fill="none" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                </svg>
+              </div>
+              <div className="text-center space-y-2">
+                <h3 className="text-2xl font-bold text-slate-800">কোর্স শীঘ্রই আসছে</h3>
+                <p className="text-slate-500 text-base max-w-md">
+                  আমরা আপনার জন্য দারুণ কোর্স তৈরি করছি। খুব শীঘ্রই এখানে নতুন কোর্স যোগ হবে — Coming Soon!
+                </p>
+              </div>
+              <span className="inline-flex items-center gap-2 rounded-full bg-purple-100 px-6 py-2.5 text-sm font-semibold text-purple-700 animate-pulse">
+                🚀 Coming Soon
+              </span>
+            </div>
+          ) : (
+            <div className="grid gap-8 md:grid-cols-2 max-w-5xl mx-auto">
+              {courses.map((course, index) => (
+                <CourseCard key={index} course={course} />
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </div>

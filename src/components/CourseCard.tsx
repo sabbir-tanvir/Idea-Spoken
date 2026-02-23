@@ -1,30 +1,42 @@
 "use client";
 
-import { CourseCardData } from "@/lib/api";
-import { Star, Clock, Users, BookOpen, CheckCircle, ArrowRight } from "lucide-react";
+import { ApiCourse } from "@/lib/api/courses";
+import { Star, Clock, Users, BookOpen, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo } from "react";
 
 interface CourseCardProps {
-  course: CourseCardData;
+  course: ApiCourse;
 }
 
+const LEVEL_LABELS: Record<string, string> = {
+  BEGINNER: 'Beginner',
+  INTERMEDIATE: 'Intermediate',
+  ADVANCED: 'Advanced',
+};
+
 export default function CourseCard({ course }: CourseCardProps) {
+  const rating = course.rating ?? 0;
+
   // Generate star array for rating
   const stars = useMemo(() => {
-    const fullStars = Math.floor(course.rating);
-    const hasHalfStar = course.rating % 1 !== 0;
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 !== 0;
     return Array.from({ length: 5 }, (_, i) => {
-      if (i < fullStars) return "full";
-      if (i === fullStars && hasHalfStar) return "half";
-      return "empty";
+      if (i < fullStars) return 'full';
+      if (i === fullStars && hasHalfStar) return 'half';
+      return 'empty';
     });
-  }, [course.rating]);
+  }, [rating]);
+
+  const instructorName = course.instructor?.name ?? 'IDEA Team';
+  const price = course.price ? `৳${course.price}` : 'Free';
+  const duration = course.totalHours > 0 ? `${course.totalHours}h` : 'Self-paced';
 
   return (
-    <Link 
-      href={`/${course.slug}`}
+    <Link
+      href={`/courses/${course.id}`}
       className="block max-w-md w-full bg-slate-50 rounded-3xl overflow-hidden shadow-lg border border-slate-100 relative group hover:shadow-xl transition-shadow duration-300 cursor-pointer"
     >
       {/* Background Watermark Logo */}
@@ -40,17 +52,20 @@ export default function CourseCard({ course }: CourseCardProps) {
       </div>
 
       {/* Thumbnail Image */}
-      <div className="relative h-64 w-full">
+      <div className="relative h-64 w-full bg-purple-100">
         <Image
-          src={course.image}
+          src={course.thumbnail || '/images/course-placeholder.jpg'}
           alt={course.title}
           fill
           className="object-cover"
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = '/images/course-placeholder.jpg';
+          }}
         />
 
         {/* Badge Overlay */}
         <div className="absolute bottom-4 left-4 bg-slate-900/90 text-white px-4 py-2 rounded-lg backdrop-blur-sm">
-          <span className="font-medium text-lg">{course.tag}</span>
+          <span className="font-medium text-lg">{LEVEL_LABELS[course.level] ?? course.level}</span>
         </div>
       </div>
 
@@ -67,10 +82,12 @@ export default function CourseCard({ course }: CourseCardProps) {
                 />
               ))}
             </div>
-            <span className="text-slate-500 text-sm font-medium">{course.reviewCount}</span>
+            <span className="text-slate-500 text-sm font-medium">
+              {rating > 0 ? rating.toFixed(1) : 'New'}
+            </span>
           </div>
           <div className="text-2xl font-bold text-purple-600">
-            {course.price}
+            {price}
           </div>
         </div>
 
@@ -88,43 +105,28 @@ export default function CourseCard({ course }: CourseCardProps) {
         <div className="flex items-center justify-between bg-white rounded-xl p-3 mb-6 shadow-sm border border-slate-100">
           <div className="flex items-center gap-2 text-slate-700 text-sm font-medium">
             <BookOpen className="w-4 h-4 text-purple-600" />
-            <span>Lesson {course.lessons}</span>
+            <span>Lesson {course.lessonCount}</span>
           </div>
           <div className="w-px h-4 bg-slate-200"></div>
           <div className="flex items-center gap-2 text-slate-700 text-sm font-medium">
             <Clock className="w-4 h-4 text-purple-600" />
-            <span>{course.duration}</span>
+            <span>{duration}</span>
           </div>
           <div className="w-px h-4 bg-slate-200"></div>
           <div className="flex items-center gap-2 text-slate-700 text-sm font-medium">
             <Users className="w-4 h-4 text-purple-600" />
-            <span>Students {course.students}</span>
+            <span>{course.enrollmentCount} Students</span>
           </div>
-        </div>
-
-        {/* Features List */}
-        <div className="space-y-3 mb-8">
-          {course.features.map((feature, i) => (
-            <div key={i} className="flex items-start gap-2.5">
-              <CheckCircle className="w-5 h-5 text-purple-600 shrink-0 mt-0.5" />
-              <span className="text-slate-700 text-sm font-medium">{feature}</span>
-            </div>
-          ))}
         </div>
 
         {/* Footer: Instructor & CTA */}
         <div className="flex items-center justify-between pt-6 border-t border-slate-200">
           <div className="flex items-center gap-3">
-            <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-white shadow-sm">
-              <Image
-                src={course.instructor.avatar}
-                alt={course.instructor.name}
-                fill
-                className="object-cover"
-              />
+            <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold text-sm border-2 border-white shadow-sm">
+              {instructorName.charAt(0).toUpperCase()}
             </div>
             <span className="font-bold text-slate-900 text-sm">
-              {course.instructor.name}
+              {instructorName}
             </span>
           </div>
 
