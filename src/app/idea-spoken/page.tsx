@@ -25,7 +25,7 @@ export default async function IdeaSpokenPage() {
             <CoursePhilosophy data={data} />
             <TypesofGame />
             <CourseStructure data={data} courseDetail={courseDetail} />
-            <OfferCard data={data} />
+            <OfferCard data={data} courseDetail={courseDetail} />
         </main>
     );
 }

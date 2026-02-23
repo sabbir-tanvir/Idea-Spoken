@@ -1,16 +1,22 @@
 "use client";
 
 import { EnglishDebateData } from "@/lib/api";
+import { ApiCourseDetail } from "@/lib/api/courses";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 interface OfferCardProps {
     data: EnglishDebateData;
+    courseDetail?: ApiCourseDetail | null;
 }
 
-export default function OfferCard({ data }: OfferCardProps) {
+export default function OfferCard({ data, courseDetail }: OfferCardProps) {
     if (!data.offer) return null;
+
+    const title = courseDetail?.title ?? data.offer.title;
+    const subtitle = courseDetail?.description ?? data.offer.subtitle;
+    const discountedPrice = courseDetail?.price ? `৳${courseDetail.price}` : data.offer.discountedPrice;
 
     return (
         <section className="bg-white w-full pb-20 px-4 md:px-8">
@@ -32,10 +38,10 @@ export default function OfferCard({ data }: OfferCardProps) {
                     {/* Content */}
                     <div className="relative z-10">
                         <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3">
-                            {data.offer.title}
+                            {title}
                         </h2>
                         <p className="text-slate-500 mb-8 max-w-lg mx-auto">
-                            {data.offer.subtitle}
+                            {subtitle}
                         </p>
 
                         <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12">
@@ -45,7 +51,7 @@ export default function OfferCard({ data }: OfferCardProps) {
                                     {data.offer.originalPrice}
                                 </div>
                                 <div className="text-4xl md:text-5xl font-bold text-slate-900">
-                                    {data.offer.discountedPrice}
+                                    {discountedPrice}
                                 </div>
                                 <div className="text-xs text-slate-400 mt-1">
                                     {data.offer.paymentText}

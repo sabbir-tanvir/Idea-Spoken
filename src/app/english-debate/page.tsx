@@ -20,7 +20,7 @@ export default async function EnglishDebatePage() {
             <DebateHero data={data} courseDetail={courseDetail} />
             <CoursePhilosophy data={data} />
             <CourseStructure data={data} courseDetail={courseDetail} />
-            <OfferCard data={data} />
+            <OfferCard data={data} courseDetail={courseDetail} />
         </main>
     );
 }
