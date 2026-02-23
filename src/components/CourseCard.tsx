@@ -1,6 +1,6 @@
 "use client";
 
-import { ApiCourse } from "@/lib/api/courses";
+import { ApiCourse, getCourseRoute } from "@/lib/api/courses";
 import { Star, Clock, Users, BookOpen, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -36,7 +36,7 @@ export default function CourseCard({ course }: CourseCardProps) {
 
   return (
     <Link
-      href={`/courses/${course.id}`}
+      href={getCourseRoute(course)}
       className="block max-w-md w-full bg-slate-50 rounded-3xl overflow-hidden shadow-lg border border-slate-100 relative group hover:shadow-xl transition-shadow duration-300 cursor-pointer"
     >
       {/* Background Watermark Logo */}

@@ -30,6 +30,17 @@ interface CoursesApiResponse {
 }
 
 /**
+ * Maps a course to its dedicated page route.
+ * Courses with dedicated pages go there; others fall back to /courses/:id
+ */
+export function getCourseRoute(course: ApiCourse): string {
+  const title = course.title.toLowerCase();
+  if (title.includes('debate')) return '/english-debate';
+  if (title.includes('idea spoken') || title.includes('idea-spoken')) return '/idea-spoken';
+  return `/courses/${course.id}`;
+}
+
+/**
  * Fetch all published courses from the backend API
  */
 export async function getCourses(): Promise<ApiCourse[]> {
