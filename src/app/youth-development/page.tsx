@@ -1,4 +1,3 @@
-import OurMission from '@/components/about/OurMission';
 import PEvent from '@/components/bangla-pitha-research-institute/BanglaPithaEvent';
 import CountUpSection from '@/components/pitha/PCountUp';
 import PhotoGallery from '@/components/pitha/PPhotoGallery';
@@ -13,7 +12,6 @@ export default function YouthDevelopment() {
     <>
     <YouthHero />
     <CountUpSection />
-    <OurMission  />
     <PhotoGallery />
     <WhatWeDo />
     <RecentEvent />
