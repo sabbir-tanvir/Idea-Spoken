@@ -1,39 +1,62 @@
 import DashboardSidebar from '@/components/DashboardSidebar';
+import MyCourses from '@/components/dashborad/MyCourses';
+import { getUserCourses } from '@/lib/api/courses';
+import { getAuthToken } from '@/lib/auth/session';
+import { redirect } from 'next/navigation';
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const token = await getAuthToken();
+  if (!token) redirect('/auth/login');
+
+  const courses = await getUserCourses(token);
+
+  // Decode user name from JWT payload
+  let userName = 'Student';
+  try {
+    const payload = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+    userName = payload.name ?? payload.username ?? 'Student';
+  } catch { /* ignore */ }
+
+  // Quick stats
+  const totalModules = courses.reduce((s, c) => s + c.modules.length, 0);
+  const totalLessons = courses.reduce(
+    (s, c) => s + c.modules.reduce((ls, m) => ls + m.lessons.length, 0),
+    0
+  );
+
   return (
     <div className="min-h-screen bg-gray-50 py-16">
       <div className="container mx-auto px-4">
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">My Courses</h1>
-          <p className="text-gray-600">Continue Your Learning Journey</p>
+          <p className="text-gray-600">Welcome back, {userName}! Continue your learning journey.</p>
         </div>
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar */}
           <div className="lg:w-90 flex-shrink-0">
-            <DashboardSidebar />
+            <DashboardSidebar userName={userName} />
           </div>
 
           {/* Main Content */}
           <main className="flex-1">
-            {/* Header */}
-
-
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               <div className="p-6 bg-white rounded-2xl shadow-sm">
-                <h3 className="text-lg font-semibold mb-2 text-gray-700">Enrolled Courses</h3>
-                <p className="text-4xl font-bold text-blue-600">5</p>
+                <h3 className="text-sm font-semibold mb-1 text-gray-500">Enrolled Courses</h3>
+                <p className="text-3xl font-bold text-purple-600">{courses.length}</p>
               </div>
               <div className="p-6 bg-white rounded-2xl shadow-sm">
-                <h3 className="text-lg font-semibold mb-2 text-gray-700">Completed Lessons</h3>
-                <p className="text-4xl font-bold text-green-600">24</p>
+                <h3 className="text-sm font-semibold mb-1 text-gray-500">Total Modules</h3>
+                <p className="text-3xl font-bold text-blue-600">{totalModules}</p>
               </div>
               <div className="p-6 bg-white rounded-2xl shadow-sm">
-                <h3 className="text-lg font-semibold mb-2 text-gray-700">Certificates</h3>
-                <p className="text-4xl font-bold text-purple-600">2</p>
+                <h3 className="text-sm font-semibold mb-1 text-gray-500">Total Lessons</h3>
+                <p className="text-3xl font-bold text-green-600">{totalLessons}</p>
               </div>
             </div>
+
+            {/* Courses List / Detail */}
+            <MyCourses courses={courses} />
           </main>
         </div>
       </div>

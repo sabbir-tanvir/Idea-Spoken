@@ -21,7 +21,6 @@ export default function DashboardSidebar({
 
   const menuItems = [
     { href: '/dashboard', label: 'My Courses', icon: BookOpen },
-    { href: '/dashboard/lessons', label: 'My Lessons', icon: Play },
     { href: '/dashboard/certificates', label: 'Certificates', icon: Award },
     { href: '/dashboard/payment-history', label: 'Payment History', icon: CreditCard },
     { href: '/dashboard/profile-settings', label: 'Profile Settings', icon: Settings },

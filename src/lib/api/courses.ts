@@ -94,6 +94,28 @@ export function getCourseRoute(course: ApiCourse): string {
 }
 
 /**
+ * Fetch user's enrolled courses with full module/lesson details (authenticated)
+ */
+export async function getUserCourses(token: string): Promise<ApiCourseDetail[]> {
+  try {
+    const response = await fetch(`${BASE_URL}/courses`, {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: 'no-store',
+    });
+    if (!response.ok) {
+      console.error('User courses API error:', response.status);
+      return [];
+    }
+    const data = await response.json();
+    if (data.success) return data.data as ApiCourseDetail[];
+    return [];
+  } catch (error) {
+    console.error('Failed to fetch user courses:', error);
+    return [];
+  }
+}
+
+/**
  * Fetch all published courses from the backend API
  */
 export async function getCourses(): Promise<ApiCourse[]> {
