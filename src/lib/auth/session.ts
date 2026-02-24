@@ -3,6 +3,29 @@ import { cookies } from 'next/headers';
 const TOKEN_NAME = 'auth_token';
 const TOKEN_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
 
+export interface JwtPayload {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  role: string;
+  iat: number;
+  exp: number;
+}
+
+/**
+ * Decode JWT payload without verification (for display purposes)
+ */
+export function decodeToken(token: string): JwtPayload | null {
+  try {
+    const base64 = token.split('.')[1];
+    const json = Buffer.from(base64, 'base64').toString();
+    return JSON.parse(json) as JwtPayload;
+  } catch {
+    return null;
+  }
+}
+
 /**
  * Set the auth token in an HTTP-only cookie
  */

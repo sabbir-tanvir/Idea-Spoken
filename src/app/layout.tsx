@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { getAuthToken } from "@/lib/auth/session";
+import { getAuthToken, decodeToken } from "@/lib/auth/session";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,15 +29,11 @@ export default async function RootLayout({
   const token = await getAuthToken();
   const isLoggedIn = !!token;
 
-  // Decode user name from JWT payload (base64)
+  // Decode user name from JWT payload
   let userName: string | undefined;
   if (token) {
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      userName = payload.name;
-    } catch {
-      // Token decode failed, ignore
-    }
+    const payload = decodeToken(token);
+    userName = payload?.name;
   }
 
   return (

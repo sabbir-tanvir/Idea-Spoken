@@ -1,7 +1,7 @@
 import DashboardSidebar from '@/components/DashboardSidebar';
 import MyCourses from '@/components/dashborad/MyCourses';
 import { getUserCourses } from '@/lib/api/courses';
-import { getAuthToken } from '@/lib/auth/session';
+import { getAuthToken, decodeToken } from '@/lib/auth/session';
 import { redirect } from 'next/navigation';
 
 export default async function DashboardPage() {
@@ -9,13 +9,11 @@ export default async function DashboardPage() {
   if (!token) redirect('/auth/login');
 
   const courses = await getUserCourses(token);
+  const user = decodeToken(token);
 
-  // Decode user name from JWT payload
-  let userName = 'Student';
-  try {
-    const payload = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
-    userName = payload.name ?? payload.username ?? 'Student';
-  } catch { /* ignore */ }
+  const userName = user?.name ?? 'Student';
+  const userEmail = user?.email ?? '';
+  const userRole = user?.role === 'STUDENT' ? 'Active Student' : (user?.role ?? 'Student');
 
   // Quick stats
   const totalModules = courses.reduce((s, c) => s + c.modules.length, 0);
@@ -34,7 +32,7 @@ export default async function DashboardPage() {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar */}
           <div className="lg:w-90 flex-shrink-0">
-            <DashboardSidebar userName={userName} />
+            <DashboardSidebar userName={userName} userEmail={userEmail} userStatus={userRole} />
           </div>
 
           {/* Main Content */}
