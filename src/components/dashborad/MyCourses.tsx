@@ -2,20 +2,22 @@
 
 import { ApiCourseDetail, ApiModule, ApiLesson } from "@/lib/api/courses";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import {
   BookOpen,
   Clock,
   ChevronDown,
   ChevronRight,
   Play,
-  ArrowLeft,
   Layers,
   BarChart3,
 } from "lucide-react";
 
 interface MyCoursesProps {
   courses: ApiCourseDetail[];
+  selectedId: number | null;
+  onSelect: (id: number) => void;
+  onBack?: () => void; // handled externally by DashboardClient
 }
 
 /** Format seconds to human-readable duration */
@@ -222,12 +224,10 @@ function LessonRow({ lesson }: { lesson: ApiLesson }) {
 }
 
 // ─── Course Detail View (modules + lessons) ──────────────────────────
-function CourseDetailView({
+export function CourseDetailView({
   course,
-  onBack,
 }: {
   course: ApiCourseDetail;
-  onBack: () => void;
 }) {
   const sortedModules = [...(course.modules ?? [])].sort(
     (a, b) => a.sortOrder - b.sortOrder
@@ -236,21 +236,13 @@ function CourseDetailView({
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.25 }}
     >
-      {/* Back + Title */}
+      {/* Course Info Card */}
       <div className="mb-6">
-        <button
-          onClick={onBack}
-          className="inline-flex items-center gap-2 text-sm text-purple-600 font-medium hover:text-purple-700 mb-4 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to My Courses
-        </button>
-
         <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
             {course.title}
@@ -305,10 +297,9 @@ function CourseDetailView({
   );
 }
 
-// ─── Main Component ──────────────────────────────────────────────────
-export default function MyCourses({ courses }: MyCoursesProps) {
-  const [selectedCourseId, setSelectedCourseId] = useState<number | null>(null);
-  const selectedCourse = courses.find((c) => c.id === selectedCourseId) ?? null;
+// ─── Main Component (list view only) ────────────────────────────────
+export default function MyCourses({ courses, selectedId, onSelect }: MyCoursesProps) {
+  const selectedCourse = courses.find((c) => c.id === selectedId) ?? null;
 
   return (
     <AnimatePresence mode="wait">
@@ -316,7 +307,6 @@ export default function MyCourses({ courses }: MyCoursesProps) {
         <CourseDetailView
           key="detail"
           course={selectedCourse}
-          onBack={() => setSelectedCourseId(null)}
         />
       ) : (
         <motion.div
@@ -344,7 +334,7 @@ export default function MyCourses({ courses }: MyCoursesProps) {
                 <CourseListCard
                   key={course.id}
                   course={course}
-                  onView={() => setSelectedCourseId(course.id)}
+                  onView={() => onSelect(course.id)}
                 />
               ))}
             </div>
