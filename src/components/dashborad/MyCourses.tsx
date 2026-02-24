@@ -11,6 +11,7 @@ import {
   Play,
   Layers,
   BarChart3,
+  CheckCircle2,
 } from "lucide-react";
 
 interface MyCoursesProps {
@@ -62,7 +63,7 @@ function CourseListCard({
     >
       <div className="flex flex-col sm:flex-row">
         {/* Thumbnail */}
-        <div className="sm:w-48 h-40 sm:h-auto bg-gradient-to-br from-purple-100 to-blue-100 flex-shrink-0 relative overflow-hidden">
+        <div className="sm:w-48 h-40 sm:h-auto bg-linear-to-br from-purple-100 to-blue-100 shrink-0 relative overflow-hidden">
           {course.thumbnail ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -135,30 +136,53 @@ function ModuleAccordion({
   const sortedLessons = [...module.lessons].sort(
     (a, b) => a.sortOrder - b.sortOrder
   );
+  const completedCount = sortedLessons.filter((l) => l.completed).length;
+  const allDone = completedCount === sortedLessons.length && sortedLessons.length > 0;
 
   return (
-    <div className="border border-gray-100 rounded-2xl overflow-hidden">
+    <div className="rounded-2xl overflow-hidden shadow-md border border-purple-100 bg-white">
       {/* Module Header */}
       <button
         onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center gap-4 p-4 md:p-5 text-left transition-colors bg-purple-50 hover:bg-purple-100"
+        className={`w-full flex items-center gap-4 p-4 md:p-5 text-left transition-colors ${
+          allDone
+            ? "bg-green-50 hover:bg-green-100"
+            : "bg-purple-50 hover:bg-purple-100"
+        }`}
       >
-        <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-purple-600 text-white">
-          <Play className="w-4 h-4 ml-0.5" fill="currentColor" />
+        <div
+          className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
+            allDone ? "bg-green-500 text-white" : "bg-purple-600 text-white"
+          }`}
+        >
+          {allDone ? (
+            <CheckCircle2 className="w-5 h-5" />
+          ) : (
+            <Play className="w-4 h-4 ml-0.5" fill="currentColor" />
+          )}
         </div>
 
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider">
+          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
             Module {module.sortOrder}
           </p>
-          <h4 className="text-lg font-bold text-gray-900 truncate">
+          <h4 className="text-base font-bold text-gray-900 truncate">
             {module.title}
           </h4>
         </div>
 
         <div className="flex items-center gap-3 shrink-0">
-          <span className="hidden sm:block text-sm text-gray-500">
-            {module.lessons.length} lesson{module.lessons.length !== 1 ? "s" : ""}
+          {/* Progress badge */}
+          <span
+            className={`hidden sm:block text-xs font-semibold px-2.5 py-1 rounded-full ${
+              allDone
+                ? "bg-green-100 text-green-700"
+                : completedCount > 0
+                ? "bg-purple-100 text-purple-700"
+                : "bg-gray-100 text-gray-500"
+            }`}
+          >
+            {completedCount}/{sortedLessons.length} done
           </span>
           <ChevronDown
             className={`w-5 h-5 text-gray-400 transition-transform ${
@@ -178,7 +202,7 @@ function ModuleAccordion({
             transition={{ duration: 0.25 }}
             className="overflow-hidden"
           >
-            <div className="divide-y divide-gray-50">
+            <div className="divide-y divide-gray-100 bg-white">
               {sortedLessons.length === 0 ? (
                 <div className="px-5 py-4 text-sm text-gray-400 italic">
                   No lessons added yet
@@ -199,25 +223,54 @@ function ModuleAccordion({
 // ─── Lesson Row ──────────────────────────────────────────────────────
 function LessonRow({ lesson }: { lesson: ApiLesson }) {
   return (
-    <div className="flex items-center gap-4 px-5 py-3.5 hover:bg-purple-50/50 cursor-pointer transition-colors">
-      {/* Play icon */}
-      <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 bg-purple-100 text-purple-600">
-        <Play className="w-3.5 h-3.5 ml-0.5" fill="currentColor" />
+    <div
+      className={`flex items-center gap-4 px-5 py-4 cursor-pointer transition-colors ${
+        lesson.completed
+          ? "hover:bg-green-50/60 bg-green-50/30"
+          : "hover:bg-purple-50/60"
+      }`}
+    >
+      {/* Icon */}
+      <div
+        className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
+          lesson.completed
+            ? "bg-green-100 text-green-600"
+            : "bg-purple-100 text-purple-600"
+        }`}
+      >
+        {lesson.completed ? (
+          <CheckCircle2 className="w-4 h-4" />
+        ) : (
+          <Play className="w-3.5 h-3.5 ml-0.5" fill="currentColor" />
+        )}
       </div>
 
       {/* Info */}
       <div className="flex-1 min-w-0">
-        <p className="text-md font-medium text-gray-900 truncate">
+        <p
+          className={`text-sm font-medium truncate ${
+            lesson.completed ? "text-gray-500 line-through" : "text-gray-900"
+          }`}
+        >
           {lesson.title}
         </p>
-        <span className="text-md text-gray-400">
+        <span className="text-xs text-gray-400">
           {formatDuration(lesson.duration)}
         </span>
       </div>
 
-      {/* Arrow */}
+      {/* Status badge */}
       <div className="shrink-0">
-        <ChevronRight className="w-4 h-4 text-gray-400" />
+        {lesson.completed ? (
+          <span className="text-xs font-semibold text-green-700 bg-green-100 px-2.5 py-1 rounded-full">
+            Completed
+          </span>
+        ) : (
+          <span className="inline-flex items-center gap-1 text-xs font-semibold text-purple-700 bg-purple-100 px-2.5 py-1 rounded-full">
+            Continue
+            <ChevronRight className="w-3 h-3" />
+          </span>
+        )}
       </div>
     </div>
   );
@@ -274,7 +327,7 @@ export function CourseDetailView({
       </div>
 
       {/* Modules */}
-      <div className="space-y-3">
+      <div className="space-y-4">
         {sortedModules.length === 0 ? (
           <div className="text-center py-16 text-gray-400">
             <Layers className="w-12 h-12 mx-auto mb-3 text-gray-300" />

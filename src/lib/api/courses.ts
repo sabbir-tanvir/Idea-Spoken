@@ -31,6 +31,8 @@ export interface ApiLesson {
   isPreview: boolean;
   createdAt: string;
   moduleId: number;
+  completed: boolean;
+  completedAt: string | null;
 }
 
 export interface ApiModule {
