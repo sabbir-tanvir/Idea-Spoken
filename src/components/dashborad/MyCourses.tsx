@@ -148,16 +148,16 @@ function ModuleAccordion({
         </div>
 
         <div className="flex-1 min-w-0">
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+          <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider">
             Module {module.sortOrder}
           </p>
-          <h4 className="text-base font-bold text-gray-900 truncate">
+          <h4 className="text-lg font-bold text-gray-900 truncate">
             {module.title}
           </h4>
         </div>
 
         <div className="flex items-center gap-3 shrink-0">
-          <span className="hidden sm:block text-xs text-gray-500">
+          <span className="hidden sm:block text-sm text-gray-500">
             {module.lessons.length} lesson{module.lessons.length !== 1 ? "s" : ""}
           </span>
           <ChevronDown
@@ -207,10 +207,10 @@ function LessonRow({ lesson }: { lesson: ApiLesson }) {
 
       {/* Info */}
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-gray-900 truncate">
+        <p className="text-md font-medium text-gray-900 truncate">
           {lesson.title}
         </p>
-        <span className="text-xs text-gray-400">
+        <span className="text-md text-gray-400">
           {formatDuration(lesson.duration)}
         </span>
       </div>
@@ -242,12 +242,12 @@ export function CourseDetailView({
       transition={{ duration: 0.25 }}
     >
       {/* Course Info Card */}
-      <div className="mb-6">
+      <div className="mb-8">
         <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">
             {course.title}
           </h2>
-          <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-3">
+          <p className="text-gray-500 text-md leading-relaxed mb-4 line-clamp-3">
             {course.description}
           </p>
 

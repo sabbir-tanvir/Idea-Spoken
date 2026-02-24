@@ -46,7 +46,7 @@ export default function DashboardClient({
                     className="min-h-screen bg-gray-50"
                 >
                     {/* Sticky top bar */}
-                    <div className="sticky top-16 z-20 bg-white border-b border-gray-200 shadow-sm">
+                    <div className="sticky top-1 z-20 bg-white border-b border-gray-200 shadow-sm">
                         <div className="container mx-auto px-4 py-3 flex items-center gap-4">
                             <button
                                 onClick={() => setSelectedCourseId(null)}
@@ -68,7 +68,7 @@ export default function DashboardClient({
                     </div>
 
                     {/* Full-width course content */}
-                    <div className="container mx-auto px-4 py-8 max-w-4xl">
+                    <div className="container mx-auto  px-4 py-8 max-w-4xl">
                         <CourseDetailView course={selectedCourse} />
                     </div>
                 </motion.div>
