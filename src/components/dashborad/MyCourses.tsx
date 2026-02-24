@@ -9,7 +9,6 @@ import {
   ChevronDown,
   ChevronRight,
   Play,
-  Lock,
   ArrowLeft,
   Layers,
   BarChart3,
@@ -30,8 +29,9 @@ function formatDuration(seconds: number): string {
 }
 
 /** Count total lessons in a course */
-function totalLessons(modules: ApiModule[]): number {
-  return modules.reduce((sum, m) => sum + m.lessons.length, 0);
+function totalLessons(modules: ApiModule[] | undefined): number {
+  if (!modules) return 0;
+  return modules.reduce((sum, m) => sum + (m.lessons?.length ?? 0), 0);
 }
 
 // ─── Course Card (list view) ─────────────────────────────────────────
@@ -42,7 +42,8 @@ function CourseListCard({
   course: ApiCourseDetail;
   onView: () => void;
 }) {
-  const lessons = totalLessons(course.modules);
+  const modules = course.modules ?? [];
+  const lessons = totalLessons(modules);
   const LEVEL_LABELS: Record<string, string> = {
     BEGINNER: "Beginner",
     INTERMEDIATE: "Intermediate",
@@ -93,7 +94,7 @@ function CourseListCard({
             <div className="flex items-center gap-4 text-sm text-gray-600">
               <span className="flex items-center gap-1.5">
                 <Layers className="w-4 h-4 text-purple-600" />
-                {course.modules.length} Module{course.modules.length !== 1 ? "s" : ""}
+                {modules.length} Module{modules.length !== 1 ? "s" : ""}
               </span>
               <span className="flex items-center gap-1.5">
                 <BookOpen className="w-4 h-4 text-purple-600" />
@@ -123,15 +124,12 @@ function CourseListCard({
 // ─── Module Accordion ────────────────────────────────────────────────
 function ModuleAccordion({
   module,
-  index,
-  isFirst,
+  defaultOpen,
 }: {
   module: ApiModule;
-  index: number;
-  isFirst: boolean;
+  defaultOpen: boolean;
 }) {
-  const [open, setOpen] = useState(isFirst);
-  const isLocked = !isFirst;
+  const [open, setOpen] = useState(defaultOpen);
   const sortedLessons = [...module.lessons].sort(
     (a, b) => a.sortOrder - b.sortOrder
   );
@@ -141,24 +139,10 @@ function ModuleAccordion({
       {/* Module Header */}
       <button
         onClick={() => setOpen((v) => !v)}
-        className={`w-full flex items-center gap-4 p-4 md:p-5 text-left transition-colors ${
-          isLocked
-            ? "bg-gray-50 hover:bg-gray-100"
-            : "bg-purple-50 hover:bg-purple-100"
-        }`}
+        className="w-full flex items-center gap-4 p-4 md:p-5 text-left transition-colors bg-purple-50 hover:bg-purple-100"
       >
-        <div
-          className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-            isLocked
-              ? "bg-gray-200 text-gray-500"
-              : "bg-purple-600 text-white"
-          }`}
-        >
-          {isLocked ? (
-            <Lock className="w-4 h-4" />
-          ) : (
-            <Play className="w-4 h-4 ml-0.5" fill="currentColor" />
-          )}
+        <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-purple-600 text-white">
+          <Play className="w-4 h-4 ml-0.5" fill="currentColor" />
         </div>
 
         <div className="flex-1 min-w-0">
@@ -170,15 +154,10 @@ function ModuleAccordion({
           </h4>
         </div>
 
-        <div className="flex items-center gap-3 flex-shrink-0">
+        <div className="flex items-center gap-3 shrink-0">
           <span className="hidden sm:block text-xs text-gray-500">
             {module.lessons.length} lesson{module.lessons.length !== 1 ? "s" : ""}
           </span>
-          {isLocked && (
-            <span className="hidden sm:block text-xs font-medium text-gray-400 bg-gray-200 px-2.5 py-1 rounded-full">
-              Locked
-            </span>
-          )}
           <ChevronDown
             className={`w-5 h-5 text-gray-400 transition-transform ${
               open ? "rotate-180" : ""
@@ -204,11 +183,7 @@ function ModuleAccordion({
                 </div>
               ) : (
                 sortedLessons.map((lesson) => (
-                  <LessonRow
-                    key={lesson.id}
-                    lesson={lesson}
-                    isLocked={isLocked}
-                  />
+                  <LessonRow key={lesson.id} lesson={lesson} />
                 ))
               )}
             </div>
@@ -220,34 +195,12 @@ function ModuleAccordion({
 }
 
 // ─── Lesson Row ──────────────────────────────────────────────────────
-function LessonRow({
-  lesson,
-  isLocked,
-}: {
-  lesson: ApiLesson;
-  isLocked: boolean;
-}) {
+function LessonRow({ lesson }: { lesson: ApiLesson }) {
   return (
-    <div
-      className={`flex items-center gap-4 px-5 py-3.5 ${
-        isLocked ? "opacity-60" : "hover:bg-purple-50/50 cursor-pointer"
-      } transition-colors`}
-    >
-      {/* Play / Lock icon */}
-      <div
-        className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${
-          isLocked
-            ? "bg-gray-100 text-gray-400"
-            : lesson.isPreview
-            ? "bg-purple-100 text-purple-600"
-            : "bg-gray-100 text-gray-500"
-        }`}
-      >
-        {isLocked ? (
-          <Lock className="w-3.5 h-3.5" />
-        ) : (
-          <Play className="w-3.5 h-3.5 ml-0.5" fill="currentColor" />
-        )}
+    <div className="flex items-center gap-4 px-5 py-3.5 hover:bg-purple-50/50 cursor-pointer transition-colors">
+      {/* Play icon */}
+      <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 bg-purple-100 text-purple-600">
+        <Play className="w-3.5 h-3.5 ml-0.5" fill="currentColor" />
       </div>
 
       {/* Info */}
@@ -255,25 +208,14 @@ function LessonRow({
         <p className="text-sm font-medium text-gray-900 truncate">
           {lesson.title}
         </p>
-        <div className="flex items-center gap-2 mt-0.5">
-          <span className="text-xs text-gray-400">
-            {formatDuration(lesson.duration)}
-          </span>
-          {lesson.isPreview && !isLocked && (
-            <span className="text-xs font-semibold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full">
-              Preview
-            </span>
-          )}
-        </div>
+        <span className="text-xs text-gray-400">
+          {formatDuration(lesson.duration)}
+        </span>
       </div>
 
-      {/* Status */}
-      <div className="flex-shrink-0">
-        {isLocked ? (
-          <span className="text-xs text-gray-400">Locked</span>
-        ) : (
-          <ChevronRight className="w-4 h-4 text-gray-400" />
-        )}
+      {/* Arrow */}
+      <div className="shrink-0">
+        <ChevronRight className="w-4 h-4 text-gray-400" />
       </div>
     </div>
   );
@@ -287,7 +229,7 @@ function CourseDetailView({
   course: ApiCourseDetail;
   onBack: () => void;
 }) {
-  const sortedModules = [...course.modules].sort(
+  const sortedModules = [...(course.modules ?? [])].sort(
     (a, b) => a.sortOrder - b.sortOrder
   );
   const lessons = totalLessons(course.modules);
@@ -354,8 +296,7 @@ function CourseDetailView({
             <ModuleAccordion
               key={module.id}
               module={module}
-              index={index}
-              isFirst={index === 0}
+              defaultOpen={index === 0}
             />
           ))
         )}

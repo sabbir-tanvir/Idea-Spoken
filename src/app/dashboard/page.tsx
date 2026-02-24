@@ -9,6 +9,7 @@ export default async function DashboardPage() {
   if (!token) redirect('/auth/login');
 
   const courses = await getUserCourses(token);
+  console.log('Enrolled courses:', courses);
   const user = decodeToken(token);
 
   const userName = user?.name ?? 'Student';
@@ -16,9 +17,9 @@ export default async function DashboardPage() {
   const userRole = user?.role === 'STUDENT' ? 'Active Student' : (user?.role ?? 'Student');
 
   // Quick stats
-  const totalModules = courses.reduce((s, c) => s + c.modules.length, 0);
+  const totalModules = courses.reduce((s, c) => s + (c.modules?.length ?? 0), 0);
   const totalLessons = courses.reduce(
-    (s, c) => s + c.modules.reduce((ls, m) => ls + m.lessons.length, 0),
+    (s, c) => s + (c.modules ?? []).reduce((ls, m) => ls + (m.lessons?.length ?? 0), 0),
     0
   );
 

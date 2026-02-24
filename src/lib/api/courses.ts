@@ -55,6 +55,17 @@ export interface ApiCourseDetail {
   status: string;
   instructorId: number | null;
   modules: ApiModule[];
+  instructor?: { name: string; avatar?: string } | null;
+}
+
+/** Enrollment wrapper returned by /courses/me */
+export interface ApiEnrollment {
+  id: number;
+  status: string;
+  enrolledAt: string;
+  userId: number;
+  courseId: number;
+  course: ApiCourseDetail;
 }
 
 interface CoursesApiResponse {
@@ -98,16 +109,20 @@ export function getCourseRoute(course: ApiCourse): string {
  */
 export async function getUserCourses(token: string): Promise<ApiCourseDetail[]> {
   try {
-    const response = await fetch(`${BASE_URL}/courses`, {
+    const response = await fetch(`${BASE_URL}/courses/me`, {
       headers: { Authorization: `Bearer ${token}` },
       cache: 'no-store',
     });
     if (!response.ok) {
       console.error('User courses API error:', response.status);
-      return [];
+      return []; 
     }
     const data = await response.json();
-    if (data.success) return data.data as ApiCourseDetail[];
+    if (data.success) {
+      // API returns enrollment wrappers — unwrap the nested course objects
+      const enrollments = data.data as ApiEnrollment[];
+      return enrollments.map((e) => e.course);
+    }
     return [];
   } catch (error) {
     console.error('Failed to fetch user courses:', error);
