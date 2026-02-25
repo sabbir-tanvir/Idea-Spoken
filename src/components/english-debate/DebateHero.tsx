@@ -1,10 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { EnglishDebateData } from "@/lib/api";
 import { ApiCourseDetail } from "@/lib/api/courses";
 import { motion } from "framer-motion";
 import { Play, Users, Clock, BookOpen } from "lucide-react";
-import Link from "next/link";
+import PaymentModal from "@/components/ui/PaymentModal";
 
 interface DebateHeroProps {
     data: EnglishDebateData;
@@ -12,6 +13,7 @@ interface DebateHeroProps {
 }
 
 export default function DebateHero({ data, courseDetail }: DebateHeroProps) {
+    const [isPaymentOpen, setIsPaymentOpen] = useState(false);
     const title = courseDetail?.title ?? data.title;
     const description = courseDetail?.description ?? data.description;
     const price = courseDetail?.price ? `৳${courseDetail.price}` : data.price;
@@ -107,16 +109,24 @@ export default function DebateHero({ data, courseDetail }: DebateHeroProps) {
                         <div className="px-6 py-3 bg-purple-100 text-purple-700 text-2xl font-bold rounded-xl">
                             {price}
                         </div>
-                        <Link
-                            href="#"
-                            className="group flex items-center gap-2 px-8 py-4 bg-purple-200 text-purple-900 rounded-xl font-semibold hover:bg-purple-300 transition-colors duration-300"
+                        <button
+                            onClick={() => setIsPaymentOpen(true)}
+                            className="group flex items-center gap-2 px-8 py-4 bg-purple-200 text-purple-900 rounded-xl font-semibold hover:bg-purple-300 transition-colors duration-300 cursor-pointer"
                         >
                             Pay & Unlock Course
                             <span className="group-hover:translate-x-1 transition-transform">
                                 →
                             </span>
-                        </Link>
+                        </button>
                     </motion.div>
+
+                    <PaymentModal
+                        isOpen={isPaymentOpen}
+                        onClose={() => setIsPaymentOpen(false)}
+                        courseName={title}
+                        courseId={courseDetail?.id ?? 0}
+                        amount={courseDetail?.price ? Number(courseDetail.price) : 2500}
+                    />
                 </motion.div>
 
                 {/* Right Side: Video Placeholder */}
