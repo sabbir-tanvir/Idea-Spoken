@@ -1,10 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { ApiCourse, getCourseRoute } from "@/lib/api/courses";
 import { Star, Clock, Users, BookOpen, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo } from "react";
+import PaymentModal from "@/components/ui/PaymentModal";
 
 interface CourseCardProps {
   course: ApiCourse;
@@ -17,6 +19,7 @@ const LEVEL_LABELS: Record<string, string> = {
 };
 
 export default function CourseCard({ course }: CourseCardProps) {
+  const [isPaymentOpen, setIsPaymentOpen] = useState(false);
   const rating = course.rating ?? 0;
 
   // Generate star array for rating
@@ -140,16 +143,28 @@ export default function CourseCard({ course }: CourseCardProps) {
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              // Enroll logic will be added here
-              console.log('Enroll clicked for:', course.title);
+              setIsPaymentOpen(true);
             }}
-            className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-6 py-2.5 rounded-full font-medium transition-colors shadow-md shadow-purple-200 hover:shadow-purple-300"
+            className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-6 py-2.5 rounded-full font-medium transition-colors shadow-md shadow-purple-200 hover:shadow-purple-300 cursor-pointer"
           >
             Enroll
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       </div>
+
+      {/* Payment Modal */}
+      {isPaymentOpen && (
+        <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}>
+          <PaymentModal
+            isOpen={isPaymentOpen}
+            onClose={() => setIsPaymentOpen(false)}
+            courseName={course.title}
+            courseId={course.id}
+            amount={course.price ? Number(course.price) : 0}
+          />
+        </div>
+      )}
     </Link>
   );
 }
