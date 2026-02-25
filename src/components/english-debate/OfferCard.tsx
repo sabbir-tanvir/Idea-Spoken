@@ -1,10 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { EnglishDebateData } from "@/lib/api";
 import { ApiCourseDetail } from "@/lib/api/courses";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import Link from "next/link";
+import PaymentModal from "@/components/ui/PaymentModal";
 
 interface OfferCardProps {
     data: EnglishDebateData;
@@ -12,6 +13,7 @@ interface OfferCardProps {
 }
 
 export default function OfferCard({ data, courseDetail }: OfferCardProps) {
+    const [isPaymentOpen, setIsPaymentOpen] = useState(false);
     if (!data.offer) return null;
 
     const title = courseDetail?.title ?? data.offer.title;
@@ -59,18 +61,29 @@ export default function OfferCard({ data, courseDetail }: OfferCardProps) {
                             </div>
 
                             {/* CTA Button */}
-                            <Link href="#" className="w-full md:w-auto">
+                            <button
+                                onClick={() => setIsPaymentOpen(true)}
+                                className="w-full md:w-auto cursor-pointer"
+                            >
                                 <motion.div
-                                    className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-purple-200 text-purple-900 rounded-xl font-bold text-lg hover:bg-purple-300 transition-colors duration-300 w-full md:w-auto cursor-pointer"
+                                    className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-purple-200 text-purple-900 rounded-xl font-bold text-lg hover:bg-purple-300 transition-colors duration-300 w-full md:w-auto"
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                 >
                                     {data.offer.buttonText}
                                     <ArrowRight className="w-5 h-5" />
                                 </motion.div>
-                            </Link>
+                            </button>
                         </div>
                     </div>
+
+                    <PaymentModal
+                        isOpen={isPaymentOpen}
+                        onClose={() => setIsPaymentOpen(false)}
+                        courseName={title}
+                        courseId={courseDetail?.id ?? 0}
+                        amount={courseDetail?.price ? Number(courseDetail.price) : 2500}
+                    />
                 </motion.div>
             </div>
         </section>
