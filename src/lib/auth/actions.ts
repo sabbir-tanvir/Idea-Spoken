@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation';
 import { setAuthToken, removeAuthToken } from './session';
-import { ActionResult, AuthResponse, RegisterRequest, LoginRequest, ForgotPasswordRequest } from './types';
+import { ActionResult, AuthResponse, RegisterRequest, LoginRequest, ForgotPasswordRequest, UpdatePasswordRequest } from './types';
 
 const BASE_URL = process.env.BASE_URL;
 
@@ -228,6 +228,81 @@ export async function forgotPassword(
     };
   } catch (error) {
     console.error('Forgot password error:', error);
+    return {
+      success: false,
+      errors: {
+        general: ['Network error. Please check your connection and try again.'],
+      },
+    };
+  }
+}
+
+/**
+ * Server Action: Update password
+ */
+export async function updatePassword(
+  email: string,
+  currentPassword: string,
+  newPassword: string
+): Promise<ActionResult> {
+  // Basic validation
+  const errors: ActionResult['errors'] = {};
+
+  if (!email || !email.includes('@')) {
+    errors.email = ['Please enter a valid email address'];
+  }
+
+  if (!currentPassword || currentPassword.length < 6) {
+    errors.password = ['Current password must be at least 6 characters'];
+  }
+
+  if (!newPassword || newPassword.length < 6) {
+    errors.password = ['New password must be at least 6 characters'];
+  }
+
+  if (currentPassword === newPassword) {
+    errors.password = ['New password must be different from current password'];
+  }
+
+  if (Object.keys(errors).length > 0) {
+    return { success: false, errors };
+  }
+
+  const requestBody: UpdatePasswordRequest = {
+    email: email.trim().toLowerCase(),
+    currentPassword,
+    newPassword,
+  };
+
+  try {
+    const response = await fetch(`${BASE_URL}/auth/updatepassword`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(requestBody),
+    });
+
+    const data: AuthResponse = await response.json();
+
+    if (!response.ok || !data.success) {
+      return {
+        success: false,
+        errors: {
+          general: [data.error || data.message || 'Failed to update password. Please try again.'],
+        },
+      };
+    }
+
+    // Update the stored token if a new one is returned
+    if (data.token) {
+      await setAuthToken(data.token);
+    }
+
+    return {
+      success: true,
+      message: 'Password updated successfully!',
+    };
+  } catch (error) {
+    console.error('Update password error:', error);
     return {
       success: false,
       errors: {

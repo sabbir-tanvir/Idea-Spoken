@@ -17,6 +17,12 @@ export interface ForgotPasswordRequest {
   email: string;
 }
 
+export interface UpdatePasswordRequest {
+  email: string;
+  currentPassword: string;
+  newPassword: string;
+}
+
 export interface AuthResponse {
   success: boolean;
   token?: string;
