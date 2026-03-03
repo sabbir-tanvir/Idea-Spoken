@@ -109,7 +109,7 @@ export default function DashboardClient({
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.2 }}
-                    className="min-h-screen bg-gray-50 py-16"
+                    className="min-h-screen bg-gray-50 py-6 md:py-16"
                 >
                     <div className="container mx-auto px-4">
 
