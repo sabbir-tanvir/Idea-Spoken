@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ApiCourseDetail, ApiLesson, ApiModule } from "@/lib/api/courses";
-import { CheckCircle2, Play, ChevronDown, Clock, ArrowLeft, BookOpen, PanelRightClose, PanelRight, X } from "lucide-react";
+import { CheckCircle2, Play, ChevronDown, Clock, ArrowLeft, BookOpen, PanelRightClose, PanelRight } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
 interface VideoPlayerProps {
@@ -31,8 +31,18 @@ function SidebarLesson({
   isActive: boolean;
   onSelect: () => void;
 }) {
+  const ref = useRef<HTMLButtonElement>(null);
+
+  // Scroll active lesson into view on mount
+  useEffect(() => {
+    if (isActive && ref.current) {
+      ref.current.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    }
+  }, [isActive]);
+
   return (
     <button
+      ref={ref}
       onClick={onSelect}
       className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${
         isActive
@@ -93,14 +103,16 @@ function SidebarModule({
 }) {
   const sortedLessons = [...module.lessons].sort((a, b) => a.sortOrder - b.sortOrder);
   const hasActive = sortedLessons.some((l) => l.id === currentLessonId);
-  const [open, setOpen] = useState(hasActive);
+  // Always open if this module contains the playing lesson; otherwise user can toggle
+  const [manualOpen, setManualOpen] = useState(false);
+  const open = hasActive || manualOpen;
   const completedCount = sortedLessons.filter((l) => l.completed).length;
 
   return (
     <div className="border-b border-gray-700">
       {/* Module header */}
       <button
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => setManualOpen((v) => !v)}
         className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-700 transition-colors"
       >
         <div className="flex-1 min-w-0">
@@ -164,8 +176,13 @@ export default function VideoPlayer({ course, initialLesson, onBack }: VideoPlay
   const nextLesson = allLessons[currentIndex + 1] ?? null;
   const prevLesson = allLessons[currentIndex - 1] ?? null;
 
+  // Scroll to top on mount and when lesson changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentLesson.id]);
+
   return (
-    <div className="flex flex-col bg-gray-900">
+    <div className="bg-gray-900 min-h-screen">
       {/* ── Top Bar ── */}
       <div className="sticky top-0 z-30 shrink-0 h-14 bg-gray-900 border-b border-gray-700 flex items-center px-3 sm:px-5 gap-3">
         {/* Back */}
@@ -202,11 +219,11 @@ export default function VideoPlayer({ course, initialLesson, onBack }: VideoPlay
           </button>
         </div>
 
-        {/* Sidebar toggle */}
+        {/* Sidebar toggle — desktop only */}
         <button
           onClick={() => setSidebarOpen((v) => !v)}
           title={sidebarOpen ? "Hide course content" : "Show course content"}
-          className="ml-1 p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-colors shrink-0"
+          className="hidden lg:flex ml-1 p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-colors shrink-0"
         >
           {sidebarOpen ? (
             <PanelRightClose className="w-5 h-5" />
@@ -216,12 +233,11 @@ export default function VideoPlayer({ course, initialLesson, onBack }: VideoPlay
         </button>
       </div>
 
-      {/* ── Body ── */}
-      <div className="flex min-h-[calc(100vh-3.5rem)] relative">
-        {/* ── Left: Video ── */}
+      {/* ── Desktop: Two-panel layout ── */}
+      <div className="hidden lg:flex min-h-[calc(100vh-3.5rem)]">
+        {/* Left: Video */}
         <div className="flex-1 min-w-0 flex flex-col">
-          {/* Video with top/bottom breathing room */}
-          <div className="px-4 sm:px-6 lg:px-8 pt-6 pb-4">
+          <div className="px-6 xl:px-8 pt-6 pb-4">
             <div className="relative w-full rounded-xl overflow-hidden" style={{ paddingTop: "56.25%" }}>
               {embedUrl ? (
                 <iframe
@@ -249,7 +265,7 @@ export default function VideoPlayer({ course, initialLesson, onBack }: VideoPlay
           </div>
 
           {/* Lesson info */}
-          <div className="px-4 sm:px-6 lg:px-8 pb-8 border-t border-gray-700 pt-4 mt-2">
+          <div className="px-6 xl:px-8 pb-10 border-t border-gray-700 pt-4 mt-2">
             <h2 className="text-lg sm:text-xl font-bold text-white mb-2">{currentLesson.title}</h2>
             <div className="flex items-center gap-4 text-sm text-gray-400">
               <span className="flex items-center gap-1.5">
@@ -266,7 +282,7 @@ export default function VideoPlayer({ course, initialLesson, onBack }: VideoPlay
           </div>
         </div>
 
-        {/* ── Right: Sidebar — Desktop (inline) ── */}
+        {/* Right: Sidebar (animated in/out) */}
         <AnimatePresence initial={false}>
           {sidebarOpen && (
             <motion.aside
@@ -275,109 +291,100 @@ export default function VideoPlayer({ course, initialLesson, onBack }: VideoPlay
               animate={{ width: "24rem", opacity: 1 }}
               exit={{ width: 0, opacity: 0 }}
               transition={{ duration: 0.25, ease: "easeInOut" }}
-              className="hidden lg:flex flex-col shrink-0 bg-gray-800 border-l border-gray-700 overflow-hidden"
+              className="flex flex-col shrink-0 bg-gray-800 border-l border-gray-700 overflow-hidden"
             >
               <div className="w-96 flex flex-col h-full">
-                <SidebarContent
-                  sortedModules={sortedModules}
-                  allLessons={allLessons}
-                  currentLesson={currentLesson}
-                  onSelect={setCurrentLesson}
-                />
-              </div>
-            </motion.aside>
-          )}
-        </AnimatePresence>
-
-        {/* ── Right: Sidebar — Mobile (fixed overlay) ── */}
-        <AnimatePresence>
-          {sidebarOpen && (
-            <>
-              {/* Backdrop */}
-              <motion.div
-                key="backdrop"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                onClick={() => setSidebarOpen(false)}
-                className="lg:hidden fixed inset-0 z-40 bg-black/60"
-              />
-
-              {/* Drawer */}
-              <motion.aside
-                key="mobile-sidebar"
-                initial={{ x: "100%" }}
-                animate={{ x: 0 }}
-                exit={{ x: "100%" }}
-                transition={{ duration: 0.25, ease: "easeInOut" }}
-                className="lg:hidden fixed top-0 right-0 z-50 w-80 max-w-[90vw] h-full bg-gray-800 flex flex-col shadow-2xl"
-              >
-                {/* Drawer header with close */}
-                <div className="flex items-center justify-between px-4 py-3 border-b border-gray-700 shrink-0">
-                  <div>
-                    <h3 className="text-sm font-bold text-white">Course Content</h3>
-                    <p className="text-xs text-gray-400 mt-0.5">
-                      {sortedModules.length} modules · {allLessons.length} lessons
-                    </p>
-                  </div>
-                  <button
-                    onClick={() => setSidebarOpen(false)}
-                    className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-colors"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
+                <div className="shrink-0 px-4 py-3 border-b border-gray-700">
+                  <h3 className="text-sm font-bold text-white">Course Content</h3>
+                  <p className="text-xs text-gray-400 mt-0.5">
+                    {sortedModules.length} modules · {allLessons.length} lessons
+                  </p>
                 </div>
-
                 <div className="flex-1 overflow-y-auto">
                   {sortedModules.map((module) => (
                     <SidebarModule
                       key={module.id}
                       module={module}
                       currentLessonId={currentLesson.id}
-                      onSelect={(l) => { setCurrentLesson(l); setSidebarOpen(false); }}
+                      onSelect={setCurrentLesson}
                     />
                   ))}
                 </div>
-              </motion.aside>
-            </>
+              </div>
+            </motion.aside>
           )}
         </AnimatePresence>
       </div>
-    </div>
-  );
-}
 
-// ─── Reusable sidebar body for desktop ──────────────────────────────
-function SidebarContent({
-  sortedModules,
-  allLessons,
-  currentLesson,
-  onSelect,
-}: {
-  sortedModules: ApiModule[];
-  allLessons: ApiLesson[];
-  currentLesson: ApiLesson;
-  onSelect: (l: ApiLesson) => void;
-}) {
-  return (
-    <>
-      <div className="shrink-0 px-4 py-3 border-b border-gray-700">
-        <h3 className="text-sm font-bold text-white">Course Content</h3>
-        <p className="text-xs text-gray-400 mt-0.5">
-          {sortedModules.length} modules · {allLessons.length} lessons
-        </p>
+      {/* ── Mobile: Stacked layout (video → info → modules below) ── */}
+      <div className="lg:hidden flex flex-col">
+        {/* Video */}
+        <div className="px-3 sm:px-4 pt-4 pb-3">
+          <div className="relative w-full rounded-xl overflow-hidden" style={{ paddingTop: "56.25%" }}>
+            {embedUrl ? (
+              <iframe
+                key={currentLesson.id}
+                src={embedUrl}
+                loading="lazy"
+                style={{
+                  border: "none",
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                }}
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen
+              />
+            ) : (
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-800 gap-4 rounded-xl">
+                <BookOpen className="w-12 h-12 text-gray-600" />
+                <p className="text-gray-400 text-sm">No video available</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Lesson info */}
+        <div className="px-3 sm:px-4 pb-4 pt-2">
+          <h2 className="text-base sm:text-lg font-bold text-white mb-1">{currentLesson.title}</h2>
+          <div className="flex items-center gap-3 text-sm text-gray-400">
+            <span className="flex items-center gap-1.5">
+              <Clock className="w-4 h-4" />
+              {formatDuration(currentLesson.duration)}
+            </span>
+            {currentLesson.completed && (
+              <span className="flex items-center gap-1.5 text-green-400">
+                <CheckCircle2 className="w-4 h-4" />
+                Completed
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Module list — inline below video */}
+        <div className="border-t border-gray-700 bg-gray-800">
+          <div className="px-3 sm:px-4 py-3 border-b border-gray-700">
+            <h3 className="text-sm font-bold text-white">Course Content</h3>
+            <p className="text-xs text-gray-400 mt-0.5">
+              {sortedModules.length} modules · {allLessons.length} lessons
+            </p>
+          </div>
+          {sortedModules.map((module) => (
+            <SidebarModule
+              key={module.id}
+              module={module}
+              currentLessonId={currentLesson.id}
+              onSelect={(l) => {
+                setCurrentLesson(l);
+                // Scroll back to top so user sees the video
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            />
+          ))}
+        </div>
       </div>
-      <div className="flex-1 overflow-y-auto">
-        {sortedModules.map((module) => (
-          <SidebarModule
-            key={module.id}
-            module={module}
-            currentLessonId={currentLesson.id}
-            onSelect={onSelect}
-          />
-        ))}
-      </div>
-    </>
+    </div>
   );
 }
