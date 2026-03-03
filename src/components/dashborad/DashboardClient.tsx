@@ -5,7 +5,8 @@ import { motion, AnimatePresence } from "motion/react";
 import { ArrowLeft, BookOpen, BarChart3, Layers } from "lucide-react";
 import DashboardSidebar from "@/components/DashboardSidebar";
 import MyCourses, { CourseDetailView } from "./MyCourses";
-import { ApiCourseDetail } from "@/lib/api/courses";
+import VideoPlayer from "./VideoPlayer";
+import { ApiCourseDetail, ApiLesson } from "@/lib/api/courses";
 
 interface DashboardClientProps {
     courses: ApiCourseDetail[];
@@ -31,12 +32,32 @@ export default function DashboardClient({
     totalLessons,
 }: DashboardClientProps) {
     const [selectedCourseId, setSelectedCourseId] = useState<number | null>(null);
+    const [selectedLesson, setSelectedLesson] = useState<ApiLesson | null>(null);
     const selectedCourse = courses.find((c) => c.id === selectedCourseId) ?? null;
+
+    // Reset lesson when navigating back to course list
+    function handleSelectCourse(id: number) {
+        setSelectedLesson(null);
+        setSelectedCourseId(id);
+    }
+
+    function handleBackToDashboard() {
+        setSelectedLesson(null);
+        setSelectedCourseId(null);
+    }
 
     return (
         <AnimatePresence mode="wait">
-            {/* ── DETAIL VIEW: full-width, no sidebar, no stats ── */}
-            {selectedCourse ? (
+            {/* ── VIDEO PLAYER VIEW: full viewport two-panel layout ── */}
+            {selectedCourse && selectedLesson ? (
+                <VideoPlayer
+                    key="video"
+                    course={selectedCourse}
+                    initialLesson={selectedLesson}
+                    onBack={() => setSelectedLesson(null)}
+                />
+            ) : selectedCourse ? (
+                /* ── DETAIL VIEW: full-width, no sidebar, no stats ── */
                 <motion.div
                     key="detail"
                     initial={{ opacity: 0 }}
@@ -49,7 +70,7 @@ export default function DashboardClient({
                     <div className="sticky top-1 z-20 bg-white border-b border-gray-200 shadow-sm">
                         <div className="container mx-auto px-4 py-3 flex items-center gap-4">
                             <button
-                                onClick={() => setSelectedCourseId(null)}
+                                onClick={handleBackToDashboard}
                                 className="inline-flex items-center gap-2 text-sm font-medium text-purple-600 hover:text-purple-700 transition-colors shrink-0"
                             >
                                 <ArrowLeft className="w-4 h-4" />
@@ -69,7 +90,10 @@ export default function DashboardClient({
 
                     {/* Full-width course content */}
                     <div className="container mx-auto  px-4 py-8 max-w-4xl">
-                        <CourseDetailView course={selectedCourse} />
+                        <CourseDetailView
+                            course={selectedCourse}
+                            onLessonSelect={setSelectedLesson}
+                        />
                     </div>
                 </motion.div>
             ) : (
@@ -153,7 +177,7 @@ export default function DashboardClient({
                                 <MyCourses
                                     courses={courses}
                                     selectedId={null}
-                                    onSelect={setSelectedCourseId}
+                                    onSelect={handleSelectCourse}
                                 />
                             </main>
                         </div>

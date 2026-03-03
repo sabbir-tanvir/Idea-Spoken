@@ -128,9 +128,11 @@ function CourseListCard({
 function ModuleAccordion({
   module,
   defaultOpen,
+  onLessonSelect,
 }: {
   module: ApiModule;
   defaultOpen: boolean;
+  onLessonSelect?: (lesson: ApiLesson) => void;
 }) {
   const [open, setOpen] = useState(defaultOpen);
   const sortedLessons = [...module.lessons].sort(
@@ -209,7 +211,11 @@ function ModuleAccordion({
                 </div>
               ) : (
                 sortedLessons.map((lesson) => (
-                  <LessonRow key={lesson.id} lesson={lesson} />
+                  <LessonRow
+                    key={lesson.id}
+                    lesson={lesson}
+                    onClick={() => onLessonSelect?.(lesson)}
+                  />
                 ))
               )}
             </div>
@@ -221,9 +227,10 @@ function ModuleAccordion({
 }
 
 // ─── Lesson Row ──────────────────────────────────────────────────────
-function LessonRow({ lesson }: { lesson: ApiLesson }) {
+function LessonRow({ lesson, onClick }: { lesson: ApiLesson; onClick?: () => void }) {
   return (
     <div
+      onClick={onClick}
       className={`flex items-center gap-4 px-5 py-4 cursor-pointer transition-colors ${
         lesson.completed
           ? "hover:bg-green-50/60 bg-green-50/30"
@@ -279,8 +286,10 @@ function LessonRow({ lesson }: { lesson: ApiLesson }) {
 // ─── Course Detail View (modules + lessons) ──────────────────────────
 export function CourseDetailView({
   course,
+  onLessonSelect,
 }: {
   course: ApiCourseDetail;
+  onLessonSelect?: (lesson: ApiLesson) => void;
 }) {
   const sortedModules = [...(course.modules ?? [])].sort(
     (a, b) => a.sortOrder - b.sortOrder
@@ -342,6 +351,7 @@ export function CourseDetailView({
               key={module.id}
               module={module}
               defaultOpen={index === 0}
+              onLessonSelect={onLessonSelect}
             />
           ))
         )}
