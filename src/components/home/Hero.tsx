@@ -61,7 +61,7 @@ export default function Hero({ data }: HeroProps) {
                             transition={{ delay: 0.5 }}
                         >
                             <Link href="/courses">
-                                <button className="inline-flex items-center gap-3 bg-slate-900 hover:bg-slate-800 text-white pl-8 py-0 rounded-full font-medium text-lg transition-all shadow-lg">
+                                <button className="inline-flex cursor-pointer items-center gap-3 bg-slate-900 hover:bg-slate-800 text-white pl-8 py-0 rounded-full font-medium text-lg transition-all shadow-lg">
                                     {data.ctaText}
                                     <ArrowRight className="w-14 h-14 bg-slate-700 rounded-full p-2 text-slate-100 right-0" />
                                 </button>
