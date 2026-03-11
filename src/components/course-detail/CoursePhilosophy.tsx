@@ -19,7 +19,7 @@ export default function CoursePhilosophy({ courseDetail }: CoursePhilosophyProps
             ? `Why ${courseDetail.title}?`
             : FALLBACK_TITLE;
 
-    const body = courseDetail?.philosophy ?? FALLBACK_DESCRIPTION;
+    const body =  FALLBACK_DESCRIPTION;
 
     return (
         <section className="bg-blue-50 w-full">
