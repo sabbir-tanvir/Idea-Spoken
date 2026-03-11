@@ -208,7 +208,7 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
                 )}
               </div>
 
-              <Link
+              {/* <Link
                 href="/blog"
                 className={`transition-colors font-medium px-4 py-2 rounded-full ${pathname?.startsWith('/blog')
                   ? 'text-purple-600 border-2 border-purple-600'
@@ -216,7 +216,7 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
                   }`}
               >
                 Blog
-              </Link>
+              </Link> */}
               <Link
                 href="/contact"
                 className={`transition-colors font-medium px-4 py-2 rounded-full ${pathname === '/contact'
@@ -365,7 +365,7 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
                   )}
                 </div>
 
-                <Link
+                {/* <Link
                   href="/blog"
                   className={`transition-colors font-medium px-4 py-2 rounded-full text-center ${pathname?.startsWith('/blog')
                     ? 'text-purple-600 border-2 border-purple-600'
@@ -373,7 +373,7 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
                     }`}
                 >
                   Blog
-                </Link>
+                </Link> */}
                 <Link
                   href="/contact"
                   className={`transition-colors font-medium px-4 py-2 rounded-full text-center ${pathname === '/contact'
