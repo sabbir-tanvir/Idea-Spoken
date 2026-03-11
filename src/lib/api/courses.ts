@@ -26,6 +26,8 @@ export interface ApiLesson {
   id: number;
   title: string;
   videoUrl: string;
+  video_id?: string;
+  library_id?: number;
   duration: number;
   sortOrder: number;
   isPreview: boolean;

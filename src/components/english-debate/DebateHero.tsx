@@ -4,7 +4,7 @@ import { useState } from "react";
 import { EnglishDebateData } from "@/lib/api";
 import { ApiCourseDetail } from "@/lib/api/courses";
 import { motion } from "framer-motion";
-import { Play, Users, Clock, BookOpen } from "lucide-react";
+import { Users, Clock, BookOpen } from "lucide-react";
 import PaymentModal from "@/components/ui/PaymentModal";
 
 interface DebateHeroProps {
@@ -136,19 +136,14 @@ export default function DebateHero({ data, courseDetail }: DebateHeroProps) {
                     transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
                     className="relative"
                 >
-                    <div className="relative aspect-video bg-purple-200 rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center group cursor-pointer hover:shadow-purple-200/50 transition-shadow duration-300">
-                        {/* Play Button */}
-                        <div className="w-20 h-20 bg-purple-600 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 z-10">
-                            <Play className="w-8 h-8 text-white ml-1" fill="currentColor" />
-                        </div>
-
-                        {/* Placeholder Text */}
-                        <div className="absolute bottom-1/3 text-purple-900 font-medium mt-4">
-                            Watch Free Intro Video
-                        </div>
-
-                        {/* Gradient Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-tr from-purple-300/50 to-transparent mix-blend-multiply"></div>
+                    <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl">
+                        <iframe
+                          src="https://iframe.mediadelivery.net/embed/610156/14bca5b0-54d7-4a11-8385-773320cb69b2?autoplay=false&preload=true&responsive=true"
+                          loading="lazy"
+                          style={{ border: "none", position: "absolute", top: 0, left: 0, height: "100%", width: "100%" }}
+                          allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                          allowFullScreen
+                        />
                     </div>
 
                     {/* Floating Badge */}
