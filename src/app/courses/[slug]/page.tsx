@@ -7,9 +7,7 @@ import CourseHighlights from '@/components/course-detail/CourseHighlights';
 import CourseModules from '@/components/course-detail/CourseModules';
 import CourseOffer from '@/components/course-detail/CourseOffer';
 
-export async function generateStaticParams() {
-  return [];
-}
+export const dynamic = 'force-dynamic';
 
 export default async function CourseDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
