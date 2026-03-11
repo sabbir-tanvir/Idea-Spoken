@@ -96,19 +96,21 @@ export default function Hero({ data }: HeroProps) {
                         </div>
 
                         {/* Explore Our Wings Card */}
-                        <motion.div
-                            className="absolute -bottom-2 left-30 transform -translate-x-1/2 bg-white rounded-2xl shadow-xl px-8 py-5 flex items-center gap-4"
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.8 }}
-                        >
-                            <div className="text-center">
-                                <span className="text-slate-800 font-bold text-lg block">{data.exploreText}</span>
-                            </div>
-                            <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
-                                <ArrowRight className="w-5 h-5" />
-                            </div>
-                        </motion.div>
+                        <Link href="#our-wings" scroll={true}>
+                            <motion.div
+                                className="absolute -bottom-2 left-30 transform -translate-x-1/2 bg-white rounded-2xl shadow-xl px-8 py-5 flex items-center gap-4 cursor-pointer hover:shadow-2xl transition-shadow duration-300"
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.8 }}
+                            >
+                                <div className="text-center">
+                                    <span className="text-slate-800 font-bold text-lg block">{data.exploreText}</span>
+                                </div>
+                                <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
+                                    <ArrowRight className="w-5 h-5" />
+                                </div>
+                            </motion.div>
+                        </Link>
 
                         {/* Decorative curve arrow (SVG) */}
                         <Image src="/images/aroww.png" alt="Arrow" width={500} height={100} className="absolute -left-130 bottom-1 text-slate-400 hidden lg:block" />

@@ -77,7 +77,7 @@ export default function SevenWings({ data }: SevenWingsProps) {
     const [avatarError, setAvatarError] = useState(false);
 
     return (
-        <section className="py-20 md:py-24 lg:py-32 bg-white">
+        <section id="our-wings" className="py-20 md:py-24 lg:py-32 bg-white">
             <div className="container mx-auto px-4">
                 {/* Header */}
                 <motion.div
