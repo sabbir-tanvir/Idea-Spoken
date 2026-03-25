@@ -2,9 +2,7 @@
 
 import { SevenWingsData } from "@/lib/api";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
 import IdeaCard from "@/components/ui/cards/IdeaCard";
 import { useState } from "react";
 
@@ -100,13 +98,13 @@ export default function SevenWings({ data }: SevenWingsProps) {
                     </div>
                     
                     {/* All Blog Post Button */}
-                    <Link 
+                    {/* <Link 
                         href="/blog"
                         className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-purple-600 text-white font-medium text-base transition-all duration-300 hover:bg-purple-700 shrink-0"
                     >
                         {content.buttonText}
                         <ArrowRight className="w-5 h-5" />
-                    </Link>
+                    </Link> */}
                 </motion.div>
 
                 {/* Cards Grid - First 6 cards in 3 columns */}

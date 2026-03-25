@@ -149,6 +149,27 @@ export interface SevenWingsData {
     wings: WingCardData[];
 }
 
+interface ApiBlogMedia {
+    id: number;
+    url: string;
+    alt?: string;
+}
+
+interface ApiBlog {
+    id: number;
+    title: string;
+    slug: string;
+    description: string;
+    published: boolean;
+    coverImage: ApiBlogMedia | null;
+}
+
+interface BlogsApiResponse {
+    success: boolean;
+    count: number;
+    data: ApiBlog[];
+}
+
 export interface TopCoursesData {
     badge: string;
     title: string;
@@ -248,8 +269,87 @@ export async function getWhyIdeaData(): Promise<WhyIdeaData> {
  * Fetches 7 Wings section data.
  */
 export async function getSevenWingsData(): Promise<SevenWingsData> {
-    await delay(200);
-    return data.sevenWings;
+    const fallback = data.sevenWings as SevenWingsData;
+
+    try {
+        const apiBase = (
+            process.env.BASE_URL
+            ?? `${process.env.NEXT_PUBLIC_BACKEND_URL ?? "https://idea-backend-03b4.onrender.com"}/api/v1`
+        ).replace(/\/+$/, "");
+
+        const backendOrigin = apiBase.replace(/\/api\/v\d+\/?$/, "");
+
+        const response = await fetch(`${apiBase}/blogs`, {
+            next: { revalidate: 60 },
+        });
+
+        if (!response.ok) return fallback;
+
+        const payload: BlogsApiResponse = await response.json();
+        if (!payload.success || !payload.data?.length) return fallback;
+
+        const routeByBlogSlug: Record<string, string> = {
+            "idea-youth-development-center": "/youth-development",
+            "idea-social-welfare": "/social-welfare",
+            "the-game-method": "/idea-spoken",
+            "idea-pitha-pathshala": "/pitha",
+            "widen": "/widen",
+            "bangla-pitha-research-institute": "/bangla-pitha-research-institute",
+            "rise-and-thrive": "/rise-and-thrive",
+        };
+
+        const orderBySlug: Record<string, number> = {
+            "idea-youth-development-center": 1,
+            "idea-social-welfare": 2,
+            "the-game-method": 3,
+            "idea-pitha-pathshala": 4,
+            "widen": 5,
+            "bangla-pitha-research-institute": 6,
+            "rise-and-thrive": 7,
+        };
+
+        const fallbackBySlug = new Map(
+            fallback.wings.map((wing) => [wing.slug.replace(/^\//, ""), wing])
+        );
+
+        const mappedWings: WingCardData[] = payload.data
+            .filter((blog) => blog.published)
+            .map((blog) => {
+                const route = routeByBlogSlug[blog.slug] ?? "/our-wings";
+                const fallbackWing = fallbackBySlug.get(route.replace(/^\//, ""));
+                const coverUrl = blog.coverImage?.url;
+                const image = coverUrl
+                    ? (
+                        coverUrl.startsWith("http")
+                            ? coverUrl
+                            : `${backendOrigin}${coverUrl.startsWith("/") ? "" : "/"}${coverUrl}`
+                    )
+                    : (fallbackWing?.image ?? "/images/wings/youth-development.jpg");
+
+                return {
+                    id: blog.id,
+                    title: blog.title || fallbackWing?.title || "Wing",
+                    description: blog.description || fallbackWing?.description || "",
+                    image,
+                    slug: route,
+                };
+            })
+            .sort((a, b) => {
+                const aOrder = orderBySlug[a.slug.replace(/^\//, "")] ?? 999;
+                const bOrder = orderBySlug[b.slug.replace(/^\//, "")] ?? 999;
+                return aOrder - bOrder;
+            });
+
+        if (!mappedWings.length) return fallback;
+
+        return {
+            ...fallback,
+            wings: mappedWings,
+        };
+    } catch (error) {
+        console.error("Failed to fetch seven wings blogs:", error);
+        return fallback;
+    }
 }
 
 /**
