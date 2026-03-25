@@ -155,6 +155,12 @@ interface ApiBlogMedia {
     alt?: string;
 }
 
+export interface BlogGalleryImage {
+    id: number;
+    url: string;
+    alt: string;
+}
+
 interface ApiBlog {
     id: number;
     title: string;
@@ -162,6 +168,7 @@ interface ApiBlog {
     description: string;
     published: boolean;
     coverImage: ApiBlogMedia | null;
+    gallery: ApiBlogMedia[];
 }
 
 interface BlogsApiResponse {
@@ -190,6 +197,62 @@ export interface Workshop {
  * @param ms milliseconds to wait
  */
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const DEFAULT_BACKEND_ORIGIN = "https://idea-backend-03b4.onrender.com";
+
+function getApiBaseUrl(): string {
+    return (
+        process.env.BASE_URL
+        ?? `${process.env.NEXT_PUBLIC_BACKEND_URL ?? DEFAULT_BACKEND_ORIGIN}/api/v1`
+    ).replace(/\/+$/, "");
+}
+
+function getBackendOrigin(apiBase: string): string {
+    return apiBase.replace(/\/api\/v\d+\/?$/, "");
+}
+
+function toAbsoluteMediaUrl(url: string, backendOrigin: string): string {
+    if (url.startsWith("http")) return url;
+    return `${backendOrigin}${url.startsWith("/") ? "" : "/"}${url}`;
+}
+
+async function fetchBlogs(): Promise<{ blogs: ApiBlog[]; backendOrigin: string } | null> {
+    const apiBase = getApiBaseUrl();
+    const backendOrigin = getBackendOrigin(apiBase);
+
+    const response = await fetch(`${apiBase}/blogs`, {
+        next: { revalidate: 60 },
+    });
+
+    if (!response.ok) return null;
+
+    const payload: BlogsApiResponse = await response.json();
+    if (!payload.success || !payload.data?.length) return null;
+
+    return {
+        blogs: payload.data,
+        backendOrigin,
+    };
+}
+
+export async function getWingGalleryBySlug(slug: string): Promise<BlogGalleryImage[]> {
+    try {
+        const blogsData = await fetchBlogs();
+        if (!blogsData) return [];
+
+        const blog = blogsData.blogs.find((item) => item.slug === slug && item.published);
+        if (!blog?.gallery?.length) return [];
+
+        return blog.gallery.map((image) => ({
+            id: image.id,
+            url: toAbsoluteMediaUrl(image.url, blogsData.backendOrigin),
+            alt: image.alt ?? blog.title,
+        }));
+    } catch (error) {
+        console.error("Failed to fetch wing gallery:", error);
+        return [];
+    }
+}
 
 /**
  * Fetches hero section data.
@@ -272,21 +335,8 @@ export async function getSevenWingsData(): Promise<SevenWingsData> {
     const fallback = data.sevenWings as SevenWingsData;
 
     try {
-        const apiBase = (
-            process.env.BASE_URL
-            ?? `${process.env.NEXT_PUBLIC_BACKEND_URL ?? "https://idea-backend-03b4.onrender.com"}/api/v1`
-        ).replace(/\/+$/, "");
-
-        const backendOrigin = apiBase.replace(/\/api\/v\d+\/?$/, "");
-
-        const response = await fetch(`${apiBase}/blogs`, {
-            next: { revalidate: 60 },
-        });
-
-        if (!response.ok) return fallback;
-
-        const payload: BlogsApiResponse = await response.json();
-        if (!payload.success || !payload.data?.length) return fallback;
+        const blogsData = await fetchBlogs();
+        if (!blogsData) return fallback;
 
         const routeByBlogSlug: Record<string, string> = {
             "idea-youth-development-center": "/youth-development",
@@ -312,7 +362,7 @@ export async function getSevenWingsData(): Promise<SevenWingsData> {
             fallback.wings.map((wing) => [wing.slug.replace(/^\//, ""), wing])
         );
 
-        const mappedWings: WingCardData[] = payload.data
+        const mappedWings: WingCardData[] = blogsData.blogs
             .filter((blog) => blog.published)
             .map((blog) => {
                 const route = routeByBlogSlug[blog.slug] ?? "/our-wings";
@@ -320,9 +370,7 @@ export async function getSevenWingsData(): Promise<SevenWingsData> {
                 const coverUrl = blog.coverImage?.url;
                 const image = coverUrl
                     ? (
-                        coverUrl.startsWith("http")
-                            ? coverUrl
-                            : `${backendOrigin}${coverUrl.startsWith("/") ? "" : "/"}${coverUrl}`
+                        toAbsoluteMediaUrl(coverUrl, blogsData.backendOrigin)
                     )
                     : (fallbackWing?.image ?? "/images/wings/youth-development.jpg");
 
