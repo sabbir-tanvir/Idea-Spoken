@@ -2,11 +2,19 @@
 
 import { motion } from "motion/react";
 import { BlogGalleryImage } from "@/lib/api";
+import { useMemo, useEffect } from "react";
 
 interface PhotoGalleryProps {
   images: BlogGalleryImage[];
   title?: string;
   subtitle?: string;
+}
+
+const BACKEND_ORIGIN = (process.env.NEXT_PUBLIC_BACKEND_URL ?? "https://idea-backend-03b4.onrender.com").replace(/\/+$/, "");
+
+function toAbsoluteUrl(url: string): string {
+  if (url.startsWith("http")) return url;
+  return `${BACKEND_ORIGIN}${url.startsWith("/") ? "" : "/"}${url}`;
 }
 
 export default function PhotoGallery({
@@ -15,6 +23,17 @@ export default function PhotoGallery({
   subtitle = "আমাদের কার্যক্রমের ঝলক",
 }: PhotoGalleryProps) {
   const galleryImages = images.slice(0, 6);
+  const resolvedGalleryImages = useMemo(
+    () => galleryImages.map((image) => ({
+      ...image,
+      resolvedUrl: toAbsoluteUrl(image.url),
+    })),
+    [galleryImages]
+  );
+
+  useEffect(() => {
+    console.log("[PhotoGallery] image src urls:", resolvedGalleryImages.map((image) => image.resolvedUrl));
+  }, [resolvedGalleryImages]);
 
   return (
     <section className="py-20 md:py-24 lg:py-32 bg-white">
@@ -41,11 +60,11 @@ export default function PhotoGallery({
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-[200px] md:auto-rows-[250px] gap-4">
-            {galleryImages.map((image, index) => (
+            {resolvedGalleryImages.map((image, index) => (
               <motion.div
                 key={image.id}
                 className={`relative overflow-hidden rounded-2xl bg-purple-100 group cursor-pointer ${
-                  index === 0 && galleryImages.length > 2 ? "lg:row-span-2" : ""
+                  index === 0 && resolvedGalleryImages.length > 2 ? "lg:row-span-2" : ""
                 }`}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -55,7 +74,7 @@ export default function PhotoGallery({
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={image.url}
+                  src={image.resolvedUrl}
                   alt={image.alt}
                   className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
                   loading="lazy"
