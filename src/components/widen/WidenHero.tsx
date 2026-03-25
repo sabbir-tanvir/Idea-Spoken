@@ -3,7 +3,19 @@
 import Image from 'next/image';
 import { motion } from "motion/react"
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  title?: string;
+  description?: string;
+  coverImageUrl?: string;
+  coverImageAlt?: string;
+}
+
+export default function HeroSection({
+  title = "Bangladeshi Students & Entrepreneurs Group (WIDEN)",
+  description = "Covid–১৯ এর কঠিন সময়ে যখন যুব সমাজ হতাশায় ডুবে যাচ্ছিল, তখন অনলাইনে ইতিবাচক প্ল্যাটফর্ম হিসেবে গড়ে ওঠে WIDEN, যার মাধ্যমে প্রায় ৩০ হাজার শিক্ষার্থী বিভিন্ন অনলাইন প্রোগ্রামে উপকৃত হয়েছে।",
+  coverImageUrl = "/home/vai.jpg",
+  coverImageAlt = "Hamidul Huq",
+}: HeroSectionProps) {
   return (
     <section className="relative min-h-screen w-full overflow-hidden">
       {/* Background Image with Overlay */}
@@ -51,9 +63,7 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
             >
-              Bangladeshi Students & 
-Entrepreneurs Group 
-(WIDEN)
+              {title}
             </motion.h1>
 
             {/* Description in Bengali */}
@@ -63,7 +73,7 @@ Entrepreneurs Group
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7 }}
             >
-              Covid–১৯ এর কঠিন সময়ে যখন যুব সমাজ হতাশায় ডুবে যাচ্ছিল, তখন অনলাইনে ইতিবাচক প্ল্যাটফর্ম হিসেবে গড়ে ওঠে WIDEN, যার মাধ্যমে প্রায় ৩০ হাজার শিক্ষার্থী বিভিন্ন অনলাইন প্রোগ্রামে উপকৃত হয়েছে।
+              {description}
             </motion.p>
 
             {/* Bottom Badges */}
@@ -114,12 +124,11 @@ Entrepreneurs Group
               transition={{ duration: 0.8, delay: 0.6 }}
               whileHover={{ scale: 1.02 }}
             >
-              <Image
-                src="/home/vai.jpg"
-                alt="Hamidul Huq"
-                fill
-                className="object-cover"
-                priority
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={coverImageUrl}
+                alt={coverImageAlt}
+                className="h-full w-full object-cover"
               />
             </motion.div>
           </motion.div>

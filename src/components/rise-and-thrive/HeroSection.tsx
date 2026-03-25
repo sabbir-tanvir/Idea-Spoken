@@ -3,7 +3,19 @@
 import Image from 'next/image';
 import { motion } from "motion/react"
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  title?: string;
+  description?: string;
+  coverImageUrl?: string;
+  coverImageAlt?: string;
+}
+
+export default function HeroSection({
+  title = "Rise And Thrive With Hamidul Huq",
+  description = '"Rise And Thrive With Hamidul Huq" বলতে এমনকিছুগো আয়— উন্নয়ন, Mind Programming ও Life Transformation—এর Intensive কোর্স, যে যারে অব্যাহতভাবে নিজেদেরে মানসিক বাধা মিটিয়ে কাঙ্ক্ষিতভাবে এগিয়ে যাওয়ার পথ খুঁজে পান',
+  coverImageUrl = "/home/vai.jpg",
+  coverImageAlt = "Hamidul Huq",
+}: HeroSectionProps) {
   return (
     <section className="relative min-h-screen w-full overflow-hidden">
       {/* Background Image with Overlay */}
@@ -51,9 +63,7 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
             >
-              Rise And Thrive With
-              <br />
-              Hamidul Huq
+              {title}
             </motion.h1>
 
             {/* Description in Bengali */}
@@ -63,10 +73,7 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7 }}
             >
-              "Rise And Thrive With Hamidul Huq" বলতে এমনকিছুগো আয়—
-              উন্নয়ন, Mind Programming ও Life Transformation—এর
-              Intensive কোর্স, যে যারে অব্যাহতভাবে নিজেদেরে মানসিক বাধা
-              মিটিয়ে কাঙ্ক্ষিতভাবে এগিয়ে যাওয়ার পথ খুঁজে পান
+              {description}
             </motion.p>
 
             {/* Bottom Badges */}
@@ -111,18 +118,17 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             <motion.div 
-              className="relative w-full h-[400px] lg:h-[600px] rounded-2xl overflow-hidden shadow-2xl"
+              className="relative w-full h-100 lg:h-150 rounded-2xl overflow-hidden shadow-2xl"
               initial={{ scale: 0.9 }}
               animate={{ scale: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
               whileHover={{ scale: 1.02 }}
             >
-              <Image
-                src="/home/vai.jpg"
-                alt="Hamidul Huq"
-                fill
-                className="object-cover"
-                priority
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={coverImageUrl}
+                alt={coverImageAlt}
+                className="h-full w-full object-cover"
               />
             </motion.div>
           </motion.div>

@@ -3,7 +3,19 @@
 import Image from 'next/image';
 import { motion } from "motion/react"
 
-export default function YouthHero() {
+interface YouthHeroProps {
+  title?: string;
+  description?: string;
+  coverImageUrl?: string;
+  coverImageAlt?: string;
+}
+
+export default function YouthHero({
+  title = "IDEA Youth Development Center",
+  description = "তরুণদের হতাশা দূর করে দক্ষ ও উদ্ভাবনী হিসেবে গড়ে তুলতে যুব উন্নয়ন মন্ত্রণালয় ২০১৫ সালে আইডিয়া প্রোগ্রাম চালু করে। দেশে বিভিন্ন স্থানে শিক্ষার্থীদের জন্য নিয়মিত কর্মশালা ও দক্ষতা উন্নয়ন কার্যক্রম আয়োজিত হয়, যাতে তারা শেখে, বুঝে এবং ভবিষ্যতের জন্য নিজেকে প্রস্তুত করতে পারে।",
+  coverImageUrl = "/home/vai.jpg",
+  coverImageAlt = "Hamidul Huq",
+}: YouthHeroProps) {
   return (
     <section className="relative min-h-screen w-full overflow-hidden">
       {/* Background Image with Overlay */}
@@ -51,8 +63,7 @@ export default function YouthHero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
             >
-              IDEA Youth Development 
-Center
+              {title}
             </motion.h1>
 
             {/* Description in Bengali */}
@@ -62,7 +73,7 @@ Center
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7 }}
             >
-তরুণদের হতাশা দূর করে দক্ষ ও উদ্ভাবনী হিসেবে গড়ে তুলতে যুব উন্নয়ন মন্ত্রণালয় ২০১৫ সালে আইডিয়া প্রোগ্রাম চালু করে। দেশে বিভিন্ন স্থানে শিক্ষার্থীদের জন্য নিয়মিত কর্মশালা ও দক্ষতা উন্নয়ন কার্যক্রম আয়োজিত হয়, যাতে তারা শেখে, বুঝে এবং ভবিষ্যতের জন্য নিজেকে প্রস্তুত করতে পারে।
+              {description}
             </motion.p>
 
             {/* Bottom Badges */}
@@ -107,12 +118,11 @@ Center
               transition={{ duration: 0.8, delay: 0.6 }}
               whileHover={{ scale: 1.02 }}
             >
-              <Image
-                src="/home/vai.jpg"
-                alt="Hamidul Huq"
-                fill
-                className="object-cover"
-                priority
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={coverImageUrl}
+                alt={coverImageAlt}
+                className="h-full w-full object-cover"
               />
             </motion.div>
           </motion.div>

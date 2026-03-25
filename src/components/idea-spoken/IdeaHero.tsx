@@ -10,12 +10,23 @@ import PaymentModal from "@/components/ui/PaymentModal";
 interface DebateHeroProps {
     data: EnglishDebateData;
     courseDetail?: ApiCourseDetail | null;
+    heroTitle?: string;
+    heroDescription?: string;
+    coverImageUrl?: string;
+    coverImageAlt?: string;
 }
 
-export default function DebateHero({ data, courseDetail }: DebateHeroProps) {
+export default function DebateHero({
+    data,
+    courseDetail,
+    heroTitle,
+    heroDescription,
+    coverImageUrl,
+    coverImageAlt = "IDEA SPOKEN cover image",
+}: DebateHeroProps) {
     const [isPaymentOpen, setIsPaymentOpen] = useState(false);
-    const title = courseDetail?.title ?? "IDEA SPOKEN – The Game Method";
-    const description = courseDetail?.description ?? "English শেখা কঠিন না, যদি শিখো গেমের মতো করে। IDEA SPOKEN – The Game Method এমন একটি কোর্স, যেখানে Vocabulary, Grammar আর Fluency সবকিছু গেম ও Activity–এর মাধ্যমে শেখানো হয়।";
+    const title = heroTitle ?? courseDetail?.title ?? "IDEA SPOKEN – The Game Method";
+    const description = heroDescription ?? courseDetail?.description ?? "English শেখা কঠিন না, যদি শিখো গেমের মতো করে। IDEA SPOKEN – The Game Method এমন একটি কোর্স, যেখানে Vocabulary, Grammar আর Fluency সবকিছু গেম ও Activity–এর মাধ্যমে শেখানো হয়।";
     const price = courseDetail?.price ? `৳${courseDetail.price}` : data.price;
     const lessonCount = courseDetail
         ? courseDetail.modules.reduce((sum, m) => sum + m.lessons.length, 0)
@@ -48,7 +59,7 @@ export default function DebateHero({ data, courseDetail }: DebateHeroProps) {
     };
 
     return (
-        <section className="bg-purple-50 min-h-[600px] flex items-center overflow-hidden w-full">
+        <section className="bg-purple-50 min-h-150 flex items-center overflow-hidden w-full">
             <div className="container mx-auto px-4 py-20 lg:py-32 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 {/* Left Side: Content */}
                 <motion.div
@@ -136,20 +147,31 @@ export default function DebateHero({ data, courseDetail }: DebateHeroProps) {
                     transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
                     className="relative"
                 >
-                    <div className="relative aspect-video bg-purple-200 rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center group cursor-pointer hover:shadow-purple-200/50 transition-shadow duration-300">
-                        {/* Play Button */}
-                        <div className="w-20 h-20 bg-purple-600 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 z-10">
-                            <Play className="w-8 h-8 text-white ml-1" fill="currentColor" />
+                    {coverImageUrl ? (
+                        <div className="relative aspect-video bg-purple-200 rounded-2xl overflow-hidden shadow-2xl group cursor-pointer hover:shadow-purple-200/50 transition-shadow duration-300">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                                src={coverImageUrl}
+                                alt={coverImageAlt}
+                                className="h-full w-full object-cover"
+                            />
                         </div>
+                    ) : (
+                        <div className="relative aspect-video bg-purple-200 rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center group cursor-pointer hover:shadow-purple-200/50 transition-shadow duration-300">
+                            {/* Play Button */}
+                            <div className="w-20 h-20 bg-purple-600 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 z-10">
+                                <Play className="w-8 h-8 text-white ml-1" fill="currentColor" />
+                            </div>
 
-                        {/* Placeholder Text */}
-                        <div className="absolute bottom-1/3 text-purple-900 font-medium mt-4">
-                            Watch Free Intro Video
+                            {/* Placeholder Text */}
+                            <div className="absolute bottom-1/3 text-purple-900 font-medium mt-4">
+                                Watch Free Intro Video
+                            </div>
+
+                            {/* Gradient Overlay */}
+                            <div className="absolute inset-0 bg-linear-to-tr from-purple-300/50 to-transparent mix-blend-multiply"></div>
                         </div>
-
-                        {/* Gradient Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-tr from-purple-300/50 to-transparent mix-blend-multiply"></div>
-                    </div>
+                    )}
 
                     {/* Floating Badge */}
                     <motion.div

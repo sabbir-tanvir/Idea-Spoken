@@ -6,16 +6,21 @@ import RecentEvent from '@/components/youth-development/RecentEvent';
 import WhatWeDo from '@/components/youth-development/WhatWeDo';
 import YouthHero from '@/components/youth-development/YouthHero';
 import React from 'react';
-import { getWingGalleryBySlug } from '@/lib/api';
+import { getWingMediaBySlug } from '@/lib/api';
 
 export default async function YouthDevelopment() {
-  const galleryImages = await getWingGalleryBySlug('idea-youth-development-center');
+  const media = await getWingMediaBySlug('idea-youth-development-center');
 
   return (
     <>
-    <YouthHero />
+    <YouthHero
+      title={media.title || undefined}
+      description={media.description || undefined}
+      coverImageUrl={media.coverImageUrl ?? undefined}
+      coverImageAlt={media.coverImageAlt}
+    />
     <CountUpSection />
-    <PhotoGallery images={galleryImages} />
+    <PhotoGallery images={media.gallery} />
     <WhatWeDo />
     <RecentEvent />
     <Review />

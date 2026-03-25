@@ -3,7 +3,19 @@
 import Image from 'next/image';
 import { motion } from "motion/react"
 
-export default function BanglaPithaHeroSection() {
+interface BanglaPithaHeroSectionProps {
+  title?: string;
+  description?: string;
+  coverImageUrl?: string;
+  coverImageAlt?: string;
+}
+
+export default function BanglaPithaHeroSection({
+  title = "Bangla Pitha Research Institute",
+  description = "বাঙালির হারিয়ে যেতে বসা পিঠা সংস্কৃতিকে পুনরুজ্জীবিত করা, গবেষণা করা এবং নতুনভাবে বিশ্বের কাছে উপস্থাপন করার উদ্দেশ্যে প্রতিষ্ঠিত হয়েছে Bangla Pitha Research Institute।",
+  coverImageUrl = "/home/vai.jpg",
+  coverImageAlt = "Hamidul Huq",
+}: BanglaPithaHeroSectionProps) {
   return (
     <section className="relative min-h-screen w-full overflow-hidden">
       {/* Background Image with Overlay */}
@@ -51,7 +63,7 @@ export default function BanglaPithaHeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
             >
-              Bangla Pitha Research Institute
+              {title}
             </motion.h1>
 
             {/* Description in Bengali */}
@@ -61,7 +73,7 @@ export default function BanglaPithaHeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7 }}
             >
-              বাঙালির হারিয়ে যেতে বসা পিঠা সংস্কৃতিকে পুনরুজ্জীবিত করা, গবেষণা করা এবং নতুনভাবে বিশ্বের কাছে উপস্থাপন করার উদ্দেশ্যে প্রতিষ্ঠিত হয়েছে Bangla Pitha Research Institute।
+              {description}
             </motion.p>
 
             {/* Bottom Badges */}
@@ -106,18 +118,17 @@ export default function BanglaPithaHeroSection() {
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             <motion.div
-              className="relative w-full h-[400px] lg:h-[600px] rounded-2xl overflow-hidden shadow-2xl"
+              className="relative w-full h-100 lg:h-150 rounded-2xl overflow-hidden shadow-2xl"
               initial={{ scale: 0.9 }}
               animate={{ scale: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
               whileHover={{ scale: 1.02 }}
             >
-              <Image
-                src="/home/vai.jpg"
-                alt="Hamidul Huq"
-                fill
-                className="object-cover"
-                priority
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={coverImageUrl}
+                alt={coverImageAlt}
+                className="h-full w-full object-cover"
               />
             </motion.div>
           </motion.div>

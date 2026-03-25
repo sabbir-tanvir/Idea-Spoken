@@ -161,6 +161,14 @@ export interface BlogGalleryImage {
     alt: string;
 }
 
+export interface WingMediaData {
+    title: string;
+    description: string;
+    coverImageUrl: string | null;
+    coverImageAlt: string;
+    gallery: BlogGalleryImage[];
+}
+
 interface ApiBlog {
     id: number;
     title: string;
@@ -236,21 +244,60 @@ async function fetchBlogs(): Promise<{ blogs: ApiBlog[]; backendOrigin: string }
 }
 
 export async function getWingGalleryBySlug(slug: string): Promise<BlogGalleryImage[]> {
+    const media = await getWingMediaBySlug(slug);
+    return media.gallery;
+}
+
+export async function getWingMediaBySlug(slug: string): Promise<WingMediaData> {
     try {
         const blogsData = await fetchBlogs();
-        if (!blogsData) return [];
+        if (!blogsData) {
+            return {
+                title: "",
+                description: "",
+                coverImageUrl: null,
+                coverImageAlt: "Wing cover",
+                gallery: [],
+            };
+        }
 
         const blog = blogsData.blogs.find((item) => item.slug === slug && item.published);
-        if (!blog?.gallery?.length) return [];
+        if (!blog) {
+            return {
+                title: "",
+                description: "",
+                coverImageUrl: null,
+                coverImageAlt: "Wing cover",
+                gallery: [],
+            };
+        }
 
-        return blog.gallery.map((image) => ({
+        const coverImageUrl = blog.coverImage?.url
+            ? toAbsoluteMediaUrl(blog.coverImage.url, blogsData.backendOrigin)
+            : null;
+
+        const gallery = (blog.gallery ?? []).map((image) => ({
             id: image.id,
             url: toAbsoluteMediaUrl(image.url, blogsData.backendOrigin),
             alt: image.alt ?? blog.title,
         }));
+
+        return {
+            title: blog.title,
+            description: blog.description ?? "",
+            coverImageUrl,
+            coverImageAlt: blog.coverImage?.alt ?? blog.title,
+            gallery,
+        };
     } catch (error) {
-        console.error("Failed to fetch wing gallery:", error);
-        return [];
+        console.error("Failed to fetch wing media:", error);
+        return {
+            title: "",
+            description: "",
+            coverImageUrl: null,
+            coverImageAlt: "Wing cover",
+            gallery: [],
+        };
     }
 }
 

@@ -7,19 +7,24 @@ import BanglaPithaResearch from '@/components/bangla-pitha-research-institute/Ba
 import BanglaPithaInovation from '@/components/bangla-pitha-research-institute/BanglaPithaInovation';
 import BanglaPithaActivation from '@/components/bangla-pitha-research-institute/BanglaPithaActivation';
 import BanglaPithaHeroSection from '@/components/bangla-pitha-research-institute/BanglaPithaheroSection';
-import { getWingGalleryBySlug } from '@/lib/api';
+import { getWingMediaBySlug } from '@/lib/api';
 
 async function PithaPatsala() {
-  const galleryImages = await getWingGalleryBySlug('bangla-pitha-research-institute');
+  const media = await getWingMediaBySlug('bangla-pitha-research-institute');
 
   return (
     <>
-    <BanglaPithaHeroSection />
+    <BanglaPithaHeroSection
+      title={media.title || undefined}
+      description={media.description || undefined}
+      coverImageUrl={media.coverImageUrl ?? undefined}
+      coverImageAlt={media.coverImageAlt}
+    />
     <CountUpSection />
     <BanglaPithaResearch />
     <BanglaPithaInovation />
     <BanglaPithaActivation />
-    <PhotoGallery images={galleryImages} />
+    <PhotoGallery images={media.gallery} />
     <PMission />
     <BanglaPithaContact />
 

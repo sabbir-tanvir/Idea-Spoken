@@ -5,17 +5,22 @@ import CountUpSection from '@/components/widen/WCountUp'
 import HeroSection from '@/components/widen/WidenHero'
 import WKeyHighlight from '@/components/widen/WKeyHighlight'
 import React from 'react'
-import { getWingGalleryBySlug } from '@/lib/api'
+import { getWingMediaBySlug } from '@/lib/api'
 
 export default async function WidenPage() {
-  const galleryImages = await getWingGalleryBySlug('widen');
+  const media = await getWingMediaBySlug('widen');
 
   return (
     <>
-    <HeroSection />
+    <HeroSection
+      title={media.title || undefined}
+      description={media.description || undefined}
+      coverImageUrl={media.coverImageUrl ?? undefined}
+      coverImageAlt={media.coverImageAlt}
+    />
     <CountUpSection />
     <WActivities />
-    <PhotoGallery images={galleryImages} />
+    <PhotoGallery images={media.gallery} />
     <WKeyHighlight />
     <Wcontact />
     

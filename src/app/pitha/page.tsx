@@ -6,17 +6,22 @@ import PhotoGallery from '@/components/PhotoGallery';
 import OurImpact from '@/components/pitha/OurImpact';
 import PReview from '@/components/pitha/PReview';
 import Wcontact from '@/components/pitha/PContact';
-import { getWingGalleryBySlug } from '@/lib/api';
+import { getWingMediaBySlug } from '@/lib/api';
 
 async function PithaPatsala() {
-  const galleryImages = await getWingGalleryBySlug('idea-pitha-pathshala');
+  const media = await getWingMediaBySlug('idea-pitha-pathshala');
 
   return (
     <>
-    <HeroSection />
+    <HeroSection
+      title={media.title || undefined}
+      description={media.description || undefined}
+      coverImageUrl={media.coverImageUrl ?? undefined}
+      coverImageAlt={media.coverImageAlt}
+    />
     <CountUpSection />
     <OurJourney />
-    <PhotoGallery images={galleryImages} />
+    <PhotoGallery images={media.gallery} />
     <OurImpact />
     <PReview />
     <Wcontact />

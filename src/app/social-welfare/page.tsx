@@ -7,18 +7,23 @@ import Review from "@/components/rise-and-thrive/Review";
 import UpcomingWorkshop from "@/components/rise-and-thrive/UpcomingWorkshop";
 import WhatYouWillLearn from "@/components/rise-and-thrive/WhatUwillLearn";
 import WhoIsItFor from "@/components/rise-and-thrive/Whoisthisfor";
-import { getWingGalleryBySlug } from "@/lib/api";
+import { getWingMediaBySlug } from "@/lib/api";
 
 export default async function Home() {
-    const galleryImages = await getWingGalleryBySlug("idea-social-welfare");
+    const media = await getWingMediaBySlug("idea-social-welfare");
 
     return (
         <>
-            <HeroSection />
+            <HeroSection
+                title={media.title || undefined}
+                description={media.description || undefined}
+                coverImageUrl={media.coverImageUrl ?? undefined}
+                coverImageAlt={media.coverImageAlt}
+            />
             <CountUpSection />
             <WhoIsItFor />
             <WhatYouWillLearn />
-            <PhotoGallery images={galleryImages} />
+            <PhotoGallery images={media.gallery} />
             <HomeResearch />
             <UpcomingWorkshop />
             <Review />

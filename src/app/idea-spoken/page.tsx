@@ -4,13 +4,14 @@ import OfferCard from "@/components/english-debate/OfferCard";
 import CourseStructure from "@/components/idea-spoken/CourseStructure";
 import DebateHero from "@/components/idea-spoken/IdeaHero";
 import TypesofGame from "@/components/idea-spoken/TypesofGame";
-import { getEnglishDebateData } from "@/lib/api";
+import { getEnglishDebateData, getWingMediaBySlug } from "@/lib/api";
 import { getCourses, getCourseById } from "@/lib/api/courses";
 
 export default async function IdeaSpokenPage() {
-    const [data, courses] = await Promise.all([
+    const [data, courses, wingMedia] = await Promise.all([
         getEnglishDebateData(),
         getCourses(),
+        getWingMediaBySlug("the-game-method"),
     ]);
 
     const summary = courses.find(c => {
@@ -21,7 +22,14 @@ export default async function IdeaSpokenPage() {
 
     return (
         <main className="min-h-screen bg-white">
-            <DebateHero data={data} courseDetail={courseDetail} />
+            <DebateHero
+                data={data}
+                courseDetail={courseDetail}
+                heroTitle={wingMedia.title || undefined}
+                heroDescription={wingMedia.description || undefined}
+                coverImageUrl={wingMedia.coverImageUrl ?? undefined}
+                coverImageAlt={wingMedia.coverImageAlt}
+            />
             <CoursePhilosophy data={data} />
             <TypesofGame />
             <CourseStructure data={data} courseDetail={courseDetail} />
