@@ -152,7 +152,9 @@ export async function getCourses(): Promise<ApiCourse[]> {
     console.log('Fetched courses:', data);
 
     if (data.success) {
-      return data.data;
+      return data.data.filter(
+        (course) => (course.status ?? '').toUpperCase() === 'PUBLISHED'
+      );
     }
 
     return [];

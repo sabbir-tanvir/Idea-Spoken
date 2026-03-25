@@ -73,13 +73,13 @@ export default function TopCourse({ courses }: TopCourseProps) {
                     </div>
                     
                     {/* Load More Button */}
-                    <Link 
+                    {/* <Link 
                         href="/courses"
                         className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-purple-600 text-white font-medium text-base transition-all duration-300 hover:bg-purple-700 shrink-0"
                     >
                         Load More Course
                         <ArrowRight className="w-5 h-5" />
-                    </Link>
+                    </Link> */}
                 </motion.div>
 
                 {/* Course Cards Grid */}
