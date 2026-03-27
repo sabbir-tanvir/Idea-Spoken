@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 // TODO: Replace this with API data when available.
 const contactData = {
   title: "Get in Touch",
@@ -25,7 +29,72 @@ const contactData = {
   ],
 };
 
+interface ContactFormData {
+  name: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+}
+
 export default function ContactPage() {
+  const [formData, setFormData] = useState<ContactFormData>({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitResult, setSubmitResult] = useState<{ success: boolean; message: string } | null>(null);
+
+  const API_BASE = `${(process.env.NEXT_PUBLIC_BACKEND_URL ?? "https://idea-backend-03b4.onrender.com").replace(/\/+$/, "")}/api/v1`;
+
+  function handleChange(
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    const { name, value } = event.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  }
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setSubmitResult(null);
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(`${API_BASE}/messages`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || data?.success === false) {
+        throw new Error(data?.message ?? "Failed to send message. Please try again.");
+      }
+
+      setSubmitResult({
+        success: true,
+        message: data?.message ?? "Message sent successfully!",
+      });
+      setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+    } catch (error) {
+      setSubmitResult({
+        success: false,
+        message:
+          error instanceof Error
+            ? error.message
+            : "Failed to send message. Please try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 pt-16 md:pt-24">
       <div className="container mx-auto px-4">
@@ -131,7 +200,18 @@ export default function ContactPage() {
 
               {/* Right Side - Contact Form */}
               <div className="p-8 md:p-12 bg-white border-l border-slate-100">
-                <form className="space-y-6" action="#">
+                <form className="space-y-6" onSubmit={handleSubmit}>
+                  {submitResult && (
+                    <div
+                      className={`rounded-xl border px-4 py-3 text-sm font-medium ${
+                        submitResult.success
+                          ? "border-green-200 bg-green-50 text-green-700"
+                          : "border-red-200 bg-red-50 text-red-700"
+                      }`}
+                    >
+                      {submitResult.message}
+                    </div>
+                  )}
                   {/* Name */}
                   <div>
                     <label htmlFor="contact-name" className="block text-base font-medium text-slate-900 mb-2">
@@ -142,6 +222,9 @@ export default function ContactPage() {
                       name="name"
                       id="contact-name"
                       placeholder="Name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
                       className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-100"
                     />
                   </div>
@@ -156,6 +239,9 @@ export default function ContactPage() {
                       name="email"
                       id="contact-email"
                       placeholder="Email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
                       className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-100"
                     />
                   </div>
@@ -170,6 +256,9 @@ export default function ContactPage() {
                       name="phone"
                       id="contact-phone"
                       placeholder="Phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      required
                       className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-100"
                     />
                   </div>
@@ -184,6 +273,9 @@ export default function ContactPage() {
                       name="subject"
                       id="contact-subject"
                       placeholder="Subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      required
                       className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-100"
                     />
                   </div>
@@ -197,7 +289,10 @@ export default function ContactPage() {
                       name="message"
                       id="contact-message"
                       rows={4}
-                      placeholder=""
+                      placeholder="Write your message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
                       className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-100 resize-none"
                     />
                   </div>
@@ -205,9 +300,10 @@ export default function ContactPage() {
                   {/* Submit Button */}
                   <button
                     type="submit"
+                    disabled={isSubmitting}
                     className="inline-flex items-center justify-center rounded-xl bg-purple-600 px-8 py-3.5 text-base font-semibold uppercase tracking-wider text-white transition-colors hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
                   >
-                    Send Message
+                    {isSubmitting ? "Sending..." : "Send Message"}
                   </button>
                 </form>
               </div>
