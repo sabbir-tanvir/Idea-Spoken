@@ -1,34 +1,14 @@
 "use client"
 
 import { motion } from "motion/react"
+import type { ApiEvent } from "@/lib/api/events"
 
-export default function UpcomingWorkshop() {
-  const workshops = [
-    {
-      title: "Rise And Thrive – Dhaka",
-      date: "১৫ নভেম্বর ২০২৪",
-      location: "পূর্বাচল",
-      participants: "250+ অংশগ্রহণকারী"
-    },
-    {
-      title: "Rise And Thrive – Dhaka",
-      date: "১৫ নভেম্বর ২০২৪",
-      location: "পূর্বাচল",
-      participants: "250+ অংশগ্রহণকারী"
-    },
-    {
-      title: "Rise And Thrive – Dhaka",
-      date: "১৫ নভেম্বর ২০২৪",
-      location: "পূর্বাচল",
-      participants: "250+ অংশগ্রহণকারী"
-    },
-    {
-      title: "Rise And Thrive – Dhaka",
-      date: "১৫ নভেম্বর ২০২৪",
-      location: "পূর্বাচল",
-      participants: "250+ অংশগ্রহণকারী"
-    }
-  ]
+interface UpcomingWorkshopProps {
+  events: ApiEvent[];
+}
+
+export default function UpcomingWorkshop({ events }: UpcomingWorkshopProps) {
+  const workshops = events;
 
   return (
     <section className="py-20 md:py-24 lg:py-32 bg-purple-50">
@@ -51,7 +31,12 @@ export default function UpcomingWorkshop() {
 
         {/* Workshop Cards */}
         <div className="space-y-6">
-          {workshops.map((workshop, index) => (
+          {workshops.length === 0 ? (
+            <div className="rounded-2xl border border-purple-100 bg-white p-8 text-center text-gray-600">
+              No upcoming workshops yet.
+            </div>
+          ) : (
+            workshops.map((workshop, index) => (
             <motion.div
               key={index}
               className="bg-white rounded-2xl p-6 md:p-8 shadow-md hover:shadow-xl transition-shadow duration-300"
@@ -62,7 +47,7 @@ export default function UpcomingWorkshop() {
             >
               <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6">
                 {/* Calendar Icon */}
-                <div className="flex-shrink-0 w-14 h-14 md:w-16 md:h-16 bg-purple-600 rounded-2xl flex items-center justify-center">
+                <div className="shrink-0 w-14 h-14 md:w-16 md:h-16 bg-purple-600 rounded-2xl flex items-center justify-center">
                   <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"/>
                   </svg>
@@ -96,24 +81,34 @@ export default function UpcomingWorkshop() {
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                       </svg>
-                      <span>{workshop.participants}</span>
+                      <span>{workshop.attendees}</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Register Button */}
-                <div className="flex-shrink-0 w-full md:w-auto">
-                  <motion.button
-                    className="w-full md:w-auto px-8 py-3 bg-purple-600 text-white rounded-full font-semibold hover:bg-purple-700 transition-colors duration-300"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    Register
-                  </motion.button>
+                <div className="shrink-0 w-full md:w-auto">
+                  {workshop.registrationUrl ? (
+                    <motion.a
+                      href={workshop.registrationUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex w-full md:w-auto items-center justify-center px-8 py-3 bg-purple-600 text-white rounded-full font-semibold hover:bg-purple-700 transition-colors duration-300"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      Register
+                    </motion.a>
+                  ) : (
+                    <div className="w-full md:w-auto px-8 py-3 bg-gray-300 text-gray-600 rounded-full font-semibold text-center">
+                      Registration Closed
+                    </div>
+                  )}
                 </div>
               </div>
             </motion.div>
-          ))}
+            ))
+          )}
         </div>
       </div>
     </section>

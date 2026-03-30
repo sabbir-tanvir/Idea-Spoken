@@ -8,9 +8,13 @@ import UpcomingWorkshop from "@/components/rise-and-thrive/UpcomingWorkshop";
 import WhatYouWillLearn from "@/components/rise-and-thrive/WhatUwillLearn";
 import WhoIsItFor from "@/components/rise-and-thrive/Whoisthisfor";
 import { getWingMediaBySlug } from "@/lib/api";
+import { getEvents } from "@/lib/api/events";
 
 export default async function Home() {
-    const media = await getWingMediaBySlug("rise-and-thrive");
+    const [media, events] = await Promise.all([
+        getWingMediaBySlug("rise-and-thrive"),
+        getEvents(),
+    ]);
 
     return (
         <>
@@ -25,7 +29,7 @@ export default async function Home() {
             <WhatYouWillLearn />
             <PhotoGallery images={media.gallery} />
             <HomeResearch />
-            <UpcomingWorkshop />
+            <UpcomingWorkshop events={events} />
             <Review />
             <Contact />
         </>
