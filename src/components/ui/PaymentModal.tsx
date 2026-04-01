@@ -55,7 +55,7 @@ const PAYMENT_METHODS: MethodConfig[] = [
   {
     id: 'rocket',
     label: 'Rocket',
-    image: 'https://freelogopng.com/images/all_img/1656234571dutch-bangla-rocket-logo-png.png',
+    image: '/images/rocket.jpg',
     bgColor: 'bg-gradient-to-r from-purple-400 to-purple-500',
     sendTo: '01783-4143541',
     numberLabel: 'Your Rocket Number',
@@ -63,8 +63,8 @@ const PAYMENT_METHODS: MethodConfig[] = [
   },
   {
     id: 'brac_bank',
-    label: 'BRAC Bank',
-    image: 'https://upload.wikimedia.org/wikipedia/en/3/3e/BRAC_Bank_logo.svg',
+    label: 'UPay',
+    image: '/images/upay.png',
     bgColor: 'bg-gradient-to-r from-blue-500 to-blue-600',
     sendTo: '01783-414354',
     numberLabel: 'Your Account Number',
