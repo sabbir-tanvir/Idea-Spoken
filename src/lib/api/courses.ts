@@ -79,6 +79,11 @@ interface CoursesApiResponse {
   data: ApiCourse[];
 }
 
+interface CompleteLessonResponse {
+  success: boolean;
+  message?: string;
+}
+
 /**
  * Fetch a single course with full module/lesson details
  */
@@ -161,5 +166,39 @@ export async function getCourses(): Promise<ApiCourse[]> {
   } catch (error) {
     console.error('Failed to fetch courses:', error);
     return [];
+  }
+}
+
+/**
+ * Mark a lesson as completed for the authenticated user.
+ * Calls local Next.js API route so cookie auth can be used server-side.
+ */
+export async function completeLesson(lessonId: number): Promise<CompleteLessonResponse> {
+  try {
+    const response = await fetch(`/api/lesson-complete/${lessonId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = (await response.json()) as CompleteLessonResponse;
+    if (!response.ok) {
+      return {
+        success: false,
+        message: data.message ?? 'Failed to complete lesson',
+      };
+    }
+
+    return {
+      success: data.success,
+      message: data.message ?? 'Lesson completed',
+    };
+  } catch (error) {
+    console.error('Failed to complete lesson:', error);
+    return {
+      success: false,
+      message: 'Failed to complete lesson',
+    };
   }
 }

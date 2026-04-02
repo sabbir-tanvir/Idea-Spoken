@@ -1,0 +1,1159 @@
+{
+  "success": true,
+  "message": "Quizzes retrieved successfully",
+  "count": 72,
+  "data": [
+    {
+      "id": 1,
+      "lessonId": 48,
+      "question": "Lesson 48: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "lessonId": 48,
+      "question": "Lesson 48: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 3,
+      "lessonId": 6,
+      "question": "Lesson 6: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "lessonId": 6,
+      "question": "Lesson 6: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 5,
+      "lessonId": 4,
+      "question": "Lesson 4: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 6,
+      "lessonId": 4,
+      "question": "Lesson 4: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 7,
+      "lessonId": 5,
+      "question": "Lesson 5: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 8,
+      "lessonId": 5,
+      "question": "Lesson 5: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 9,
+      "lessonId": 7,
+      "question": "Lesson 7: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 10,
+      "lessonId": 7,
+      "question": "Lesson 7: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 11,
+      "lessonId": 8,
+      "question": "Lesson 8: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 12,
+      "lessonId": 8,
+      "question": "Lesson 8: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 13,
+      "lessonId": 9,
+      "question": "Lesson 9: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 14,
+      "lessonId": 9,
+      "question": "Lesson 9: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 15,
+      "lessonId": 10,
+      "question": "Lesson 10: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 16,
+      "lessonId": 10,
+      "question": "Lesson 10: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 17,
+      "lessonId": 11,
+      "question": "Lesson 11: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 18,
+      "lessonId": 11,
+      "question": "Lesson 11: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 19,
+      "lessonId": 12,
+      "question": "Lesson 12: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 20,
+      "lessonId": 12,
+      "question": "Lesson 12: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 21,
+      "lessonId": 13,
+      "question": "Lesson 13: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 22,
+      "lessonId": 13,
+      "question": "Lesson 13: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 23,
+      "lessonId": 14,
+      "question": "Lesson 14: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 24,
+      "lessonId": 14,
+      "question": "Lesson 14: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 25,
+      "lessonId": 15,
+      "question": "Lesson 15: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 26,
+      "lessonId": 15,
+      "question": "Lesson 15: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 27,
+      "lessonId": 16,
+      "question": "Lesson 16: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 28,
+      "lessonId": 16,
+      "question": "Lesson 16: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 29,
+      "lessonId": 17,
+      "question": "Lesson 17: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 30,
+      "lessonId": 17,
+      "question": "Lesson 17: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 31,
+      "lessonId": 18,
+      "question": "Lesson 18: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 32,
+      "lessonId": 18,
+      "question": "Lesson 18: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 33,
+      "lessonId": 44,
+      "question": "Lesson 44: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 34,
+      "lessonId": 44,
+      "question": "Lesson 44: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 35,
+      "lessonId": 49,
+      "question": "Lesson 49: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 36,
+      "lessonId": 49,
+      "question": "Lesson 49: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 37,
+      "lessonId": 26,
+      "question": "Lesson 26: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 38,
+      "lessonId": 26,
+      "question": "Lesson 26: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 39,
+      "lessonId": 25,
+      "question": "Lesson 25: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 40,
+      "lessonId": 25,
+      "question": "Lesson 25: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 41,
+      "lessonId": 27,
+      "question": "Lesson 27: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 42,
+      "lessonId": 27,
+      "question": "Lesson 27: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 43,
+      "lessonId": 28,
+      "question": "Lesson 28: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 44,
+      "lessonId": 28,
+      "question": "Lesson 28: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 45,
+      "lessonId": 29,
+      "question": "Lesson 29: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 46,
+      "lessonId": 29,
+      "question": "Lesson 29: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 47,
+      "lessonId": 30,
+      "question": "Lesson 30: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 48,
+      "lessonId": 30,
+      "question": "Lesson 30: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 49,
+      "lessonId": 31,
+      "question": "Lesson 31: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 50,
+      "lessonId": 31,
+      "question": "Lesson 31: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 51,
+      "lessonId": 33,
+      "question": "Lesson 33: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 52,
+      "lessonId": 33,
+      "question": "Lesson 33: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 53,
+      "lessonId": 32,
+      "question": "Lesson 32: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 54,
+      "lessonId": 32,
+      "question": "Lesson 32: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 55,
+      "lessonId": 35,
+      "question": "Lesson 35: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 56,
+      "lessonId": 35,
+      "question": "Lesson 35: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 57,
+      "lessonId": 34,
+      "question": "Lesson 34: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 58,
+      "lessonId": 34,
+      "question": "Lesson 34: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 59,
+      "lessonId": 36,
+      "question": "Lesson 36: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 60,
+      "lessonId": 36,
+      "question": "Lesson 36: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 61,
+      "lessonId": 38,
+      "question": "Lesson 38: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 62,
+      "lessonId": 38,
+      "question": "Lesson 38: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 63,
+      "lessonId": 39,
+      "question": "Lesson 39: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 64,
+      "lessonId": 39,
+      "question": "Lesson 39: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 65,
+      "lessonId": 37,
+      "question": "Lesson 37: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 66,
+      "lessonId": 37,
+      "question": "Lesson 37: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 67,
+      "lessonId": 41,
+      "question": "Lesson 41: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 68,
+      "lessonId": 41,
+      "question": "Lesson 41: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 69,
+      "lessonId": 42,
+      "question": "Lesson 42: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 70,
+      "lessonId": 42,
+      "question": "Lesson 42: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    },
+    {
+      "id": 71,
+      "lessonId": 40,
+      "question": "Lesson 40: Which option best summarizes the video?",
+      "options": [
+        "Main idea",
+        "Minor detail",
+        "Random fact",
+        "Unrelated topic"
+      ],
+      "correctAnswer": "Main idea",
+      "videoCheckpoint": 120,
+      "point": 10,
+      "createdAt": "2026-03-30T10:00:00.000Z",
+      "updatedAt": "2026-03-30T10:00:00.000Z"
+    },
+    {
+      "id": 72,
+      "lessonId": 40,
+      "question": "Lesson 40: What is the best next speaking practice step?",
+      "options": [
+        "Practice aloud",
+        "Skip revision",
+        "Memorize silently",
+        "Avoid feedback"
+      ],
+      "correctAnswer": "Practice aloud",
+      "videoCheckpoint": 300,
+      "point": 15,
+      "createdAt": "2026-03-30T10:15:00.000Z",
+      "updatedAt": "2026-03-30T10:15:00.000Z"
+    }
+  ]
+}
