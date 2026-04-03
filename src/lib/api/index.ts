@@ -388,7 +388,7 @@ export async function getSevenWingsData(): Promise<SevenWingsData> {
         const routeByBlogSlug: Record<string, string> = {
             "idea-youth-development-center": "/youth-development",
             "idea-social-welfare": "/social-welfare",
-            "the-game-method": "/idea-spoken",
+            "the-game-method": "/game-method",
             "idea-pitha-pathshala": "/pitha",
             "widen": "/widen",
             "bangla-pitha-research-institute": "/bangla-pitha-research-institute",

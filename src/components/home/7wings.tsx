@@ -36,7 +36,7 @@ const fallbackData: SevenWingsData = {
             title: "IDEA SPOKEN – The Game Method",
             description: "গেম-ভিত্তিক English শেখার অভিনব পদ্ধতি",
             image: "/images/wings/spoken-english.jpg",
-            slug: "/idea-spoken"
+            slug: "/game-method"
         },
         {
             id: 4,
