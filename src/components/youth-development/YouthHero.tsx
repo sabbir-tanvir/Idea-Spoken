@@ -13,7 +13,7 @@ interface YouthHeroProps {
 export default function YouthHero({
   title = "IDEA Youth Development Center",
   description = "তরুণদের হতাশা দূর করে দক্ষ ও উদ্ভাবনী হিসেবে গড়ে তুলতে যুব উন্নয়ন মন্ত্রণালয় ২০১৫ সালে আইডিয়া প্রোগ্রাম চালু করে। দেশে বিভিন্ন স্থানে শিক্ষার্থীদের জন্য নিয়মিত কর্মশালা ও দক্ষতা উন্নয়ন কার্যক্রম আয়োজিত হয়, যাতে তারা শেখে, বুঝে এবং ভবিষ্যতের জন্য নিজেকে প্রস্তুত করতে পারে।",
-  coverImageUrl = "/home/vai.jpg",
+  coverImageUrl = "/images/vai.jpg",
   coverImageAlt = "Hamidul Huq",
 }: YouthHeroProps) {
   return (

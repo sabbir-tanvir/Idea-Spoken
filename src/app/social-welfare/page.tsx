@@ -1,12 +1,12 @@
 import PEvent from '@/components/bangla-pitha-research-institute/BanglaPithaEvent';
 import PhotoGallery from '@/components/PhotoGallery';
-import HeroSection from "@/components/rise-and-thrive/HeroSection";
 
 import React from 'react';
 import { getWingMediaBySlug } from '@/lib/api';
 import KeyProjects from '@/components/youth-development/KeyProjects';
 import OurImpactText from '@/components/youth-development/OurImpactText';
 import { getEvents } from "@/lib/api/events";
+import SocialHome from '@/components/social-welfare/SocialHome';
 
 
 export default async function Home() {
@@ -17,7 +17,7 @@ export default async function Home() {
 
   return (
     <>
-      <HeroSection
+      <SocialHome
         title={media.title || undefined}
         description={media.description || undefined}
         coverImageUrl={media.coverImageUrl ?? undefined}
