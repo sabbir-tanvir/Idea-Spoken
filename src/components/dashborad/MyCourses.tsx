@@ -127,17 +127,24 @@ function CourseListCard({
 // ─── Module Accordion ────────────────────────────────────────────────
 function ModuleAccordion({
   module,
+  moduleIndex,
   defaultOpen,
+  isModuleUnlocked,
+  isLessonUnlocked,
   onLessonSelect,
 }: {
   module: ApiModule;
+  moduleIndex: number;
   defaultOpen: boolean;
+  isModuleUnlocked: (moduleIndex: number) => boolean;
+  isLessonUnlocked: (moduleIndex: number, lessonIndex: number) => boolean;
   onLessonSelect?: (lesson: ApiLesson) => void;
 }) {
   const [open, setOpen] = useState(defaultOpen);
   const sortedLessons = [...module.lessons].sort(
     (a, b) => a.sortOrder - b.sortOrder
   );
+  const moduleUnlocked = isModuleUnlocked(moduleIndex);
   const completedCount = sortedLessons.filter((l) => l.completed).length;
   const allDone = completedCount === sortedLessons.length && sortedLessons.length > 0;
 
@@ -145,9 +152,11 @@ function ModuleAccordion({
     <div className="rounded-2xl overflow-hidden shadow-md border border-purple-100 bg-white">
       {/* Module Header */}
       <button
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => moduleUnlocked && setOpen((v) => !v)}
         className={`w-full flex items-center gap-4 p-4 md:p-5 text-left transition-colors ${
-          allDone
+          !moduleUnlocked
+            ? "bg-gray-100"
+            : allDone
             ? "bg-green-50 hover:bg-green-100"
             : "bg-purple-50 hover:bg-purple-100"
         }`}
@@ -171,6 +180,9 @@ function ModuleAccordion({
           <h4 className="text-base font-bold text-gray-900 truncate">
             {module.title}
           </h4>
+          {!moduleUnlocked && (
+            <p className="text-xs text-gray-500 mt-1">Complete previous module to unlock</p>
+          )}
         </div>
 
         <div className="flex items-center gap-3 shrink-0">
@@ -214,7 +226,12 @@ function ModuleAccordion({
                   <LessonRow
                     key={lesson.id}
                     lesson={lesson}
-                    onClick={() => onLessonSelect?.(lesson)}
+                    locked={!isLessonUnlocked(moduleIndex, sortedLessons.findIndex((l) => l.id === lesson.id))}
+                    onClick={() => {
+                      const lessonIndex = sortedLessons.findIndex((l) => l.id === lesson.id);
+                      if (!isLessonUnlocked(moduleIndex, lessonIndex)) return;
+                      onLessonSelect?.(lesson);
+                    }}
                   />
                 ))
               )}
@@ -227,12 +244,14 @@ function ModuleAccordion({
 }
 
 // ─── Lesson Row ──────────────────────────────────────────────────────
-function LessonRow({ lesson, onClick }: { lesson: ApiLesson; onClick?: () => void }) {
+function LessonRow({ lesson, locked, onClick }: { lesson: ApiLesson; locked: boolean; onClick?: () => void }) {
   return (
     <div
       onClick={onClick}
       className={`flex items-center gap-4 px-5 py-4 cursor-pointer transition-colors ${
-        lesson.completed
+        locked
+          ? "bg-gray-50 cursor-not-allowed"
+          : lesson.completed
           ? "hover:bg-green-50/60 bg-green-50/30"
           : "hover:bg-purple-50/60"
       }`}
@@ -240,12 +259,16 @@ function LessonRow({ lesson, onClick }: { lesson: ApiLesson; onClick?: () => voi
       {/* Icon */}
       <div
         className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
-          lesson.completed
+          locked
+            ? "bg-gray-200 text-gray-500"
+            : lesson.completed
             ? "bg-green-100 text-green-600"
             : "bg-purple-100 text-purple-600"
         }`}
       >
-        {lesson.completed ? (
+        {locked ? (
+          <ChevronRight className="w-4 h-4" />
+        ) : lesson.completed ? (
           <CheckCircle2 className="w-4 h-4" />
         ) : (
           <Play className="w-3.5 h-3.5 ml-0.5" fill="currentColor" />
@@ -256,19 +279,23 @@ function LessonRow({ lesson, onClick }: { lesson: ApiLesson; onClick?: () => voi
       <div className="flex-1 min-w-0">
         <p
           className={`text-sm font-medium truncate ${
-            lesson.completed ? "text-gray-500 line-through" : "text-gray-900"
+            locked ? "text-gray-400" : lesson.completed ? "text-gray-500 line-through" : "text-gray-900"
           }`}
         >
           {lesson.title}
         </p>
         <span className="text-xs text-gray-400">
-          {formatDuration(lesson.duration)}
+          {locked ? "Locked" : formatDuration(lesson.duration)}
         </span>
       </div>
 
       {/* Status badge */}
       <div className="shrink-0">
-        {lesson.completed ? (
+        {locked ? (
+          <span className="text-xs font-semibold text-gray-600 bg-gray-200 px-2.5 py-1 rounded-full">
+            Locked
+          </span>
+        ) : lesson.completed ? (
           <span className="text-xs font-semibold text-green-700 bg-green-100 px-2.5 py-1 rounded-full">
             Completed
           </span>
@@ -294,6 +321,27 @@ export function CourseDetailView({
   const sortedModules = [...(course.modules ?? [])].sort(
     (a, b) => a.sortOrder - b.sortOrder
   );
+
+  const isModuleUnlocked = (moduleIndex: number) => {
+    if (moduleIndex === 0) return true;
+    const prevModule = sortedModules[moduleIndex - 1];
+    if (!prevModule) return false;
+    const prevLessons = [...prevModule.lessons].sort((a, b) => a.sortOrder - b.sortOrder);
+    return prevLessons.length > 0 && prevLessons.every((lesson) => lesson.completed);
+  };
+
+  const isLessonUnlocked = (moduleIndex: number, lessonIndex: number) => {
+    if (!isModuleUnlocked(moduleIndex)) return false;
+    const currentModule = sortedModules[moduleIndex];
+    if (!currentModule) return false;
+    const lessons = [...currentModule.lessons].sort((a, b) => a.sortOrder - b.sortOrder);
+    const lesson = lessons[lessonIndex];
+    if (!lesson) return false;
+    if (lesson.completed) return true;
+    if (lessonIndex === 0) return true;
+    return lessons[lessonIndex - 1]?.completed ?? false;
+  };
+
   const lessons = totalLessons(course.modules);
 
   return (
@@ -350,7 +398,10 @@ export function CourseDetailView({
             <ModuleAccordion
               key={module.id}
               module={module}
+              moduleIndex={index}
               defaultOpen={index === 0}
+              isModuleUnlocked={isModuleUnlocked}
+              isLessonUnlocked={isLessonUnlocked}
               onLessonSelect={onLessonSelect}
             />
           ))
