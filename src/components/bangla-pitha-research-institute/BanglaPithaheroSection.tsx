@@ -21,7 +21,7 @@ export default function BanglaPithaHeroSection({
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/home/bgg.jpg"
+          src="/images/pithaBG.png"
           alt="Background"
           fill
           className="object-cover"

@@ -22,10 +22,10 @@ async function PithaPatsala() {
     />
     <CountUpSection />
     <BanglaPithaResearch />
+        <PhotoGallery images={media.gallery} />
+
     <BanglaPithaInovation />
     <BanglaPithaActivation />
-    <PhotoGallery images={media.gallery} />
-    <PMission />
     <BanglaPithaContact />
 
     </>

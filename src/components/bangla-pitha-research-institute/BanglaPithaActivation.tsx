@@ -1,6 +1,7 @@
 'use client';
 
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Globe } from 'lucide-react';
+import VisionCard from '../ui/cards/VisionCard';
 
 const activities = [
   {
@@ -31,7 +32,7 @@ const activities = [
 
 export default function BanglaPithaActivation() {
   return (
-    <section className="py-20 md:py-24 lg:py-32 bg-white">
+    <section className="py-10 md:py-14 lg:py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className=" mx-auto">
           {/* Section Title */}
@@ -61,6 +62,17 @@ export default function BanglaPithaActivation() {
           </div>
         </div>
       </div>
+
+      <div className="container max-w-6xl mx-auto px-4 py-12 ">
+        <VisionCard
+          icon={<Globe className="w-16 h-16" />}
+          title="Our Vision"
+          subtitle='"Local to Global" – গ্রামের পিঠাকে বিশ্বমেলার স্টলে তোলার স্বপ্ন।'
+        />
+      </div>
     </section>
+
+
+
   );
 }
