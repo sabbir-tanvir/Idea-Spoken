@@ -2,8 +2,9 @@
 
 import { EnglishDebateData } from "@/lib/api";
 import { ApiCourseDetail } from "@/lib/api/courses";
-import { motion } from "framer-motion";
-import { Brain, Mic, Trophy, Play, Lock } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Brain, Mic, Trophy, Play, Lock, X } from "lucide-react";
+import { useState } from "react";
 
 interface CourseStructureProps {
     data: EnglishDebateData;
@@ -20,6 +21,8 @@ const getIcon = (iconName: string) => {
 };
 
 export default function CourseStructure({ data, courseDetail }: CourseStructureProps) {
+    const [previewOpen, setPreviewOpen] = useState(false);
+    
     if (!data.skillsHighlights || !data.courseModules) return null;
 
     // Build module list: prefer API modules, fall back to static data
@@ -38,6 +41,17 @@ export default function CourseStructure({ data, courseDetail }: CourseStructureP
               lessonCount: m.lessons.length,
           }))
         : data.courseModules;
+
+    // Get first lesson for preview video
+    const firstLesson = courseDetail
+        ? [...courseDetail.modules]
+              .sort((a, b) => a.sortOrder - b.sortOrder)
+              .flatMap((module) => [...module.lessons].sort((a, b) => a.sortOrder - b.sortOrder))[0]
+        : undefined;
+
+    const previewEmbedUrl = firstLesson?.video_id && firstLesson?.library_id
+        ? `https://iframe.mediadelivery.net/embed/${firstLesson.library_id}/${firstLesson.video_id}?autoplay=true&preload=true&responsive=true`
+        : undefined;
 
     return (
         <section className="bg-white w-full">
@@ -62,15 +76,16 @@ export default function CourseStructure({ data, courseDetail }: CourseStructureP
                                 key={module.id}
                                 className={`flex items-center gap-4 p-4 md:p-6 rounded-2xl transition-all duration-300 ${module.isLocked
                                         ? "bg-purple-100/75 shadow-md opacity-75 hover:opacity-100"
-                                        : "bg-purple-200 shadow-sm hover:shadow-md cursor-pointer"
+                                        : "bg-purple-200 shadow-sm hover:shadow-lg cursor-pointer group"
                                     }`}
                                 initial={{ opacity: 0, x: -20 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.4, delay: 0.3 + (index * 0.05) }}
+                                onClick={() => !module.isLocked && previewEmbedUrl && setPreviewOpen(true)}
                             >
                                 {/* Icon Box */}
-                                <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${module.isLocked ? "bg-purple-200 text-white" : "bg-purple-600 text-white"
+                                <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 transition-transform ${module.isLocked ? "bg-purple-200 text-white" : "bg-purple-600 text-white group-hover:scale-110"
                                     }`}>
                                     {module.isLocked ? (
                                         <Lock className="w-5 h-5" />
@@ -101,16 +116,83 @@ export default function CourseStructure({ data, courseDetail }: CourseStructureP
                                     )}
                                 </div>
 
-                                {/* Status Badge (Locked) */}
-                                {module.isLocked && (
+                                {/* Status Badge (Locked or Watch Preview) */}
+                                {module.isLocked ? (
                                     <div className="bg-purple-200/50 px-3 py-1 rounded text-xs font-medium text-purple-700 hidden sm:block">
                                         Locked
+                                    </div>
+                                ) : previewEmbedUrl && (
+                                    <div className="bg-purple-600 px-4 py-2 rounded-lg text-xs font-semibold text-white hidden sm:flex items-center gap-1 group-hover:bg-purple-700 transition-colors">
+                                        <Play className="w-3 h-3" fill="currentColor" />
+                                        Watch
                                     </div>
                                 )}
                             </motion.div>
                         ))}
                     </div>
                 </motion.div>
+
+                {/* Preview Modal */}
+                <AnimatePresence>
+                    {previewOpen && previewEmbedUrl && (
+                        <motion.div
+                            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                        >
+                            {/* Backdrop */}
+                            <motion.div
+                                className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                                onClick={() => setPreviewOpen(false)}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                            />
+
+                            {/* Modal Content */}
+                            <motion.div
+                                className="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden"
+                                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                                animate={{ opacity: 1, scale: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                                transition={{ duration: 0.3, ease: "easeOut" }}
+                            >
+                                {/* Close Button */}
+                                <button
+                                    onClick={() => setPreviewOpen(false)}
+                                    className="absolute top-4 right-4 z-10 p-2 rounded-full bg-black/20 hover:bg-black/40 text-white transition-colors"
+                                    aria-label="Close"
+                                >
+                                    <X className="w-5 h-5" />
+                                </button>
+
+                                {/* Video Container */}
+                                <div className="relative w-full aspect-video bg-black">
+                                    <iframe
+                                        src={previewEmbedUrl}
+                                        loading="lazy"
+                                        title={firstLesson?.title ?? "Module preview"}
+                                        style={{ border: "none", position: "absolute", top: 0, left: 0, height: "100%", width: "100%" }}
+                                        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                                        allowFullScreen
+                                    />
+                                </div>
+
+                                {/* Video Info */}
+                                <div className="p-6 bg-white">
+                                    <h3 className="text-xl font-bold text-slate-900 mb-2">
+                                        {firstLesson?.title ?? "Module Preview"}
+                                    </h3>
+                                    <p className="text-slate-600 text-sm">
+                                        Duration: {firstLesson?.duration ? `${Math.round(firstLesson.duration / 60)} minutes` : "N/A"}
+                                    </p>
+                                </div>
+                            </motion.div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </div>
         </section>
     );
