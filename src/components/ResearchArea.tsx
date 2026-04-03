@@ -25,7 +25,7 @@ export default function ResearchArea({ heading, subheading, cards }: ResearchAre
   };
 
   return (
-    <section className="py-16 md:py-24 bg-gray-50">
+    <section className="py-10 md:py-18 bg-gray-50">
       <div className="container mx-auto px-4 ">
         {/* Heading */}
         <motion.div

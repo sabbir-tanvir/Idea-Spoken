@@ -22,7 +22,7 @@ const ContactCard: React.FC<ContactCardProps> = ({
   backgroundClassName = "bg-purple-200"
 }) => {
   return (
-    <section className={`py-20 md:py-24 lg:py-32 ${backgroundClassName}`}>
+    <section className={`py-10 md:py-14 lg:py-18 ${backgroundClassName}`}>
       <div className="container mx-auto px-4">
         <motion.div
           className="bg-white rounded-3xl p-8 md:p-12 lg:p-16 mx-auto text-center shadow-[0_15px_60px_rgba(124,58,237,0.15)]"

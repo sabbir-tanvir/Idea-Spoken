@@ -32,7 +32,7 @@ export default function CountUpSection() {
   ]
 
   return (
-    <section className="bg-gray-50 py-16 md:py-20">
+    <section className="bg-gray-50 py-6 md:py-10">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {stats.map((stat, index) => (

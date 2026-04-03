@@ -18,7 +18,7 @@ interface ReviewProps {
 
 const Review: React.FC<ReviewProps> = ({ icon, title, subtitle, reviews }) => {
   return (
-    <section className="py-20 md:py-24 lg:py-32 bg-gray-50">
+    <section className="py-10 md:py-14 lg:py-18 bg-gray-50">
       <div className="container mx-auto px-4">
         <motion.div
           className="relative bg-white rounded-3xl shadow-lg p-8 md:p-12 lg:p-16 overflow-hidden"

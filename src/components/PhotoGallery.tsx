@@ -36,7 +36,7 @@ export default function PhotoGallery({
   }, [resolvedGalleryImages]);
 
   return (
-    <section className="py-20 md:py-24 lg:py-32 bg-white">
+    <section className="py-10 md:py-14 lg:py-18 bg-white">
       <div className="container mx-auto px-4">
         <motion.div
           className="mb-12"
