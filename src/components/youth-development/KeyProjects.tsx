@@ -25,7 +25,7 @@ export default function KeyProjects() {
             {projects.map((project, index) => (
               <div
                 key={index}
-                className="bg-white/90 backdrop-blur-sm border-2 border-purple-200 rounded-lg p-4 min-h-21 shadow-md shadow-blue-100 hover:shadow-lg hover:shadow-blue-200 transition-all duration-300"
+                className="bg-white/90 backdrop-blur-sm border-2 border-purple-200 rounded-2xl p-4 min-h-21 shadow-md shadow-blue-100 hover:shadow-lg hover:shadow-blue-200 transition-all duration-300"
               >
                 <div className="flex items-start gap-3">
                   <div className="shrink-0 w-6 h-6 relative mt-0.5">
