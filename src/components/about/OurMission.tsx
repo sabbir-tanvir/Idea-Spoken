@@ -30,7 +30,7 @@ export default function OurMission({ data }: OurMissionProps) {
                             {/* Tall Image - Left */}
                             <div className="w-1/2 relative h-[450px] md:h-[550px] rounded-2xl overflow-hidden shadow-xl">
                                 <Image
-                                    src={data.images[0] || "/placeholder.jpg"}
+                                    src="/images/vai.jpg"
                                     alt="Students"
                                     fill
                                     className="object-cover"
@@ -88,7 +88,7 @@ export default function OurMission({ data }: OurMissionProps) {
                                 {/* Short Image - Bottom */}
                                 <div className="relative flex-1 min-h-[200px] md:min-h-[280px] rounded-2xl overflow-hidden shadow-xl">
                                     <Image
-                                        src={data.images[1] || "/placeholder.jpg"}
+                                        src="/images/youth.jpg"
                                         alt="Discussion"
                                         fill
                                         className="object-cover"
