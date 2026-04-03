@@ -23,6 +23,17 @@ export default function DebateHero({ data, courseDetail }: DebateHeroProps) {
     const durationHrs = courseDetail?.duration
         ? `${Math.round(courseDetail.duration / 3600)} Hours`
         : data.duration;
+
+    const firstLesson = courseDetail
+        ? [...courseDetail.modules]
+              .sort((a, b) => a.sortOrder - b.sortOrder)
+              .flatMap((module) => [...module.lessons].sort((a, b) => a.sortOrder - b.sortOrder))[0]
+        : undefined;
+
+    const previewEmbedUrl = firstLesson?.video_id && firstLesson?.library_id
+        ? `https://iframe.mediadelivery.net/embed/${firstLesson.library_id}/${firstLesson.video_id}?autoplay=false&preload=true&responsive=true`
+        : undefined;
+
     // Animation variants
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -136,15 +147,22 @@ export default function DebateHero({ data, courseDetail }: DebateHeroProps) {
                     transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
                     className="relative"
                 >
-                    <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl">
-                        <iframe
-                          src="https://iframe.mediadelivery.net/embed/610156/14bca5b0-54d7-4a11-8385-773320cb69b2?autoplay=false&preload=true&responsive=true"
-                          loading="lazy"
-                          style={{ border: "none", position: "absolute", top: 0, left: 0, height: "100%", width: "100%" }}
-                          allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
-                          allowFullScreen
-                        />
-                    </div>
+                    {previewEmbedUrl ? (
+                        <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl">
+                            <iframe
+                                src={previewEmbedUrl}
+                                loading="lazy"
+                                title={firstLesson?.title ?? "Course preview"}
+                                style={{ border: "none", position: "absolute", top: 0, left: 0, height: "100%", width: "100%" }}
+                                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                                allowFullScreen
+                            />
+                        </div>
+                    ) : (
+                        <div className="relative aspect-video bg-purple-200 rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center">
+                            <span className="text-purple-900 font-medium">Preview will be available soon</span>
+                        </div>
+                    )}
 
                     {/* Floating Badge */}
                     <motion.div
@@ -153,7 +171,7 @@ export default function DebateHero({ data, courseDetail }: DebateHeroProps) {
                         transition={{ delay: 1, duration: 0.5 }}
                         className="absolute -bottom-6 -right-6 lg:bottom-8 lg:-right-8 bg-purple-600 text-white px-6 py-3 rounded-xl shadow-lg font-medium text-sm flex items-center gap-2 z-20"
                     >
-                        Free Preview Available
+                        {firstLesson ? `Free Preview: ${firstLesson.title}` : "Free Preview Available"}
                     </motion.div>
                 </motion.div>
             </div>

@@ -34,6 +34,17 @@ export default function DebateHero({
     const durationHrs = courseDetail?.duration
         ? `${Math.round(courseDetail.duration / 3600)} Hours`
         : data.duration;
+
+    const firstLesson = courseDetail
+        ? [...courseDetail.modules]
+              .sort((a, b) => a.sortOrder - b.sortOrder)
+              .flatMap((module) => [...module.lessons].sort((a, b) => a.sortOrder - b.sortOrder))[0]
+        : undefined;
+
+    const previewEmbedUrl = firstLesson?.video_id && firstLesson?.library_id
+        ? `https://iframe.mediadelivery.net/embed/${firstLesson.library_id}/${firstLesson.video_id}?autoplay=false&preload=true&responsive=true`
+        : undefined;
+
     // Animation variants
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -147,7 +158,18 @@ export default function DebateHero({
                     transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
                     className="relative"
                 >
-                    {coverImageUrl ? (
+                    {previewEmbedUrl ? (
+                        <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl">
+                            <iframe
+                                src={previewEmbedUrl}
+                                loading="lazy"
+                                title={firstLesson?.title ?? "Course preview"}
+                                style={{ border: "none", position: "absolute", top: 0, left: 0, height: "100%", width: "100%" }}
+                                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                                allowFullScreen
+                            />
+                        </div>
+                    ) : coverImageUrl ? (
                         <div className="relative aspect-video bg-purple-200 rounded-2xl overflow-hidden shadow-2xl group cursor-pointer hover:shadow-purple-200/50 transition-shadow duration-300">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
@@ -180,7 +202,7 @@ export default function DebateHero({
                         transition={{ delay: 1, duration: 0.5 }}
                         className="absolute -bottom-6 -right-6 lg:bottom-8 lg:-right-8 bg-purple-600 text-white px-6 py-3 rounded-xl shadow-lg font-medium text-sm flex items-center gap-2 z-20"
                     >
-                        Free Preview Available
+                        {firstLesson ? `Free Preview: ${firstLesson.title}` : "Free Preview Available"}
                     </motion.div>
                 </motion.div>
             </div>
