@@ -6,38 +6,56 @@ const WActivities = () => {
   const activities: Activity[] = [
     {
       icon: <Monitor className="w-8 h-8" />,
-      title: 'Online Grooming Mission',
-      description: 'Professional Development Sessions',
+      title: '★ উইনি উদ্যোক্তা প্রশিক্ষণ সেশন:',
+      description: '(অনলাইন ও অফলাইন—উভয় মাধ্যমেই উদ্যোক্তাদের জন্য ব্যবসা পরিচালনা, মার্কেটিং কৌশল এবং আত্ম-উন্নয়নমূলক বিভিন্ন প্রশিক্ষণ সেশন সম্পূর্ণ বিনামূল্যে আয়োজন করা হয়।)',
       bgColor: 'bg-purple-500'
     },
     {
       icon: <MessageSquare className="w-8 h-8" />,
-      title: 'WIDEN উদ্যোক্তা আড্ডা',
-      description: 'Entrepreneur Networking',
+      title: '★ অনলাইন গ্রুমিং সেশন:',
+      description: '(নিয়মিত গ্রুমিং সেশনের মাধ্যমে উদ্যোক্তাদের ব্যবসায়িক দক্ষতা বৃদ্ধি, ধারাবাহিকতা বজায় রাখা এবং উন্নয়নের কার্যকর কৌশল নিয়ে দিকনির্দেশনা প্রদান করা হয়।)',
       bgColor: 'bg-purple-500'
     },
     {
       icon: <BookOpen className="w-8 h-8" />,
-      title: 'WIDEN শেখাও-শেখানো',
-      description: 'Peer Learning Program',
+      title: '★ উইনি–এই আমি, এই আমার উদ্যোগ:',
+      description: '(উইনি গ্রুপের একটি জনপ্রিয় লাইভ সেগমেন্ট, যেখানে উদ্যোক্তারা তাদের যাত্রার গল্প—সফলতা, ব্যর্থতা ও শেখার অভিজ্ঞতা শেয়ার করে অন্যদের অনুপ্রাণিত করেন।)',
       bgColor: 'bg-purple-500'
     },
     {
       icon: <Briefcase className="w-8 h-8" />,
-      title: 'Online Entrepreneur Sessions',
-      description: 'Business Training',
+      title: '★ উইনি শিক্ষামূলক পোস্ট ও লাইভ:',
+      description: '(বিভিন্ন শিক্ষামূলক পোস্ট, ভিডিও ও লাইভ সেশনের মাধ্যমে উদ্যোক্তাদের জ্ঞান, দক্ষতা এবং মোটিভেশন উন্নয়নে ধারাবাহিকভাবে কাজ করা হয়।)',
       bgColor: 'bg-purple-500'
     },
     {
       icon: <MapPin className="w-8 h-8" />,
-      title: '64 District Meetups',
-      description: 'Nationwide Gatherings',
+      title: '★ উইনি মিট-আপ:',
+      description: '(প্রতি বছর আয়োজিত অফলাইন মিট-আপে দেশের বিভিন্ন অঞ্চলের উদ্যোক্তারা একত্রিত হয়ে পারস্পরিক নেটওয়ার্কিং, অভিজ্ঞতা বিনিময় এবং পণ্যের প্রসারের সুযোগ পান।)',
       bgColor: 'bg-purple-500'
     },
     {
       icon: <Users className="w-8 h-8" />,
-      title: 'Multi-Point Mentoring',
-      description: 'Comprehensive Guidance',
+      title: '★ বিনামূল্যে বই বিতরণ কর্মসূচি:',
+      description: '(অভাবী শিক্ষার্থীদের জন্য একাডেমিক বই সম্পূর্ণ বিনামূল্যে প্রদান করা হয়। এই উদ্যোগের মাধ্যমে দেশের বিভিন্ন প্রান্তের শিক্ষার্থীদের কাছে শিক্ষার সুযোগ পৌঁছে দেওয়া হচ্ছে।)',
+      bgColor: 'bg-purple-500'
+    },
+    {
+      icon: <Monitor className="w-8 h-8" />,
+      title: '★IDEA Soft Skill Development Course:',
+      description: '(এই কোর্সের মাধ্যমে শিক্ষার্থীদের কমিউনিকেশন, লিডারশিপ, প্রেজেন্টেশনসহ প্রয়োজনীয় সফট স্কিল উন্নয়নে প্রশিক্ষণ দেওয়া হয়, যা তাদের ভবিষ্যৎ ক্যারিয়ার ও চাকরির বাজারে প্রস্তুত হতে সহায়তা করে।)',
+      bgColor: 'bg-purple-500'
+    },
+    {
+      icon: <MessageSquare className="w-8 h-8" />,
+      title: '★ উইনি দেখাও তোমার প্রতিভা:',
+      description: '(উইনির প্রতিষ্ঠাবার্ষিকী উপলক্ষে আয়োজিত অনলাইন প্রতিযোগিতা, যেখানে সাংস্কৃতিক পরিবেশনা, কমেডি, হামদ-নাতসহ নানা ক্যাটাগরিতে অংশগ্রহণের মাধ্যমে সদস্যদের মধ্যে বন্ধন দৃঢ় হয় এবং একটি উৎসবমুখর পরিবেশ তৈরি হয়।)',
+      bgColor: 'bg-purple-500'
+    },
+    {
+      icon: <BookOpen className="w-8 h-8" />,
+      title: '★ আইডিয়া ফ্রাইডে মিল (আমরা যোগ হলে সবারই খাবার মেলে)',
+      description: '(‘আমরা যোগ হলে, সবারই খাবার মেলে’—এই স্লোগানকে সামনে রেখে আয়োজিত এই উদ্যোগের মাধ্যমে দেশের বিভিন্ন জেলায় বঞ্চিত মানুষের মাঝে মানসম্মত খাবার বিতরণ করা হয়, যা সামাজিক দায়বদ্ধতার একটি উজ্জ্বল উদাহরণ।)',
       bgColor: 'bg-purple-500'
     }
   ];
