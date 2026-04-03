@@ -4,22 +4,32 @@ import { motion } from "motion/react"
 import Image from "next/image"
 
 export default function WhatYouWillLearn() {
-  const learningTopics = [
+  const benefitsData = [
     {
-      title: "Mind Pylons & Focus Routines"
+      category: "★ Benefits for Students",
+      items: [
+        { title: "মনোযোগ ও ফোকাস বৃদ্ধি" },
+        { title: "মেমোরি ও পড়ার কার্যকর পদ্ধতি" },
+        { title: "আত্মবিশ্বাস ও স্বনির্ভরতা বৃদ্ধি" },
+        { title: "শিক্ষার্থী-অভিভাবক সম্পর্ক উন্নয়ন" },
+      ]
     },
     {
-      title: "Habit Formation",
-      subtitle: "(Neuroplasticity-Based)"
+      category: "★ Benefits for Professionals & Entrepreneurs",
+      items: [
+        { title: "মানসিক চাপ ও ক্লান্তি ম্যানেজমেন্ট" },
+        { title: "ফোকাস ও প্রোডাক্টিভিটি বৃদ্ধি" },
+        { title: "আত্মবিশ্বাস ও মাইন্ডসেট ডেভেলপমেন্ট" },
+        { title: "লক্ষ্য অর্জনের স্টেপ-বাই-স্টেপ গাইডলাইন" },
+      ]
     },
     {
-      title: "Anxiety/Stress Tools & Self-Talk Protocols"
-    },
-    {
-      title: "Academic/Work Performance Systems"
-    },
-    {
-      title: "Self-Confidence & Life Direction"
+      category: "★ Benefits for Parents",
+      items: [
+        { title: "সন্তানের মানসিকতা বোঝার দক্ষতা" },
+        { title: "কার্যকর অভিভাবকত্বের গাইডলাইন" },
+        { title: "ইতিবাচক সম্পর্ক গড়ে তোলার কৌশল" },
+      ]
     }
   ]
 
@@ -49,39 +59,52 @@ export default function WhatYouWillLearn() {
         </motion.div>
 
         {/* Learning Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {learningTopics.map((topic, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+          {benefitsData.map((section, sectionIndex) => (
             <motion.div
-              key={index}
-              className="bg-white/90 backdrop-blur-sm border-2 border-purple-200 rounded-2xl p-6 md:p-8 shadow-lg shadow-blue-100 hover:shadow-xl hover:shadow-blue-200 transition-all duration-300"
+              key={sectionIndex}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ y: -5, scale: 1.02 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: sectionIndex * 0.2 }}
             >
-              <div className="flex items-start gap-4">
-                {/* Check Icon */}
-                <div className="flex-shrink-0 w-8 h-8 relative">
-                  <Image
-                    src="/home/add_task.png"
-                    alt="Check icon"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
+              {/* Category Title */}
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">
+                {section.category}
+              </h3>
 
-                {/* Text Content */}
-                <div className="flex-1">
-                  <h3 className="text-lg md:text-xl font-semibold text-gray-800 leading-snug">
-                    {topic.title}
-                  </h3>
-                  {topic.subtitle && (
-                    <p className="text-base md:text-lg text-gray-700 mt-1">
-                      {topic.subtitle}
-                    </p>
-                  )}
-                </div>
+              {/* Benefits List */}
+              <div className="space-y-3">
+                {section.items.map((item, itemIndex) => (
+                  <motion.div
+                    key={itemIndex}
+                    className="bg-white/90 backdrop-blur-sm border-2 border-purple-200 rounded-lg p-4 shadow-md shadow-blue-100 hover:shadow-lg hover:shadow-blue-200 transition-all duration-300"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.5, delay: itemIndex * 0.08 }}
+                    whileHover={{ y: -3, scale: 1.01 }}
+                  >
+                    <div className="flex items-start gap-3">
+                      {/* Check Icon */}
+                      <div className="shrink-0 w-6 h-6 relative mt-0.5">
+                        <Image
+                          src="/home/add_task.png"
+                          alt="Check icon"
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+
+                      {/* Text Content */}
+                      <div className="flex-1">
+                        <h4 className="text-base font-semibold text-gray-800 leading-snug">
+                          {item.title}
+                        </h4>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
             </motion.div>
           ))}
