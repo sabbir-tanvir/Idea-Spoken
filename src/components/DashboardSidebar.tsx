@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { BookOpen, Award, CreditCard, Settings, LogOut, User, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { logoutUser } from '@/lib/auth/actions';
 
 interface DashboardSidebarProps {
   userName?: string;
@@ -60,13 +61,25 @@ export default function DashboardSidebar({
       </ul>
 
       {/* Logout Button */}
-      <button
-        onClick={onLogout}
-        className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-100 text-red-600 rounded-xl font-medium hover:bg-red-200 transition-colors duration-200"
-      >
-        <LogOut className="w-5 h-5" />
-        <span>Logout</span>
-      </button>
+      {onLogout ? (
+        <button
+          onClick={onLogout}
+          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-100 text-red-600 rounded-xl font-medium hover:bg-red-200 transition-colors duration-200"
+        >
+          <LogOut className="w-5 h-5" />
+          <span>Logout</span>
+        </button>
+      ) : (
+        <form action={logoutUser}>
+          <button
+            type="submit"
+            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-100 text-red-600 rounded-xl font-medium hover:bg-red-200 transition-colors duration-200"
+          >
+            <LogOut className="w-5 h-5" />
+            <span>Logout</span>
+          </button>
+        </form>
+      )}
     </nav>
   );
 

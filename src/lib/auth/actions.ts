@@ -1,7 +1,7 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { setAuthToken, removeAuthToken } from './session';
+import { setAuthToken, removeAuthToken, getAuthToken } from './session';
 import { ActionResult, AuthResponse, RegisterRequest, LoginRequest, ForgotPasswordRequest, UpdatePasswordRequest } from './types';
 
 const BASE_URL = process.env.BASE_URL;
@@ -316,6 +316,22 @@ export async function updatePassword(
  * Server Action: Logout user
  */
 export async function logoutUser(): Promise<void> {
+  const token = await getAuthToken();
+
+  if (token) {
+    try {
+      await fetch(`${BASE_URL}/auth/logout`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        cache: 'no-store',
+      });
+    } catch (error) {
+      console.error('Logout API call failed:', error);
+    }
+  }
+
   await removeAuthToken();
   redirect('/auth/login');
 }
