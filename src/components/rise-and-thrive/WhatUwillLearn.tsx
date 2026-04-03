@@ -28,7 +28,7 @@ export default function WhatYouWillLearn() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/home/map.jpg"
+          src="/images/map.jpg"
           alt="Background Map"
           fill
           className="object-cover"
