@@ -21,7 +21,7 @@ export default function YouthHero({
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/home/bgg.jpg"
+          src="/images/youth.jpg"
           alt="Background"
           fill
           className="object-cover"
@@ -53,7 +53,7 @@ export default function YouthHero({
               transition={{ duration: 0.6, delay: 0.3 }}
             >
               <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-              <span className="text-sm font-medium">Online Platform</span>
+              <span className="text-sm font-medium">Registration No: যুউঅ-১৭/২০২০</span>
             </motion.div>
 
             {/* Main Heading */}
