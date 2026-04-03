@@ -1,4 +1,5 @@
 import Contact from "@/components/Contact";
+import AboutHamidul from "@/components/rise-and-thrive/AboutHamidul";
 import CountUpSection from "@/components/rise-and-thrive/CountUp";
 import HeroSection from "@/components/rise-and-thrive/HeroSection";
 import HomeResearch from "@/components/rise-and-thrive/HomeResearch";
@@ -32,6 +33,7 @@ export default async function Home() {
             <HomeResearch />
             <OurActivities />
             <UpcomingWorkshop events={events} />
+            <AboutHamidul />
             <Review />
             <Contact />
         </>
