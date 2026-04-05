@@ -6,6 +6,7 @@ import { Star, Clock, Users, BookOpen, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo } from "react";
+import { getFullImageUrl } from "@/lib/getFullImageUrl";
 import PaymentModal from "@/components/ui/PaymentModal";
 
 interface CourseCardProps {
@@ -13,9 +14,9 @@ interface CourseCardProps {
 }
 
 const LEVEL_LABELS: Record<string, string> = {
-  BEGINNER: 'Beginner',
-  INTERMEDIATE: 'Intermediate',
-  ADVANCED: 'Advanced',
+  BEGINNER: "Beginner",
+  INTERMEDIATE: "Intermediate",
+  ADVANCED: "Advanced",
 };
 
 export default function CourseCard({ course }: CourseCardProps) {
@@ -27,15 +28,16 @@ export default function CourseCard({ course }: CourseCardProps) {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 !== 0;
     return Array.from({ length: 5 }, (_, i) => {
-      if (i < fullStars) return 'full';
-      if (i === fullStars && hasHalfStar) return 'half';
-      return 'empty';
+      if (i < fullStars) return "full";
+      if (i === fullStars && hasHalfStar) return "half";
+      return "empty";
     });
   }, [rating]);
 
-  const instructorName = course.instructor?.name ?? 'IDEA Team';
-  const price = course.price ? `৳${course.price}` : 'Free';
-  const duration = course.totalHours > 0 ? `${course.totalHours}h` : 'Self-paced';
+  const instructorName = course.instructor?.name ?? "IDEA Team";
+  const price = course.price ? `৳${course.price}` : "Free";
+  const duration =
+    course.totalHours > 0 ? `${course.totalHours}h` : "Self-paced";
 
   return (
     <Link
@@ -59,22 +61,36 @@ export default function CourseCard({ course }: CourseCardProps) {
         {course.thumbnail ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={course.thumbnail}
+            src={getFullImageUrl(course.thumbnail)}
             alt={course.title}
             className="h-full w-full object-cover"
           />
         ) : (
           <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-purple-300">
-            <svg viewBox="0 0 24 24" className="h-16 w-16" fill="none" stroke="currentColor" strokeWidth={1.2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+            <svg
+              viewBox="0 0 24 24"
+              className="h-16 w-16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+              />
             </svg>
-            <span className="text-sm font-medium text-purple-400">No Preview</span>
+            <span className="text-sm font-medium text-purple-400">
+              No Preview
+            </span>
           </div>
         )}
 
         {/* Badge Overlay */}
         <div className="absolute bottom-4 left-4 bg-slate-900/90 text-white px-4 py-2 rounded-lg backdrop-blur-sm">
-          <span className="font-medium text-lg">{LEVEL_LABELS[course.level] ?? course.level}</span>
+          <span className="font-medium text-lg">
+            {LEVEL_LABELS[course.level] ?? course.level}
+          </span>
         </div>
       </div>
 
@@ -87,17 +103,15 @@ export default function CourseCard({ course }: CourseCardProps) {
               {stars.map((type, i) => (
                 <Star
                   key={i}
-                  className={`w-4 h-4 ${type === 'full' ? 'fill-current' : ''} ${type === 'empty' ? 'text-slate-300' : ''}`}
+                  className={`w-4 h-4 ${type === "full" ? "fill-current" : ""} ${type === "empty" ? "text-slate-300" : ""}`}
                 />
               ))}
             </div>
             <span className="text-slate-500 text-sm font-medium">
-              {rating > 0 ? rating.toFixed(1) : 'New'}
+              {rating > 0 ? rating.toFixed(1) : "New"}
             </span>
           </div>
-          <div className="text-2xl font-bold text-purple-600">
-            {price}
-          </div>
+          <div className="text-2xl font-bold text-purple-600">{price}</div>
         </div>
 
         {/* Title */}
@@ -139,7 +153,7 @@ export default function CourseCard({ course }: CourseCardProps) {
             </span>
           </div>
 
-          <button 
+          <button
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -155,7 +169,12 @@ export default function CourseCard({ course }: CourseCardProps) {
 
       {/* Payment Modal */}
       {isPaymentOpen && (
-        <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}>
+        <div
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
+        >
           <PaymentModal
             isOpen={isPaymentOpen}
             onClose={() => setIsPaymentOpen(false)}
