@@ -139,20 +139,20 @@ export default function SevenWings({ data }: SevenWingsProps) {
 
                 {/* Founder Quote Card */}
                 <motion.div
-                    className="mt-20 md:mt-30 px-30"
+                    className="mt-20 md:mt-30"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                    <div className="relative bg-linear-to-br from-purple-50 via-slate-50 to-purple-50/50 border border-gray-700 shadow-2xl shadow-purple-300 rounded-3xl p-8 md:p-12 overflow-hidden">
+                    <div className="relative bg-linear-to-br from-purple-50 via-slate-50 to-purple-50/50 border border-gray-700 shadow-2xl shadow-purple-300 rounded-3xl p-5 sm:p-8 md:p-12 overflow-hidden">
                         {/* Decorative shape on right */}
                         <div className="absolute right-0 bottom-0 w-48 h-48 md:w-64 md:h-64">
                             <div className="absolute right-0 bottom-0 w-full h-full bg-purple-200/40 rounded-tl-full" />
                         </div>
 
                         {/* Quote */}
-                        <blockquote className="relative z-10 text-xl md:text-2xl lg:text-3xl font-medium text-slate-800 leading-relaxed mb-8 max-w-4xl">
+                        <blockquote className="relative z-10 text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium text-slate-800 leading-normal sm:leading-relaxed mb-8 max-w-none sm:max-w-4xl">
                             &ldquo;আইডিয়ার যাত্রা শুরু হয়েছিল একঝাঁক শিক্ষার্থীর স্বপ্ন আর একটি বৃক্ষরোপণ অভিযান দিয়ে  আজ এটি শিক্ষা, উন্নয়ন, উদ্যোক্তা সৃষ্টি ও চরিত্র গঠনের এক সমন্বিত প্ল্যাটফর্ম &rdquo;
                         </blockquote>
 
