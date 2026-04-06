@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { ChevronDown } from 'lucide-react';
 import Image from 'next/image';
@@ -29,6 +29,15 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
   const [mobileWingsOpen, setMobileWingsOpen] = useState(false);
   const pathname = usePathname();
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+    setMobileWingsOpen(false);
+  };
+
+  useEffect(() => {
+    closeMobileMenu();
+  }, [pathname]);
 
   // Handle dropdown open with delay clear
   const handleDropdownEnter = () => {
@@ -312,6 +321,7 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
               <nav className="flex flex-col space-y-4">
                 <Link
                   href="/"
+                  onClick={closeMobileMenu}
                   className={`transition-colors font-medium px-4 py-2 rounded-full text-center ${pathname === '/'
                     ? 'text-purple-600 border-2 border-purple-600'
                     : 'text-gray-700 hover:text-purple-600'
@@ -321,6 +331,7 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
                 </Link>
                 <Link
                   href="/about"
+                  onClick={closeMobileMenu}
                   className={`transition-colors font-medium px-4 py-2 rounded-full text-center ${pathname === '/about'
                     ? 'text-purple-600 border-2 border-purple-600'
                     : 'text-gray-700 hover:text-purple-600'
@@ -330,6 +341,7 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
                 </Link>
                 <Link
                   href="/courses"
+                  onClick={closeMobileMenu}
                   className={`transition-colors font-medium px-4 py-2 rounded-full text-center ${pathname?.startsWith('/courses')
                     ? 'text-purple-600 border-2 border-purple-600'
                     : 'text-gray-700 hover:text-purple-600'
@@ -364,7 +376,7 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
                                 ? 'text-purple-600 font-medium bg-purple-50'
                                 : 'text-gray-600 hover:text-purple-600'
                               }`}
-                            onClick={() => setMobileMenuOpen(false)}
+                            onClick={closeMobileMenu}
                           >
                             {item.title}
                           </Link>
@@ -385,6 +397,7 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
                 </Link> */}
                 <Link
                   href="/contact"
+                  onClick={closeMobileMenu}
                   className={`transition-colors font-medium px-4 py-2 rounded-full text-center ${pathname === '/contact'
                     ? 'text-purple-600 border-2 border-purple-600'
                     : 'text-gray-700 hover:text-purple-600'
@@ -396,6 +409,7 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
                   {!isLoggedIn ? (
                     <Link
                       href="/auth/login"
+                      onClick={closeMobileMenu}
                       className="px-4 py-2 border-2 border-purple-600 text-purple-600 rounded-full hover:bg-purple-50 transition-colors font-medium text-sm text-center"
                     >
                       Student Login
@@ -407,7 +421,8 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
                   )}
 
                   <Link
-                    href="/courses">
+                    href="/courses"
+                    onClick={closeMobileMenu}>
                     <button
                       className="bg-[#704FE6] text-center w-full rounded-full h-12 relative text-white text-base group overflow-hidden cursor-pointer"
                       type="button"
