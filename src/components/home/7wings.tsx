@@ -161,7 +161,7 @@ export default function SevenWings({ data }: SevenWingsProps) {
                             <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-purple-200">
                                 {!avatarError ? (
                                     <Image
-                                        src="/images/founder.jpg"
+                                        src="/images/vai.jpg"
                                         alt="Md. Hamidul Huq"
                                         fill
                                         className="object-cover"
