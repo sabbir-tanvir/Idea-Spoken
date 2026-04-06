@@ -59,11 +59,12 @@ export default function CourseCard({ course }: CourseCardProps) {
       {/* Thumbnail Image */}
       <div className="relative h-64 w-full overflow-hidden bg-gradient-to-br from-purple-100 to-blue-100">
         {course.thumbnail ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={getFullImageUrl(course.thumbnail)}
             alt={course.title}
-            className="h-full w-full object-cover"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover"
           />
         ) : (
           <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-purple-300">
