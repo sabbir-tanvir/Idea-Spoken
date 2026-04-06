@@ -48,8 +48,36 @@ export default function Timeline({ events }: TimelineProps) {
           </h2>
         </motion.div>
 
-        {/* Timeline */}
-        <div className="relative max-w-5xl mx-auto">
+        {/* Timeline - Mobile */}
+        <div className="md:hidden relative max-w-xl mx-auto">
+          <div className="absolute left-7 top-0 bottom-0 w-px border-l-2 border-dashed border-purple-400"></div>
+
+          {events.map((event, index) => (
+            <motion.div
+              key={index}
+              className="relative flex items-start gap-4 mb-10 last:mb-0"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.08 }}
+            >
+              <div className="z-10 shrink-0">
+                <div className="w-14 h-14 rounded-full bg-purple-100 border-2 border-purple-200 flex items-center justify-center text-purple-600 shadow-lg">
+                  {getIcon(event.icon)}
+                </div>
+              </div>
+
+              <div className="pt-1 pb-2 pr-1">
+                <span className="text-2xl font-bold text-slate-600">{event.year}</span>
+                <h3 className="text-lg font-bold text-purple-700 mt-1">{event.title}</h3>
+                <p className="text-sm text-slate-500 mt-2 leading-relaxed">{event.description}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Timeline - Desktop */}
+        <div className="hidden md:block relative max-w-5xl mx-auto">
           {/* Vertical Line */}
           <div className="absolute left-1/2 top-0 bottom-0 w-px border-l-2 border-dashed border-purple-400 transform -translate-x-1/2"></div>
 
@@ -58,7 +86,7 @@ export default function Timeline({ events }: TimelineProps) {
             return (
               <motion.div
                 key={index}
-                className={`relative flex items-center justify-center mb-16 last:mb-0`}
+                className="relative flex items-center justify-center mb-16 last:mb-0"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
