@@ -14,17 +14,18 @@ export default function Hero({ data }: HeroProps) {
     if (!data) return null;
 
     return (
-        <section className="relative min-h-[80vh] bg-white/80 overflow-hidden py-16 md:py-24" style={{ backgroundImage: "url('/images/dhew.png')" }}>
+        <section
+            className="relative min-h-[80vh] bg-white/80 overflow-hidden py-20 md:py-24 lg:py-32"
+            style={{ backgroundImage: "url('/images/dhew.png')" }}
+        >
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-
                     {/* Left: Text Content */}
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8 }}
                     >
-                        {/* Tagline */}
                         <motion.p
                             className="text-purple-600 font-medium text-lg mb-4"
                             initial={{ opacity: 0 }}
@@ -34,7 +35,6 @@ export default function Hero({ data }: HeroProps) {
                             {data.tagline}
                         </motion.p>
 
-                        {/* Title */}
                         <motion.h1
                             className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight mb-6"
                             initial={{ opacity: 0, y: 20 }}
@@ -44,7 +44,6 @@ export default function Hero({ data }: HeroProps) {
                             {data.title}
                         </motion.h1>
 
-                        {/* Description */}
                         <motion.p
                             className="text-slate-600 text-lg md:text-xl leading-relaxed mb-8 max-w-lg"
                             initial={{ opacity: 0, y: 20 }}
@@ -54,28 +53,34 @@ export default function Hero({ data }: HeroProps) {
                             {data.description}
                         </motion.p>
 
-                        {/* CTA Button */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.5 }}
                         >
-                            <Link href="/courses">
-                                <button className="inline-flex cursor-pointer items-center gap-3 bg-slate-900 hover:bg-slate-800 text-white pl-8 py-0 rounded-full font-medium text-lg transition-all shadow-lg">
-                                    {data.ctaText}
-                                    <ArrowRight className="w-14 h-14 bg-slate-700 rounded-full p-2 text-slate-100 right-0" />
-                                </button>
+                            <Link
+                                href="/courses"
+                                className="inline-flex cursor-pointer items-center gap-3 bg-slate-900 hover:bg-slate-800 text-white pl-8 py-0 rounded-full font-medium text-lg transition-all shadow-lg"
+                            >
+                                {data.ctaText}
+                                <ArrowRight className="w-14 h-14 bg-slate-700 rounded-full p-2 text-slate-100 right-0" />
                             </Link>
                         </motion.div>
 
-                        {/* Decorative Book Image */}
                         <motion.div
                             className="hidden md:block absolute bottom-20 left-40"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.6 }}
                         >
-                            <Image src="/images/book.png" alt="Book" width={120} height={120} />
+                            <Image
+                                src="/images/book.png"
+                                alt="Book"
+                                width={120}
+                                height={120}
+                                loading="lazy"
+                                sizes="120px"
+                            />
                         </motion.div>
                     </motion.div>
 
@@ -91,12 +96,14 @@ export default function Hero({ data }: HeroProps) {
                                 src="/images/cing.jpg"
                                 alt="Students"
                                 fill
+                                priority
+                                quality={85}
+                                sizes="(max-width: 1024px) 100vw, 50vw"
                                 className="object-cover"
                             />
                         </div>
 
-                        {/* Explore Our Wings Card */}
-                        <Link href="#our-wings" scroll={true}>
+                        <Link href="#our-wings" scroll>
                             <motion.div
                                 className="absolute -bottom-2 left-30 transform -translate-x-1/2 bg-white rounded-2xl shadow-xl px-8 py-5 flex items-center gap-4 cursor-pointer hover:shadow-2xl transition-shadow duration-300"
                                 initial={{ opacity: 0, y: 30 }}
@@ -112,9 +119,15 @@ export default function Hero({ data }: HeroProps) {
                             </motion.div>
                         </Link>
 
-                        {/* Decorative curve arrow (SVG) */}
-                        <Image src="/images/aroww.png" alt="Arrow" width={500} height={100} className="absolute -left-130 bottom-1 text-slate-400 hidden lg:block" />
-
+                        <Image
+                            src="/images/aroww.png"
+                            alt="Arrow"
+                            width={500}
+                            height={100}
+                            loading="lazy"
+                            sizes="(max-width: 1024px) 0px, 500px"
+                            className="absolute -left-130 bottom-1 text-slate-400 hidden lg:block"
+                        />
                     </motion.div>
                 </div>
             </div>
