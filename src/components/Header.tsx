@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { ChevronDown } from 'lucide-react';
+import Image from 'next/image';
 import UserMenu from './UserMenu';
 
 // Wings dropdown items - routes that have dedicated pages use absolute paths
@@ -131,8 +132,15 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
           <div className="flex items-center py-2">
             {/* Logo Section */}
             <Link href="/" className="flex items-center">
-              <div className="relative w-12 h-12 sm:w-16 sm:h-18">
-                <img src="/logo.png" alt="" />
+              <div className="relative w-12 h-12 sm:w-16 sm:h-16">
+                <Image
+                  src="/images/logo.png"
+                  alt="IDEA Spoken Logo"
+                  fill
+                  sizes="(max-width: 640px) 48px, 64px"
+                  className="object-contain"
+                  priority
+                />
               </div>
             </Link>
 

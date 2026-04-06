@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -8,8 +9,14 @@ export default function Footer() {
           {/* IDEA Branding */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-15 h-15  flex items-center justify-center">
-                <img src="/logo.png" alt="" />
+              <div className="relative w-14 h-14 flex items-center justify-center">
+                <Image
+                  src="/images/logo.png"
+                  alt="IDEA logo"
+                  fill
+                  sizes="56px"
+                  className="object-contain"
+                />
               </div>
               <h3 className="text-2xl font-bold">IDEA</h3>
             </div>
