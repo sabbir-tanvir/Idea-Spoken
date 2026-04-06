@@ -139,13 +139,13 @@ export default function SevenWings({ data }: SevenWingsProps) {
 
                 {/* Founder Quote Card */}
                 <motion.div
-                    className="mt-20 md:mt-30"
+                    className="mt-20 md:mt-30 items-center justify-center flex"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                    <div className="relative bg-linear-to-br from-purple-50 via-slate-50 to-purple-50/50 border border-gray-700 shadow-2xl shadow-purple-300 rounded-3xl p-5 sm:p-8 md:p-12 overflow-hidden">
+                    <div className="relative bg-linear-to-br max-w-5xl from-purple-50 via-slate-50 to-purple-50/50 border border-gray-700 shadow-2xl shadow-purple-300 rounded-3xl p-5 sm:p-8 md:p-12 overflow-hidden">
                         {/* Decorative shape on right */}
                         <div className="absolute right-0 bottom-0 w-48 h-48 md:w-64 md:h-64">
                             <div className="absolute right-0 bottom-0 w-full h-full bg-purple-200/40 rounded-tl-full" />
