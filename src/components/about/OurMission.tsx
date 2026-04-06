@@ -26,9 +26,9 @@ export default function OurMission({ data }: OurMissionProps) {
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
                     >
-                        <div className="flex gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                             {/* Tall Image - Left */}
-                            <div className="w-1/2 relative h-[450px] md:h-[550px] rounded-2xl overflow-hidden shadow-xl">
+                            <div className="relative h-80 sm:h-112.5 md:h-137.5 rounded-2xl overflow-hidden shadow-xl">
                                 <Image
                                     src="/images/vai.jpg"
                                     alt="Students"
@@ -38,7 +38,7 @@ export default function OurMission({ data }: OurMissionProps) {
                             </div>
 
                             {/* Right Column - Experience Badge + Short Image */}
-                            <div className="w-1/2 flex flex-col gap-6">
+                            <div className="grid grid-cols-2 sm:grid-cols-1 gap-4 sm:gap-6">
                                 {/* Experience Badge - Square Card */}
                                 <motion.div
                                     className="bg-white p-4 rounded-2xl shadow-xl border-2 border-dashed border-red-300"
@@ -86,7 +86,7 @@ export default function OurMission({ data }: OurMissionProps) {
                                 </motion.div>
 
                                 {/* Short Image - Bottom */}
-                                <div className="relative flex-1 min-h-[200px] md:min-h-[280px] rounded-2xl overflow-hidden shadow-xl">
+                                <div className="relative min-h-45 sm:min-h-50 md:min-h-70 rounded-2xl overflow-hidden shadow-xl">
                                     <Image
                                         src="/images/youth.jpg"
                                         alt="Discussion"
@@ -98,7 +98,7 @@ export default function OurMission({ data }: OurMissionProps) {
                         </div>
 
                         {/* Decorative Shape (Top-Left) */}
-                        <div className="absolute -top-10 -left-10 text-emerald-400">
+                        <div className="hidden sm:block absolute -top-10 -left-10 text-emerald-400">
                             <Image src="/images/arrow.png" alt="" width={100} height={100} />
                         </div>
                     </motion.div>
