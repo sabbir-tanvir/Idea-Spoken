@@ -14,7 +14,7 @@ export default function Hero({ data }: HeroProps) {
     if (!data) return null;
 
     return (
-        <section className="relative bg-gradient-to-b min-h-[80vh] from-purple-50 to-white overflow-hidden py-16 md:py-24" style={{ backgroundImage: "url('/images/dhew.png')" }}>
+        <section className="relative min-h-[80vh] bg-white/80 overflow-hidden py-16 md:py-24" style={{ backgroundImage: "url('/images/dhew.png')" }}>
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
