@@ -1,5 +1,3 @@
-import mockQuizzes from "@/lib/api/mock/quizzes.json";
-
 export interface ApiQuiz {
   id: number;
   lessonId: number;
@@ -27,6 +25,7 @@ interface QuizSubmitResponse {
 interface QuizResultResponse {
   success: boolean;
   message?: string;
+  count?: number;
   data?: {
     lessonId: number;
     totalQuestions: number;
@@ -42,79 +41,132 @@ interface QuizResultResponse {
   };
 }
 
-interface MockQuizListResponse {
-  success: boolean;
-  message: string;
-  count: number;
-  data: ApiQuiz[];
+interface QuizResultAttempt {
+  userAnswer?: string;
+  isCorrect: boolean;
+  pointsEarned?: number;
+  quizId: number;
+  quiz?: {
+    id: number;
+    question?: string;
+    options?: string[];
+    correctAnswer?: string;
+    point?: number;
+    lessonId?: number;
+  };
 }
 
-const mockDb = mockQuizzes as MockQuizListResponse;
-const answerStore = new Map<number, string>();
-
-function getMockQuizzesByLessonId(lessonId: number): ApiQuiz[] {
-  return mockDb.data.filter((quiz) => quiz.lessonId === lessonId);
+interface QuizResultsApiPayload {
+  success: boolean;
+  message?: string;
+  count?: number;
+  data?: QuizResultAttempt[];
 }
 
 export async function getQuizzesByLesson(lessonId: number): Promise<ApiQuiz[]> {
-  return getMockQuizzesByLessonId(lessonId);
+  try {
+    const response = await fetch(`/api/quizzes/lesson/${lessonId}`, {
+      cache: "no-store",
+    });
+
+    if (!response.ok) return [];
+
+    const payload = await response.json();
+    if (Array.isArray(payload)) return payload as ApiQuiz[];
+
+    if (payload?.success) {
+      if (Array.isArray(payload.data)) return payload.data as ApiQuiz[];
+      if (payload.data?.quizzes && Array.isArray(payload.data.quizzes)) {
+        return payload.data.quizzes as ApiQuiz[];
+      }
+    }
+
+    return [];
+  } catch (error) {
+    console.error("Failed to fetch quizzes by lesson:", error);
+    return [];
+  }
 }
 
 export async function submitQuizAnswer(quizId: number, userAnswer: string) {
-  const quiz = mockDb.data.find((q) => q.id === quizId);
-  if (!quiz) {
-    return { ok: false, data: { success: false, message: "Quiz not found" } as QuizSubmitResponse };
+  try {
+    const response = await fetch(`/api/quizzes/${quizId}/submit`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userAnswer }),
+    });
+
+    const data: QuizSubmitResponse = await response.json();
+    return { ok: response.ok, data };
+  } catch (error) {
+    console.error("Failed to submit quiz answer:", error);
+    return {
+      ok: false,
+      data: {
+        success: false,
+        message: "Failed to submit quiz answer",
+      } as QuizSubmitResponse,
+    };
   }
-
-  answerStore.set(quizId, userAnswer);
-  const isCorrect = quiz.correctAnswer === userAnswer;
-  const data: QuizSubmitResponse = {
-    success: true,
-    message: isCorrect ? "Answer recorded" : "Answer recorded",
-    data: {
-      quizId,
-      lessonId: quiz.lessonId,
-      userAnswer,
-      correctAnswer: quiz.correctAnswer,
-      isCorrect,
-    },
-  };
-
-  return { ok: true, data };
 }
 
 export async function getQuizResults(lessonId: number) {
-  const quizzes = getMockQuizzesByLessonId(lessonId);
-  const answers = quizzes.map((quiz) => {
-    const userAnswer = answerStore.get(quiz.id);
-    const isCorrect = !!userAnswer && userAnswer === quiz.correctAnswer;
-    return {
-      quizId: quiz.id,
-      isCorrect,
-      userAnswer,
-      correctAnswer: quiz.correctAnswer,
+  try {
+    const response = await fetch(`/api/quizzes/results/lesson/${lessonId}`, {
+      method: "GET",
+      cache: "no-store",
+    });
+
+    const payload: QuizResultsApiPayload = await response.json();
+    if (!response.ok || !payload.success) {
+      return {
+        ok: false,
+        data: {
+          success: false,
+          message: payload.message ?? "Failed to fetch quiz results",
+        } as QuizResultResponse,
+      };
+    }
+
+    const attempts = payload.data ?? [];
+    const answers = attempts.map((attempt) => ({
+      quizId: attempt.quizId,
+      isCorrect: attempt.isCorrect,
+      userAnswer: attempt.userAnswer,
+      correctAnswer: attempt.quiz?.correctAnswer,
+    }));
+
+    const correctAnswers = answers.filter((answer) => answer.isCorrect).length;
+    const earnedPoints = attempts.reduce((sum, attempt) => sum + (attempt.pointsEarned ?? 0), 0);
+    const totalPoints = attempts.reduce(
+      (sum, attempt) => sum + (attempt.quiz?.point ?? 0),
+      0
+    );
+
+    const data: QuizResultResponse = {
+      success: true,
+      count: payload.count,
+      data: {
+        lessonId,
+        totalQuestions: answers.length,
+        correctAnswers,
+        earnedPoints,
+        totalPoints,
+        answers,
+      },
     };
-  });
 
-  const correctAnswers = answers.filter((a) => a.isCorrect).length;
-  const totalPoints = quizzes.reduce((sum, quiz) => sum + (quiz.point ?? 0), 0);
-  const earnedPoints = quizzes.reduce((sum, quiz) => {
-    const answer = answers.find((a) => a.quizId === quiz.id);
-    return sum + (answer?.isCorrect ? quiz.point ?? 0 : 0);
-  }, 0);
-
-  const data: QuizResultResponse = {
-    success: true,
-    message: "Quiz results generated",
-    data: {
-      lessonId,
-      totalQuestions: quizzes.length,
-      correctAnswers,
-      earnedPoints,
-      totalPoints,
-      answers,
-    },
-  };
-
-  return { ok: true, data };
+    return { ok: true, data };
+  } catch (error) {
+    console.error("Failed to fetch quiz results:", error);
+    return {
+      ok: false,
+      data: {
+        success: false,
+        message: "Failed to fetch quiz results",
+      } as QuizResultResponse,
+    };
+  }
 }
