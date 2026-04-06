@@ -2,6 +2,7 @@
 
 import { WingCardData } from "@/lib/api";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 
@@ -20,11 +21,12 @@ export default function IdeaCard({ wing }: IdeaCardProps) {
             {/* Image */}
             <div className="relative h-50 w-full rounded-md overflow-hidden mb-4">
                 {!imageError ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
+                    <Image
                         src={wing.image}
                         alt={wing.title}
-                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
                         onError={() => setImageError(true)}
                     />
                 ) : (
