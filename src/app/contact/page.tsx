@@ -48,7 +48,7 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitResult, setSubmitResult] = useState<{ success: boolean; message: string } | null>(null);
 
-  const API_BASE = `${(process.env.NEXT_PUBLIC_BACKEND_URL ?? "https://idea-backend-03b4.onrender.com").replace(/\/+$/, "")}/api/v1`;
+  const API_BASE = `${(process.env.NEXT_PUBLIC_BACKEND_URL ?? "https://api.idealessons.com").replace(/\/+$/, "")}/api/v1`;
 
   function handleChange(
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'api.rumon.top',
       },
+      {
+        protocol: 'https',
+        hostname: 'api.idealessons.com',
+      },
     ],
   },
 };

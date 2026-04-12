@@ -10,7 +10,7 @@ interface PhotoGalleryProps {
   subtitle?: string;
 }
 
-const BACKEND_ORIGIN = (process.env.NEXT_PUBLIC_BACKEND_URL ?? "https://idea-backend-03b4.onrender.com").replace(/\/+$/, "");
+const BACKEND_ORIGIN = (process.env.NEXT_PUBLIC_BACKEND_URL ?? "https://api.idealessons.com").replace(/\/+$/, "");
 
 function toAbsoluteUrl(url: string): string {
   if (url.startsWith("http")) return url;

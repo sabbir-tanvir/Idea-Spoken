@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "P-Hero - Empowering Through Education",
+  title: "IDEA - Empowering Minds, Transforming Futures",
   description: "Quality education and social development programs",
 };
 

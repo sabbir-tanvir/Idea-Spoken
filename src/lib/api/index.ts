@@ -209,7 +209,7 @@ const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const DEFAULT_BACKEND_ORIGIN = (
   process.env.NEXT_PUBLIC_BACKEND_URL ??
-  "https://idea-backend-03b4.onrender.com"
+  "https://api.idealessons.com"
 ).replace(/\/+$/, "");
 
 function getApiBaseUrl(): string {
