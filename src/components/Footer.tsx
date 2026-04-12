@@ -52,12 +52,12 @@ export default function Footer() {
             <h3 className="text-xl font-bold mb-4">Courses</h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/courses/idea-spoken" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/idea-spoken" className="text-gray-400 hover:text-white transition-colors">
                   IDEA SPOKEN - The Game Method
                 </Link>
               </li>
               <li>
-                <Link href="/courses/english-debate" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/english-debate" className="text-gray-400 hover:text-white transition-colors">
                   English Debate Mastery
                 </Link>
               </li>
@@ -74,12 +74,12 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/our-wings/youth-development" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/youth-development" className="text-gray-400 hover:text-white transition-colors">
                   Youth Development
                 </Link>
               </li>
               <li>
-                <Link href="/our-wings/social-welfare" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/social-welfare" className="text-gray-400 hover:text-white transition-colors">
                   Social Welfare
                 </Link>
               </li>
