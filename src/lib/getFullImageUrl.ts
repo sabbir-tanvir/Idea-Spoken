@@ -1,27 +1,39 @@
 // src/lib/getFullImageUrl.ts
 
+const BACKEND_ORIGIN = (process.env.NEXT_PUBLIC_BACKEND_URL ?? "").replace(
+  /\/+$/,
+  ""
+);
+
 /**
- * Returns a full image URL, prefixing with PUBLIC_BASE_URL if needed.
- * Accepts any path from image/avatar/thumbnailUrl/backgroundImage/foregroundImage fields.
+ * Returns an absolute URL for API media paths and keeps local public paths untouched.
+ * API media is expected to come from `/uploads/...`.
  */
 export function getFullImageUrl(path?: string | null): string {
   if (!path) return "";
+
   const normalizedPath = path.replace(/\\/g, "/");
-  if (normalizedPath.startsWith("blob:") || normalizedPath.startsWith("http"))
+
+  if (
+    normalizedPath.startsWith("blob:") ||
+    normalizedPath.startsWith("http://") ||
+    normalizedPath.startsWith("https://")
+  ) {
     return normalizedPath;
-  if (normalizedPath.startsWith("/")) {
-    // Use env var for prefix
-    const base =
-      process.env.NEXT_PUBLIC_BASE_URL || process.env.PUBLIC_BASE_URL || "";
-
-    const gu = base
-      ? `${base.replace(/\/$/, "")}${normalizedPath}`
-      : normalizedPath;
-
-    console.log("getFullImageUrl", { path, normalizedPath, base, gu });
-    return base
-      ? `${base.replace(/\/$/, "")}${normalizedPath}`
-      : normalizedPath;
   }
-  return normalizedPath;
+
+  const isUploadPath =
+    normalizedPath.startsWith("/uploads/") ||
+    normalizedPath.startsWith("uploads/");
+
+  if (!isUploadPath) {
+    // Keep local assets like /images/... as-is.
+    return normalizedPath;
+  }
+
+  if (!BACKEND_ORIGIN) {
+    throw new Error("NEXT_PUBLIC_BACKEND_URL is required for media URLs.");
+  }
+
+  return `${BACKEND_ORIGIN}${normalizedPath.startsWith("/") ? "" : "/"}${normalizedPath}`;
 }
