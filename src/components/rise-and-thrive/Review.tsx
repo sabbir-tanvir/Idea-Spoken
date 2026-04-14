@@ -31,10 +31,10 @@ export default function Review() {
           transition={{ duration: 0.8 }}
         >
           {/* Top Left Quarter Circle */}
-          <div className="absolute top-0 left-0 w-32 md:w-48 h-32 md:h-48 bg-purple-200 rounded-br-full"></div>
+          <div className="absolute top-0 left-0 w-32  h-32 md:w-64 md:h-64 bg-purple-200 rounded-br-full"></div>
           
           {/* Bottom Right Quarter Circle */}
-          <div className="absolute bottom-0 right-0 w-32 md:w-48 h-32 md:h-48 bg-purple-200 rounded-tl-full"></div>
+          <div className="absolute bottom-0 right-0 w-32 md:w-64 h-32 md:h-64 bg-purple-200 rounded-tl-full"></div>
 
           {/* Heading */}
           <div className="text-center mb-12 relative z-10">
@@ -50,7 +50,7 @@ export default function Review() {
           </div>
 
           {/* Review Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-12 relative z-10">
             {reviews.map((review, index) => (
               <motion.div
                 key={index}

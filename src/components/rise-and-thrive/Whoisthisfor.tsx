@@ -25,7 +25,7 @@ export default function WhoIsItFor() {
         <div className="flex flex-col md:flex-row gap-6 lg:gap-8 items-start mb-6 lg:mb-8">
           {/* Left Card */}
           <motion.div
-            className="flex-1 bg-white border border-gray-200 rounded-2xl mt-16 p-8 md:p-10 shadow-lg shadow-blue-200 hover:shadow-xl hover:shadow-blue-300 transition-shadow duration-300"
+            className="flex-1 bg-white border border-2px-[#D0C1FF] rounded-2xl mt-16 p-8 md:p-10 shadow-sm shadow-[rgba(208,193,255,1)] hover:shadow-xl hover:shadow-blue-300 transition-shadow duration-300"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
@@ -55,7 +55,7 @@ export default function WhoIsItFor() {
 
           {/* Right Card */}
           <motion.div
-            className="flex-1 bg-white border border-gray-200 rounded-2xl p-8 mt-16 md:p-10 shadow-lg shadow-blue-200 hover:shadow-xl hover:shadow-blue-300 transition-shadow duration-300"
+            className="flex-1 bg-white border border-2px-[#D0C1FF] rounded-2xl p-8 mt-16 md:p-10 shadow-sm shadow-[rgba(208,193,255,1)] hover:shadow-xl hover:shadow-blue-300 transition-shadow duration-300"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
@@ -72,7 +72,7 @@ export default function WhoIsItFor() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
           {/* Third Card */}
           <motion.div
-            className="bg-white border border-gray-200 rounded-2xl p-8 md:p-10 shadow-lg shadow-blue-200 hover:shadow-xl hover:shadow-blue-300 transition-shadow duration-300"
+            className="bg-white border border-2px-[#D0C1FF] rounded-2xl p-8 md:p-10 shadow-sm shadow-[rgba(208,193,255,1)] hover:shadow-xl hover:shadow-blue-300 transition-shadow duration-300"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
@@ -86,7 +86,7 @@ export default function WhoIsItFor() {
 
           {/* Fourth Card */}
           <motion.div
-            className="bg-white border border-gray-200 rounded-2xl p-8 md:p-10 shadow-lg shadow-blue-200 hover:shadow-xl hover:shadow-blue-300 transition-shadow duration-300"
+            className="bg-white border border-2px-[#D0C1FF] rounded-2xl p-8 md:p-10 shadow-sm shadow-[rgba(208,193,255,1)] hover:shadow-xl hover:shadow-blue-300 transition-shadow duration-300"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
