@@ -2,8 +2,8 @@
 
 import { ApiCourse } from "@/lib/api/courses";
 import { motion } from "framer-motion";
-import Link from "next/link";
-import { ArrowRight, Pencil } from "lucide-react";
+import Image from "next/image";
+import { Pencil } from "lucide-react";
 import CourseCard from "@/components/CourseCard";
 
 interface TopCourseProps {
@@ -15,9 +15,19 @@ export default function TopCourse({ courses }: TopCourseProps) {
     const titleParts = title.split("English");
 
     return (
-        <section className="py-20 md:py-24 lg:py-32 bg-linear-to-b from-slate-50 to-white relative overflow-hidden">
+        <section className="relative overflow-hidden py-20 md:py-24 lg:py-32 bg-white">
+            <div className="absolute inset-0 z-0">
+                <Image
+                    src="/images/coursebg.jpg"
+                    alt="Course background"
+                    fill
+                    className="object-cover"
+                    priority
+                />
+            </div>
+
             {/* Decorative elements on the right */}
-            <div className="absolute top-0 right-0 w-64 h-64 md:w-96 md:h-96">
+            <div className="absolute top-0 right-0 z-10 w-64 h-64 md:w-96 md:h-96">
                 <svg viewBox="0 0 200 200" className="w-full h-full text-purple-200/50">
                     <path
                         d="M 100 0 Q 200 0 200 100 Q 200 200 100 200"
@@ -35,7 +45,7 @@ export default function TopCourse({ courses }: TopCourseProps) {
             </div>
 
             {/* Decorative star/asterisk on right side */}
-            <div className="absolute right-8 top-1/2 hidden lg:block">
+            <div className="absolute right-8 top-1/2 z-10 hidden lg:block">
                 <svg viewBox="0 0 100 100" className="w-24 h-24 text-slate-200">
                     <path
                         d="M50 0 L50 100 M0 50 L100 50 M15 15 L85 85 M85 15 L15 85"
@@ -46,7 +56,7 @@ export default function TopCourse({ courses }: TopCourseProps) {
                 </svg>
             </div>
 
-            <div className="container mx-auto px-4">
+            <div className="relative z-10 container mx-auto px-4">
                 {/* Header */}
                 <motion.div
                     className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-12 md:mb-16"
@@ -87,7 +97,7 @@ export default function TopCourse({ courses }: TopCourseProps) {
                     {courses.map((course, index) => (
                         <motion.div
                             key={index}
-                            className="flex [&>*]:w-full [&>*]:max-w-none [&>*]:h-full"
+                            className="flex *:w-full *:max-w-none *:h-full"
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
