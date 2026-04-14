@@ -31,10 +31,10 @@ export default function Review() {
           transition={{ duration: 0.8 }}
         >
           {/* Top Left Quarter Circle */}
-          <div className="absolute top-0 left-0 w-48 h-48 bg-blue-300 rounded-br-full"></div>
+          <div className="absolute top-0 left-0 w-32 md:w-48 h-32 md:h-48 bg-purple-200 rounded-br-full"></div>
           
           {/* Bottom Right Quarter Circle */}
-          <div className="absolute bottom-0 right-0 w-48 h-48 bg-blue-300 rounded-tl-full"></div>
+          <div className="absolute bottom-0 right-0 w-32 md:w-48 h-32 md:h-48 bg-purple-200 rounded-tl-full"></div>
 
           {/* Heading */}
           <div className="text-center mb-12 relative z-10">
@@ -54,7 +54,7 @@ export default function Review() {
             {reviews.map((review, index) => (
               <motion.div
                 key={index}
-                className="bg-white rounded-2xl p-6 md:p-8 shadow-md shadow-emerald-600 hover:shadow-xl transition-shadow duration-300"
+                className="bg-gray-50 rounded-2xl p-6 md:p-8 border-2 border-purple-100 hover:border-purple-200 hover:shadow-lg transition-all duration-300"
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true, margin: "-50px" }}

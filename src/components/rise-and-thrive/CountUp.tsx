@@ -32,7 +32,7 @@ export default function CountUpSection() {
   ]
 
   return (
-    <section className="bg-gray-50 py-16 md:py-20">
+    <section className="bg-gray-50 h-35.25 flex items-center">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {stats.map((stat, index) => (
@@ -51,7 +51,7 @@ export default function CountUpSection() {
                   duration={stat.duration}
                   enableScrollSpy
                   scrollSpyOnce
-                  className="text-4xl md:text-5xl lg:text-6xl font-bold text-purple-600"
+                  className="text-3xl md:text-3xl lg:text-4xl font-bold text-purple-600"
                 />
               </div>
               <p className="text-sm md:text-base text-gray-600 font-medium">
