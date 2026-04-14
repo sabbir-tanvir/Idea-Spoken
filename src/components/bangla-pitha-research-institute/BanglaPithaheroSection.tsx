@@ -17,7 +17,7 @@ export default function BanglaPithaHeroSection({
   coverImageAlt = "Hamidul Huq",
 }: BanglaPithaHeroSectionProps) {
   return (
-    <section className="relative min-h-screen w-full overflow-hidden">
+    <section className="relative min-h-127.75 w-full overflow-hidden">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -28,7 +28,7 @@ export default function BanglaPithaHeroSection({
           priority
         />
         <motion.div
-          className="absolute inset-0 bg-purple-600/70"
+          className="absolute inset-0 bg-[#704FE6]/70"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
@@ -118,7 +118,7 @@ export default function BanglaPithaHeroSection({
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             <motion.div
-              className="relative w-full h-100 lg:h-150 rounded-2xl overflow-hidden shadow-2xl"
+              className="relative w-full max-w-146.5 h-90 mx-auto rounded-2xl overflow-hidden shadow-2xl"
               initial={{ scale: 0.9 }}
               animate={{ scale: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
