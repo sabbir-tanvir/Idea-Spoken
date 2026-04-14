@@ -2,7 +2,7 @@
 
 import { WhyIdeaData } from "@/lib/api";
 import { motion } from "framer-motion";
-import { Users, Sprout, Code, Home } from "lucide-react";
+import Image from "next/image";
 import React from "react";
 
 interface WhichIdeaProps {
@@ -27,7 +27,7 @@ const fallbackData: WhyIdeaData = {
             title: "বাস্তব অভিজ্ঞতা",
             description: "বাস্তব জীবনের অভিজ্ঞতায় ভিত্তিক কোর্স ডিজাইন যা সরাসরি কাজে লাগে",
             icon: "seedling",
-            bgColor: "purple"
+            bgColor: "green"
         },
         {
             id: 3,
@@ -46,21 +46,10 @@ const fallbackData: WhyIdeaData = {
     ]
 };
 
-// Icon mapping
-const getIcon = (iconName: string) => {
-    const iconClasses = "w-8 h-8";
-    switch (iconName) {
-        case "gamepad":
-            return <Users className={iconClasses} />;
-        case "seedling":
-            return <Sprout className={iconClasses} />;
-        case "code":
-            return <Code className={iconClasses} />;
-        case "home":
-            return <Home className={iconClasses} />;
-        default:
-            return <Users className={iconClasses} />;
-    }
+const iconImages = ["/images/g1.png", "/images/g2.png", "/images/g3.png", "/images/g4.png"];
+
+const getIconImageByIndex = (index: number) => {
+    return iconImages[index] ?? iconImages[0];
 };
 
 // Background color mapping
@@ -99,7 +88,7 @@ export default function WhichIdea({ data }: WhichIdeaProps) {
     const content = data && data.cards?.length > 0 ? data : fallbackData;
 
     return (
-        <section className="py-20 md:py-24 lg:py-32 bg-slate-50">
+        <section className="py-20 md:py-24  bg-slate-50">
             <div className="container mx-auto px-4">
                 {/* Header */}
                 <motion.div
@@ -123,19 +112,25 @@ export default function WhichIdea({ data }: WhichIdeaProps) {
                 {/* Cards Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {content.cards.slice(0, 3).map((card, index) => {
-                        const styles = getBgStyles(card.bgColor);
+                        const styles = getBgStyles(index === 1 ? "green" : card.bgColor);
                         return (
                             <motion.div
                                 key={card.id}
-                                className={`${styles.card} rounded-3xl p-6 md:p-8 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-2`}
+                                className={`${styles.card} rounded-xl p-6 md:p-8 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-2`}
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
                             >
                                 <div className="flex items-start gap-4">
-                                    <div className={`flex-shrink-0 w-14 h-14 rounded-2xl border-2 ${styles.icon} flex items-center justify-center`}>
-                                        {getIcon(card.icon)}
+                                    <div className="shrink-0">
+                                        <Image
+                                            src={getIconImageByIndex(index)}
+                                            alt={card.title}
+                                            width={64}
+                                            height={64}
+                                            className="w-16 h-16 object-contain"
+                                        />
                                     </div>
                                     <div>
                                         <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-2">
@@ -160,10 +155,16 @@ export default function WhichIdea({ data }: WhichIdeaProps) {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: 0.3 }}
                     >
-                        <div className={`${getBgStyles(content.cards[3].bgColor).card} rounded-3xl p-6 md:p-8 w-full md:w-2/3 lg:w-1/2 shadow-xl transition-all duration-300 hover:shadow-xl hover:-translate-y-2`}>
+                        <div className={`${getBgStyles(content.cards[3].bgColor).card} rounded-xl p-6 md:p-8 w-full md:w-2/3 lg:w-1/3 shadow-xl transition-all duration-300 hover:shadow-xl hover:-translate-y-2`}>
                             <div className="flex items-start gap-4">
-                                <div className={`flex-shrink-0 w-14 h-14 rounded-2xl border-2 ${getBgStyles(content.cards[3].bgColor).icon} flex items-center justify-center`}>
-                                    {getIcon(content.cards[3].icon)}
+                                <div className="shrink-0">
+                                    <Image
+                                        src={getIconImageByIndex(3)}
+                                        alt={content.cards[3].title}
+                                        width={56}
+                                        height={56}
+                                        className="w-14 h-14 object-contain"
+                                    />
                                 </div>
                                 <div>
                                     <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-2">
