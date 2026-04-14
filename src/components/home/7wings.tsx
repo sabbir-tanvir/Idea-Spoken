@@ -125,13 +125,13 @@ export default function SevenWings({ data }: SevenWingsProps) {
                 {/* 7th Card - Centered below */}
                 {content.wings.length > 6 && (
                     <motion.div
-                        className="flex justify-start"
+                        className="flex justify-left"
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: 0.6 }}
                     >
-                        <div className="w-full md:w-1/2 lg:w-1/3">
+                        <div className="w-full md:w-1/2 lg:w-[calc((100%-3rem)/3)]">
                             <IdeaCard wing={content.wings[6]} />
                         </div>
                     </motion.div>

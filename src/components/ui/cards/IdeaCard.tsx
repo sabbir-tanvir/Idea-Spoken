@@ -17,7 +17,7 @@ export default function IdeaCard({ wing }: IdeaCardProps) {
     const href = wing.slug.startsWith('/') ? wing.slug : `/${wing.slug}`;
 
     return (
-        <div className="bg-[#f7f4f4] border border-red-200 gap-4 min-h-[420px] h-full p-7 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group">
+        <div className="bg-[#eeefef] border border-red-200 gap-4 min-h-[420px] h-full p-7 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group">
             {/* Image */}
             <div className="relative h-50 w-full rounded-md overflow-hidden mb-4">
                 {!imageError ? (
@@ -41,12 +41,12 @@ export default function IdeaCard({ wing }: IdeaCardProps) {
             </div>
 
             {/* Title */}
-            <h3 className="text-lg md:text-3xl font-bold pr-24 text-slate-900 mb-4 line-clamp-2">
+            <h3 className="text-lg md:text-3xl font-bold pr-24 text-slate-900 mb-8 line-clamp-2">
                 {wing.title}
             </h3>
 
             {/* Description */}
-            <p className="text-xl text-slate-600 mb-4 pr-20 line-clamp-2">
+            <p className="text-xl text-slate-600 mb-8 pr-20 line-clamp-2">
                 {wing.description}
             </p>
 
