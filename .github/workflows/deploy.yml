@@ -12,6 +12,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      NEXT_PUBLIC_BACKEND_URL: ${{ secrets.NEXT_PUBLIC_BACKEND_URL }}
+      NEXT_PUBLIC_APP_NAME: ${{ secrets.NEXT_PUBLIC_APP_NAME }}
+      BASE_URL: ${{ secrets.BASE_URL }}
+      PUBLIC_BASE_URL: ${{ secrets.PUBLIC_BASE_URL }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -20,7 +26,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22.13.1"
-          cache: "npm" # Automatically caches dependencies for faster subsequent runs
 
       - name: Install dependencies
         run: npm ci
@@ -30,3 +35,39 @@ jobs:
 
       - name: Show files
         run: ls -la
+
+      - name: Upload build via SCP
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          password: ${{ secrets.PASS }}
+          source: ".next/*"
+          target: "public_html/test/"
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          password: ${{ secrets.PASS }}
+          script: |
+            # Go to your Next.js project folder
+            cd ~/public_html/test || exit 1
+
+            # Pull latest code
+            git pull origin main
+
+            # Use Node v22
+            export PATH=/usr/local/apps/nodejs22/bin:$PATH
+
+            # Debug
+            node -v
+            npm -v
+
+            # Install dependencies
+            npm install
+
+            # Restart app (choose ONE option below)
+            mkdir -p tmp
+            touch tmp/restart.txt
