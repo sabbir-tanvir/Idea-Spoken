@@ -10,7 +10,7 @@ import UserMenu from './UserMenu';
 // Wings dropdown items - routes that have dedicated pages use absolute paths
 const wingsDropdownItems = [
   { title: 'Rise and Thrive', slug: '/rise-and-thrive', hasPage: true },
-  { title: 'WIDEN', slug: '/widen', hasPage: true },
+  { title: 'WINI', slug: '/widen', hasPage: true },
   { title: 'IDEA SPOKEN – The Game Method', slug: '/game-method', hasPage: true },
   { title: 'IDEA Pitha Pathshala', slug: '/pitha', hasPage: true },
   { title: 'Bangla Pitha Research Institute', slug: '/bangla-pitha-research-institute', hasPage: true },
