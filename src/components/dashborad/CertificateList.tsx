@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import { Certificate } from '@/lib/data';
+import { ApiCourseProgress } from '@/lib/api/courses';
 import { CertificateCard } from './CertificateCard';
 import { Award } from 'lucide-react';
 
 interface CertificateListProps {
-  certificates: Certificate[];
+  progressItems: ApiCourseProgress[];
 }
 
 /**
@@ -12,7 +12,7 @@ interface CertificateListProps {
  * This component can be rendered on the server and will receive data from API
  * Only the animation wrapper (CertificateCard) uses "use client"
  */
-export default function CertificateList({ certificates }: CertificateListProps) {
+export default function CertificateList({ progressItems }: CertificateListProps) {
   return (
     <div className="w-full max-w-6xl mx-auto">
       {/* Header Section */}
@@ -23,20 +23,20 @@ export default function CertificateList({ certificates }: CertificateListProps) 
           </div>
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Certificates & Achievements</h1>
-            <p className="text-gray-600 mt-1">Your Learning Milestones</p>
+            <p className="text-gray-600 mt-1">Generate certificates for completed courses</p>
           </div>
         </div>
       </div>
 
       {/* Empty State or Certificate Grid */}
-      {certificates.length === 0 ? (
+      {progressItems.length === 0 ? (
         <EmptyState />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {certificates.map((certificate, index) => (
-            <CertificateCard 
-              key={certificate.id} 
-              certificate={certificate}
+          {progressItems.map((progress, index) => (
+            <CertificateCard
+              key={progress.courseId}
+              progress={progress}
               index={index}
             />
           ))}

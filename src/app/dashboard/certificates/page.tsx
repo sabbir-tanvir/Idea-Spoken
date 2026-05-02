@@ -1,6 +1,8 @@
 import DashboardSidebar from '@/components/DashboardSidebar';
 import CertificateList from '@/components/dashborad/CertificateList';
-import { mockCertificatesEmpty, mockCertificates } from '@/lib/data';
+import { getCourseProgress, getUserCourses, ApiCourseProgress } from '@/lib/api/courses';
+import { getAuthToken } from '@/lib/auth/session';
+import { redirect } from 'next/navigation';
 
 /**
  * Certificates Page - Server Component
@@ -10,12 +12,17 @@ import { mockCertificatesEmpty, mockCertificates } from '@/lib/data';
  * To test empty state, use: mockCertificatesEmpty
  * To test with data, use: mockCertificates
  */
-export default function CertificatesPage() {
-  // TODO: Replace with actual API call when ready
-  // const certificates = await fetch('/api/certificates').then(res => res.json());
-  
-  // Switch between mockCertificatesEmpty and mockCertificates to test both states
-  const certificates = mockCertificatesEmpty; // Change to mockCertificates to see certificate cards
+export default async function CertificatesPage() {
+  const token = await getAuthToken();
+  if (!token) redirect('/auth/login');
+
+  const courses = await getUserCourses(token);
+  const progressEntries = await Promise.all(
+    courses.map((course) => getCourseProgress(token, course.id))
+  );
+  const progressItems = progressEntries.filter(
+    (entry): entry is ApiCourseProgress => Boolean(entry)
+  );
 
   return (
     <div className="flex bg-gray-50 min-h-screen py-16">
@@ -27,7 +34,7 @@ export default function CertificatesPage() {
           </div>
 
           <main className="flex-1 ">
-            <CertificateList certificates={certificates} />
+            <CertificateList progressItems={progressItems} />
           </main>
         </div>
       </div>

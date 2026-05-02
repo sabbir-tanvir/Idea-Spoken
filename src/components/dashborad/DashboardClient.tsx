@@ -6,7 +6,7 @@ import { ArrowLeft, BookOpen, BarChart3, Layers } from "lucide-react";
 import DashboardSidebar from "@/components/DashboardSidebar";
 import MyCourses, { CourseDetailView } from "./MyCourses";
 import VideoPlayer from "./VideoPlayer";
-import { ApiCourseDetail, ApiLesson } from "@/lib/api/courses";
+import { ApiCourseDetail, ApiCourseProgress, ApiLesson } from "@/lib/api/courses";
 
 interface DashboardClientProps {
     courses: ApiCourseDetail[];
@@ -15,6 +15,8 @@ interface DashboardClientProps {
     userRole: string;
     totalModules: number;
     totalLessons: number;
+    progressByCourseId: Record<number, ApiCourseProgress | null>;
+    initialSelectedCourseId?: number | null;
 }
 
 const LEVEL_LABELS: Record<string, string> = {
@@ -30,8 +32,12 @@ export default function DashboardClient({
     userRole,
     totalModules,
     totalLessons,
+    progressByCourseId,
+    initialSelectedCourseId,
 }: DashboardClientProps) {
-    const [selectedCourseId, setSelectedCourseId] = useState<number | null>(null);
+    const [selectedCourseId, setSelectedCourseId] = useState<number | null>(
+        initialSelectedCourseId ?? null
+    );
     const [selectedLesson, setSelectedLesson] = useState<ApiLesson | null>(null);
     const selectedCourse = courses.find((c) => c.id === selectedCourseId) ?? null;
 
@@ -39,6 +45,15 @@ export default function DashboardClient({
     useEffect(() => {
         window.scrollTo({ top: 0 });
     }, [selectedCourseId, selectedLesson]);
+
+    useEffect(() => {
+        if (!initialSelectedCourseId) return;
+        const exists = courses.some((course) => course.id === initialSelectedCourseId);
+        if (exists) {
+            setSelectedLesson(null);
+            setSelectedCourseId(initialSelectedCourseId);
+        }
+    }, [courses, initialSelectedCourseId]);
 
     // Reset lesson when navigating back to course list
     function handleSelectCourse(id: number) {
@@ -98,6 +113,7 @@ export default function DashboardClient({
                         <CourseDetailView
                             course={selectedCourse}
                             onLessonSelect={setSelectedLesson}
+                            progress={progressByCourseId[selectedCourse.id] ?? null}
                         />
                     </div>
                 </motion.div>
@@ -181,6 +197,7 @@ export default function DashboardClient({
                                 {/* Course list */}
                                 <MyCourses
                                     courses={courses}
+                                    progressByCourseId={progressByCourseId}
                                     selectedId={null}
                                     onSelect={handleSelectCourse}
                                 />

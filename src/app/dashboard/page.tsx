@@ -1,13 +1,26 @@
 import DashboardClient from '@/components/dashborad/DashboardClient';
-import { getUserCourses } from '@/lib/api/courses';
+import { getCourseProgress, getUserCourses, ApiCourseProgress } from '@/lib/api/courses';
 import { getAuthToken, decodeToken } from '@/lib/auth/session';
 import { redirect } from 'next/navigation';
 
-export default async function DashboardPage() {
+export default async function DashboardPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ courseId?: string }>;
+}) {
+  const params = (await searchParams) ?? {};
+  const initialCourseId = params.courseId ? Number(params.courseId) : null;
   const token = await getAuthToken();
   if (!token) redirect('/auth/login');
 
   const courses = await getUserCourses(token);
+  const progressEntries = await Promise.all(
+    courses.map(async (course) => [course.id, await getCourseProgress(token, course.id)] as const)
+  );
+  const progressByCourseId = Object.fromEntries(progressEntries) as Record<
+    number,
+    ApiCourseProgress | null
+  >;
   const user = decodeToken(token);
 
   const userName = user?.name ?? 'Student';
@@ -28,6 +41,8 @@ export default async function DashboardPage() {
       userRole={userRole}
       totalModules={totalModules}
       totalLessons={totalLessons}
+      progressByCourseId={progressByCourseId}
+      initialSelectedCourseId={Number.isNaN(initialCourseId) ? null : initialCourseId}
     />
   );
 }

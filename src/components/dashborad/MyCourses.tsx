@@ -1,8 +1,9 @@
 "use client";
 
-import { ApiCourseDetail, ApiModule, ApiLesson } from "@/lib/api/courses";
+import { ApiCourseDetail, ApiCourseProgress, ApiModule, ApiLesson } from "@/lib/api/courses";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { getFullImageUrl } from "@/lib/getFullImageUrl";
 import {
   BookOpen,
   Clock,
@@ -16,6 +17,7 @@ import {
 
 interface MyCoursesProps {
   courses: ApiCourseDetail[];
+  progressByCourseId: Record<number, ApiCourseProgress | null>;
   selectedId: number | null;
   onSelect: (id: number) => void;
   onBack?: () => void; // handled externally by DashboardClient
@@ -37,16 +39,31 @@ function totalLessons(modules: ApiModule[] | undefined): number {
   return modules.reduce((sum, m) => sum + (m.lessons?.length ?? 0), 0);
 }
 
+function completedLessons(modules: ApiModule[] | undefined): number {
+  if (!modules) return 0;
+  return modules.reduce(
+    (sum, m) => sum + (m.lessons ?? []).filter((lesson) => lesson.completed).length,
+    0
+  );
+}
+
 // ─── Course Card (list view) ─────────────────────────────────────────
 function CourseListCard({
   course,
+  progress,
   onView,
 }: {
   course: ApiCourseDetail;
+  progress: ApiCourseProgress | null;
   onView: () => void;
 }) {
   const modules = course.modules ?? [];
   const lessons = totalLessons(modules);
+  const completed = completedLessons(modules);
+  const progressPercent =
+    progress?.progressPercent ??
+    (lessons > 0 ? Math.round((completed / lessons) * 100) : 0);
+  const thumbnailUrl = getFullImageUrl(course.thumbnail);
   const LEVEL_LABELS: Record<string, string> = {
     BEGINNER: "Beginner",
     INTERMEDIATE: "Intermediate",
@@ -64,10 +81,10 @@ function CourseListCard({
       <div className="flex flex-col sm:flex-row">
         {/* Thumbnail */}
         <div className="sm:w-48 h-40 sm:h-auto bg-linear-to-br from-purple-100 to-blue-100 shrink-0 relative overflow-hidden">
-          {course.thumbnail ? (
+          {thumbnailUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={course.thumbnail}
+              src={thumbnailUrl}
               alt={course.title}
               className="h-full w-full object-cover"
             />
@@ -90,6 +107,20 @@ function CourseListCard({
             <p className="text-sm text-gray-500 line-clamp-2 mb-4">
               {course.description}
             </p>
+            <div className="flex items-center gap-3 text-xs text-gray-500">
+              <span className="font-semibold text-purple-600">
+                {progressPercent}%
+              </span>
+              <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-purple-600 rounded-full"
+                  style={{ width: `${Math.min(progressPercent, 100)}%` }}
+                />
+              </div>
+              <span>
+                {completed}/{lessons}
+              </span>
+            </div>
           </div>
 
           <div className="flex items-center justify-between flex-wrap gap-3">
@@ -313,9 +344,11 @@ function LessonRow({ lesson, locked, onClick }: { lesson: ApiLesson; locked: boo
 // ─── Course Detail View (modules + lessons) ──────────────────────────
 export function CourseDetailView({
   course,
+  progress,
   onLessonSelect,
 }: {
   course: ApiCourseDetail;
+  progress?: ApiCourseProgress | null;
   onLessonSelect?: (lesson: ApiLesson) => void;
 }) {
   const sortedModules = [...(course.modules ?? [])].sort(
@@ -343,6 +376,10 @@ export function CourseDetailView({
   };
 
   const lessons = totalLessons(course.modules);
+  const completed = completedLessons(course.modules);
+  const progressPercent =
+    progress?.progressPercent ??
+    (lessons > 0 ? Math.round((completed / lessons) * 100) : 0);
 
   return (
     <motion.div
@@ -379,6 +416,10 @@ export function CourseDetailView({
               <BarChart3 className="w-4 h-4 text-purple-600" />
               {course.level}
             </span>
+            <span className="flex items-center gap-1.5 text-gray-600 bg-gray-50 px-3 py-1.5 rounded-lg">
+              <CheckCircle2 className="w-4 h-4 text-purple-600" />
+              {progressPercent}% Completed
+            </span>
           </div>
         </div>
       </div>
@@ -412,7 +453,7 @@ export function CourseDetailView({
 }
 
 // ─── Main Component (list view only) ────────────────────────────────
-export default function MyCourses({ courses, selectedId, onSelect }: MyCoursesProps) {
+export default function MyCourses({ courses, progressByCourseId, selectedId, onSelect }: MyCoursesProps) {
   const selectedCourse = courses.find((c) => c.id === selectedId) ?? null;
 
   return (
@@ -421,6 +462,7 @@ export default function MyCourses({ courses, selectedId, onSelect }: MyCoursesPr
         <CourseDetailView
           key="detail"
           course={selectedCourse}
+          progress={progressByCourseId[selectedCourse.id] ?? null}
         />
       ) : (
         <motion.div
@@ -448,6 +490,7 @@ export default function MyCourses({ courses, selectedId, onSelect }: MyCoursesPr
                 <CourseListCard
                   key={course.id}
                   course={course}
+                  progress={progressByCourseId[course.id] ?? null}
                   onView={() => onSelect(course.id)}
                 />
               ))}

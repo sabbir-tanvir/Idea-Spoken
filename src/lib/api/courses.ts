@@ -62,6 +62,39 @@ export interface ApiCourseDetail {
   instructor?: { name: string; avatar?: string } | null;
 }
 
+export interface ApiCourseProgressCourse {
+  id: number;
+  title: string;
+  description: string;
+  thumbnail: string;
+  thumbnailId?: number | null;
+  duration: number;
+  level: string;
+  language: string;
+  price: string;
+  rating: number | null;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  instructorId: number | null;
+  _count?: {
+    modules: number;
+  };
+  instructor?: { name?: string; avatar?: string } | null;
+}
+
+export interface ApiCourseProgress {
+  id: number;
+  status: string;
+  enrolledAt: string;
+  userId: number;
+  courseId: number;
+  course: ApiCourseProgressCourse;
+  totalLessons: number;
+  completedLessons: number;
+  progressPercent: number;
+}
+
 /** Enrollment wrapper returned by /courses/me */
 export interface ApiEnrollment {
   id: number;
@@ -107,10 +140,17 @@ export async function getCourseById(id: number): Promise<ApiCourseDetail | null>
  * Courses with dedicated pages go there; others fall back to /courses/:id
  */
 export function getCourseRoute(course: ApiCourse): string {
-  const title = course.title.toLowerCase();
-  if (title.includes('debate')) return '/english-debate';
-  if (title.includes('idea spoken') || title.includes('idea-spoken')) return '/idea-spoken';
-  return `/courses/${course.id}`;
+  return resolveCourseRoute(course.id, course.title);
+}
+
+/**
+ * Maps a course title/id to its dedicated page route.
+ */
+export function resolveCourseRoute(courseId: number, title: string): string {
+  const normalizedTitle = title.toLowerCase();
+  if (normalizedTitle.includes('debate')) return '/english-debate';
+  if (normalizedTitle.includes('idea spoken') || normalizedTitle.includes('idea-spoken')) return '/idea-spoken';
+  return `/courses/${courseId}`;
 }
 
 /**
@@ -136,6 +176,39 @@ export async function getUserCourses(token: string): Promise<ApiCourseDetail[]> 
   } catch (error) {
     console.error('Failed to fetch user courses:', error);
     return [];
+  }
+}
+
+/**
+ * Fetch course progress for the authenticated user.
+ */
+export async function getCourseProgress(
+  token: string,
+  courseId: number
+): Promise<ApiCourseProgress | null> {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/courses/me/progress?courseId=${courseId}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+        cache: 'no-store',
+      }
+    );
+
+    if (!response.ok) {
+      console.error('Course progress API error:', response.status);
+      return null;
+    }
+
+    const data = await response.json();
+    if (data.success && Array.isArray(data.data) && data.data.length > 0) {
+      return data.data[0] as ApiCourseProgress;
+    }
+
+    return null;
+  } catch (error) {
+    console.error('Failed to fetch course progress:', error);
+    return null;
   }
 }
 
