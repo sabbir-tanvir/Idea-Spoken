@@ -1,6 +1,6 @@
 import DashboardSidebar from '@/components/DashboardSidebar';
 import CertificateList from '@/components/dashborad/CertificateList';
-import { getCourseProgress, getUserCourses, ApiCourseProgress } from '@/lib/api/courses';
+import { getCourseProgress } from '@/lib/api/courses';
 import { getAuthToken } from '@/lib/auth/session';
 import { redirect } from 'next/navigation';
 
@@ -16,13 +16,7 @@ export default async function CertificatesPage() {
   const token = await getAuthToken();
   if (!token) redirect('/auth/login');
 
-  const courses = await getUserCourses(token);
-  const progressEntries = await Promise.all(
-    courses.map((course) => getCourseProgress(token, course.id))
-  );
-  const progressItems = progressEntries.filter(
-    (entry): entry is ApiCourseProgress => Boolean(entry)
-  );
+  const progressItems = await getCourseProgress(token);
 
   return (
     <div className="flex bg-gray-50 min-h-screen py-16">

@@ -14,13 +14,14 @@ export default async function DashboardPage({
   if (!token) redirect('/auth/login');
 
   const courses = await getUserCourses(token);
-  const progressEntries = await Promise.all(
-    courses.map(async (course) => [course.id, await getCourseProgress(token, course.id)] as const)
+  const progressItems = await getCourseProgress(token);
+  const progressByCourseId = progressItems.reduce<Record<number, ApiCourseProgress | null>>(
+    (acc, item) => {
+      acc[item.courseId] = item;
+      return acc;
+    },
+    {}
   );
-  const progressByCourseId = Object.fromEntries(progressEntries) as Record<
-    number,
-    ApiCourseProgress | null
-  >;
   const user = decodeToken(token);
 
   const userName = user?.name ?? 'Student';

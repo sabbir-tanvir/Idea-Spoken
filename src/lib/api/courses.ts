@@ -183,12 +183,11 @@ export async function getUserCourses(token: string): Promise<ApiCourseDetail[]> 
  * Fetch course progress for the authenticated user.
  */
 export async function getCourseProgress(
-  token: string,
-  courseId: number
-): Promise<ApiCourseProgress | null> {
+  token: string
+): Promise<ApiCourseProgress[]> {
   try {
     const response = await fetch(
-      `${BASE_URL}/courses/me/progress?courseId=${courseId}`,
+      `${BASE_URL}/courses/me/progress`,
       {
         headers: { Authorization: `Bearer ${token}` },
         cache: 'no-store',
@@ -197,18 +196,19 @@ export async function getCourseProgress(
 
     if (!response.ok) {
       console.error('Course progress API error:', response.status);
-      return null;
+      return [];
     }
 
     const data = await response.json();
-    if (data.success && Array.isArray(data.data) && data.data.length > 0) {
-      return data.data[0] as ApiCourseProgress;
+    if (data.success && Array.isArray(data.data)) {
+      return data.data as ApiCourseProgress[];
     }
+    console.log('Course progress API returned no progress data:', data.data);
 
-    return null;
+    return [];
   } catch (error) {
     console.error('Failed to fetch course progress:', error);
-    return null;
+    return [];
   }
 }
 
