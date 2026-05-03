@@ -48,7 +48,7 @@ export default function ResearchArea({ heading, subheading, cards }: ResearchAre
           {cards.map((card, index) => (
             <motion.div
               key={index}
-              className="bg-white border-2 border-purple-200 rounded-2xl p-8 text-center shadow-lg shadow-blue-100 hover:shadow-xl hover:shadow-blue-200 transition-all duration-300"
+              className="bg-white border-2 border-purple-200 rounded-2xl p-8 text-center shadow-lg shadow-purple-100 hover:shadow-xl hover:shadow-purple-200 transition-all duration-300"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
