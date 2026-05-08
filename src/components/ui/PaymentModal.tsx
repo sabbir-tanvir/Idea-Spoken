@@ -46,7 +46,7 @@ const PAYMENT_METHODS: MethodConfig[] = [
   {
     id: 'nagad',
     label: 'Nagad',
-    image: 'https://freelogopng.com/images/all_img/1679248787Nagad-Logo.png',
+    image: 'https://freelogopng.com/images/all_img/1679248828Nagad-Logo-PNG.png',
     bgColor: 'bg-gradient-to-r from-orange-400 to-orange-500',
     sendTo: '01783-414354',
     numberLabel: 'Your Nagad Number',
@@ -55,7 +55,7 @@ const PAYMENT_METHODS: MethodConfig[] = [
   {
     id: 'rocket',
     label: 'Rocket',
-    image: '/images/rocket.jpg',
+    image: 'https://static.vecteezy.com/system/resources/thumbnails/068/706/013/small_2x/rocket-color-logo-mobile-banking-icon-free-png.png',
     bgColor: 'bg-gradient-to-r from-purple-400 to-purple-500',
     sendTo: '01783-4143541',
     numberLabel: 'Your Rocket Number',
@@ -64,7 +64,7 @@ const PAYMENT_METHODS: MethodConfig[] = [
   {
     id: 'brac_bank',
     label: 'UPay',
-    image: '/images/upay.png',
+    image: 'https://static.vecteezy.com/system/resources/thumbnails/068/706/007/small_2x/upay-logo-color-mobile-banking-app-icon-free-png.png',
     bgColor: 'bg-gradient-to-r from-blue-500 to-blue-600',
     sendTo: '01783-414354',
     numberLabel: 'Your Account Number',
