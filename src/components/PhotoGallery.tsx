@@ -1,8 +1,9 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { BlogGalleryImage } from "@/lib/api";
-import { useMemo, useEffect } from "react";
+import { useMemo, useEffect, useState, useCallback } from "react";
+import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 
 interface PhotoGalleryProps {
   images: BlogGalleryImage[];
@@ -22,18 +23,58 @@ export default function PhotoGallery({
   title = "Photo Gallery",
   subtitle = "আমাদের কার্যক্রমের ঝলক",
 }: PhotoGalleryProps) {
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
   const galleryImages = images.slice(0, 6);
   const resolvedGalleryImages = useMemo(
-    () => galleryImages.map((image) => ({
-      ...image,
-      resolvedUrl: toAbsoluteUrl(image.url),
-    })),
+    () =>
+      galleryImages.map((image) => ({
+        ...image,
+        resolvedUrl: toAbsoluteUrl(image.url),
+      })),
     [galleryImages]
   );
 
   useEffect(() => {
     console.log("[PhotoGallery] image src urls:", resolvedGalleryImages.map((image) => image.resolvedUrl));
   }, [resolvedGalleryImages]);
+
+  const handleNext = useCallback(() => {
+    setSelectedIndex((prev) => (prev !== null ? (prev + 1) % resolvedGalleryImages.length : null));
+  }, [resolvedGalleryImages.length]);
+
+  const handlePrev = useCallback(() => {
+    setSelectedIndex((prev) =>
+      prev !== null ? (prev - 1 + resolvedGalleryImages.length) % resolvedGalleryImages.length : null
+    );
+  }, [resolvedGalleryImages.length]);
+
+  const handleClose = useCallback(() => {
+    setSelectedIndex(null);
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedIndex === null) return;
+      if (e.key === "Escape") handleClose();
+      if (e.key === "ArrowRight") handleNext();
+      if (e.key === "ArrowLeft") handlePrev();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    if (selectedIndex !== null) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "unset";
+    };
+  }, [selectedIndex, handleClose, handleNext, handlePrev]);
+
+  const activeImage = selectedIndex !== null ? resolvedGalleryImages[selectedIndex] : null;
 
   return (
     <section className="py-10 md:py-14 lg:py-18 bg-white">
@@ -63,6 +104,7 @@ export default function PhotoGallery({
             {resolvedGalleryImages.map((image, index) => (
               <motion.div
                 key={image.id}
+                onClick={() => setSelectedIndex(index)}
                 className={`relative overflow-hidden rounded-2xl bg-purple-100 group cursor-pointer ${
                   index === 0 && resolvedGalleryImages.length > 2 ? "lg:row-span-2" : ""
                 }`}
@@ -75,15 +117,126 @@ export default function PhotoGallery({
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={image.resolvedUrl}
-                  alt={image.alt}
+                  alt={image.alt || title}
                   className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
                   loading="lazy"
                 />
+                <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <div className="p-3 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/40 shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    <ZoomIn className="w-6 h-6" />
+                  </div>
+                </div>
               </motion.div>
             ))}
           </div>
         )}
       </div>
+
+      {/* Fullscreen Lightbox Modal */}
+      <AnimatePresence>
+        {selectedIndex !== null && activeImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 md:p-8"
+            onClick={handleClose}
+          >
+            {/* Top Bar with Counter & Close button */}
+            <div
+              className="absolute top-4 left-4 right-4 flex items-center justify-between z-10 text-white"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <span className="text-sm font-medium tracking-wide bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+                {selectedIndex + 1} / {resolvedGalleryImages.length}
+              </span>
+              <button
+                onClick={handleClose}
+                aria-label="Close fullscreen view"
+                className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-md border border-white/10 cursor-pointer text-white"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Navigation Previous Button */}
+            {resolvedGalleryImages.length > 1 && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePrev();
+                }}
+                aria-label="Previous image"
+                className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-md border border-white/10 text-white z-10 cursor-pointer hidden md:flex items-center justify-center"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+            )}
+
+            {/* Main Fullscreen Image Container */}
+            <motion.div
+              key={activeImage.id}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="relative max-w-5xl max-h-[85vh] flex flex-col items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={activeImage.resolvedUrl}
+                alt={activeImage.alt || title}
+                className="max-h-[80vh] max-w-full rounded-lg object-contain shadow-2xl"
+              />
+              {/* {activeImage.alt && (
+                <p className="mt-3 text-center text-sm md:text-base text-gray-300 font-medium px-4">
+                  {activeImage.alt}
+                </p>
+              )} */}
+            </motion.div>
+
+            {/* Navigation Next Button */}
+            {resolvedGalleryImages.length > 1 && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNext();
+                }}
+                aria-label="Next image"
+                className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-md border border-white/10 text-white z-10 cursor-pointer hidden md:flex items-center justify-center"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            )}
+
+            {/* Mobile Bottom Navigation Controls */}
+            {resolvedGalleryImages.length > 1 && (
+              <div
+                className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-4 md:hidden z-10"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  onClick={handlePrev}
+                  aria-label="Previous image"
+                  className="p-3 rounded-full bg-white/10 active:bg-white/20 transition-colors backdrop-blur-md border border-white/10 text-white"
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+                <button
+                  onClick={handleNext}
+                  aria-label="Next image"
+                  className="p-3 rounded-full bg-white/10 active:bg-white/20 transition-colors backdrop-blur-md border border-white/10 text-white"
+                >
+                  <ChevronRight className="w-6 h-6" />
+                </button>
+              </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
+
