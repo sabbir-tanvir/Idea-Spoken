@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, X } from 'lucide-react';
 import Image from 'next/image';
 import UserMenu from './UserMenu';
 
@@ -39,6 +39,18 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
     closeMobileMenu();
   }, [pathname]);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
   // Handle dropdown open with delay clear
   const handleDropdownEnter = () => {
     if (dropdownTimeoutRef.current) {
@@ -52,7 +64,7 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
   const handleDropdownLeave = () => {
     dropdownTimeoutRef.current = setTimeout(() => {
       setWingsDropdownOpen(false);
-    }, 300); // 300ms delay before closing
+    }, 300);
   };
 
   // Get the href for a wing item
@@ -61,11 +73,22 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
   };
 
   // Check if current path is one of the wings
-  const isWingsActive = pathname?.startsWith('') ||
-    pathname?.startsWith('/widen') ||
+  const isWingsActive = pathname?.startsWith('/widen') ||
     pathname?.startsWith('/pitha') ||
     pathname?.startsWith('/english-debate') ||
-    pathname?.startsWith('/rise-and-thrive');
+    pathname?.startsWith('/rise-and-thrive') ||
+    pathname?.startsWith('/game-method') ||
+    pathname?.startsWith('/bangla-pitha-research-institute') ||
+    pathname?.startsWith('/youth-development') ||
+    pathname?.startsWith('/social-welfare');
+
+  // Desktop nav link classes with underline active indicator
+  const getNavLinkClasses = (isActive: boolean) =>
+    `relative transition-colors font-medium px-4 py-2 ${
+      isActive
+        ? 'text-purple-600 after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-3/4 after:h-[2.5px] after:bg-purple-600 after:rounded-full'
+        : 'text-gray-700 hover:text-purple-600 after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-[2.5px] after:bg-purple-400 after:rounded-full after:transition-all after:duration-300 hover:after:w-3/4'
+    }`;
 
   return (
     <header className="w-full">
@@ -153,47 +176,30 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
               </div>
             </Link>
 
-            {/* Desktop Navigation - with custom left padding */}
+            {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-1 pl-6 xl:pl-8 flex-1">
-              <Link
-                href="/"
-                className={`transition-colors font-medium px-4 py-2 rounded-full ${pathname === '/'
-                  ? 'text-purple-600 border-2 border-purple-600'
-                  : 'text-gray-700 hover:text-purple-600 hover:border-2 hover:border-purple-200'
-                  }`}
-              >
+              <Link href="/" className={getNavLinkClasses(pathname === '/')}>
                 Home
               </Link>
-              <Link
-                href="/about"
-                className={`transition-colors font-medium px-4 py-2 rounded-full ${pathname === '/about'
-                  ? 'text-purple-600 border-2 border-purple-600'
-                  : 'text-gray-700 hover:text-purple-600 hover:border-2 hover:border-purple-200'
-                  }`}
-              >
+              <Link href="/about" className={getNavLinkClasses(pathname === '/about')}>
                 About Us
               </Link>
-              <Link
-                href="/courses"
-                className={`transition-colors font-medium px-4 py-2 rounded-full ${pathname?.startsWith('/courses')
-                  ? 'text-purple-600 border-2 border-purple-600'
-                  : 'text-gray-700 hover:text-purple-600 hover:border-2 hover:border-purple-200'
-                  }`}
-              >
+              <Link href="/courses" className={getNavLinkClasses(pathname?.startsWith('/courses') ?? false)}>
                 Courses
               </Link>
 
-              {/* Our Wings with Dropdown */}
+              {/* Our Wings with Dropdown - Gradient Badge Style */}
               <div
                 className="relative"
                 onMouseEnter={handleDropdownEnter}
                 onMouseLeave={handleDropdownLeave}
               >
                 <button
-                  className={`transition-colors font-medium px-4 py-2 rounded-full flex items-center gap-1 ${isWingsActive
-                      ? 'text-purple-600 border-2 border-purple-600'
-                      : 'text-gray-700 hover:text-purple-600 hover:border-2 hover:border-purple-200'
-                    }`}
+                  className={`flex items-center gap-1.5 font-medium px-5 py-2 rounded-full transition-all duration-300 ${
+                    isWingsActive
+                      ? 'bg-gradient-to-r from-purple-600 to-indigo-500 text-white shadow-lg shadow-purple-300/40'
+                      : 'bg-gradient-to-r from-purple-600 to-indigo-500 text-white shadow-md shadow-purple-200/30 hover:shadow-lg hover:shadow-purple-300/40 hover:scale-[1.03]'
+                  }`}
                 >
                   Our Wings
                   <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${wingsDropdownOpen ? 'rotate-180' : ''}`} />
@@ -202,46 +208,36 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
                 {/* Dropdown Menu */}
                 {wingsDropdownOpen && (
                   <div
-                    className="absolute top-full left-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-gray-100 py-3 z-50"
+                    className="absolute top-full left-0 mt-3 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100/80 overflow-hidden z-50 animate-[fadeInDown_0.2s_ease-out]"
                     onMouseEnter={handleDropdownEnter}
                     onMouseLeave={handleDropdownLeave}
                   >
-                    {wingsDropdownItems.map((item, index) => {
-                      const href = getWingHref(item);
-                      const isActive = pathname === href || pathname?.startsWith(href + '/');
-                      return (
-                        <Link
-                          key={index}
-                          href={href}
-                          className={`block px-5 py-3 text-base transition-colors ${isActive
-                              ? 'bg-purple-50 text-purple-600 font-medium'
-                              : 'text-gray-700 hover:bg-purple-50 hover:text-purple-600'
+                    {/* Gradient accent bar */}
+                    <div className="h-1 bg-gradient-to-r from-purple-600 to-indigo-500" />
+                    <div className="py-2">
+                      {wingsDropdownItems.map((item, index) => {
+                        const href = getWingHref(item);
+                        const isActive = pathname === href || pathname?.startsWith(href + '/');
+                        return (
+                          <Link
+                            key={index}
+                            href={href}
+                            className={`flex items-center gap-3 px-5 py-3 text-[15px] transition-all duration-200 ${
+                              isActive
+                                ? 'bg-gradient-to-r from-purple-50 to-indigo-50 text-purple-700 font-semibold border-l-[3px] border-purple-600'
+                                : 'text-gray-600 hover:bg-gray-50 hover:text-purple-600 hover:pl-7 border-l-[3px] border-transparent'
                             }`}
-                        >
-                          {item.title}
-                        </Link>
-                      );
-                    })}
+                          >
+                            {item.title}
+                          </Link>
+                        );
+                      })}
+                    </div>
                   </div>
                 )}
               </div>
 
-              {/* <Link
-                href="/blog"
-                className={`transition-colors font-medium px-4 py-2 rounded-full ${pathname?.startsWith('/blog')
-                  ? 'text-purple-600 border-2 border-purple-600'
-                  : 'text-gray-700 hover:text-purple-600 hover:border-2 hover:border-purple-200'
-                  }`}
-              >
-                Blog
-              </Link> */}
-              <Link
-                href="/contact"
-                className={`transition-colors font-medium px-4 py-2 rounded-full ${pathname === '/contact'
-                  ? 'text-purple-600 border-2 border-purple-600'
-                  : 'text-gray-700 hover:text-purple-600 hover:border-2 hover:border-purple-200'
-                  }`}
-              >
+              <Link href="/contact" className={getNavLinkClasses(pathname === '/contact')}>
                 Contact
               </Link>
             </nav>
@@ -297,167 +293,205 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
 
             </div>
 
-            {/* Mobile Menu Button - moved to right with ml-auto */}
+            {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="lg:hidden p-2 text-gray-700 hover:text-purple-600 transition-colors ml-auto"
               aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
             </button>
           </div>
+        </div>
+      </div>
 
-          {/* Mobile Menu */}
-          {mobileMenuOpen && (
-            <div className="lg:hidden border-t border-gray-200 py-4">
-              <nav className="flex flex-col space-y-4">
-                <Link
-                  href="/"
-                  onClick={closeMobileMenu}
-                  className={`transition-colors font-medium px-4 py-2 rounded-full text-center ${pathname === '/'
-                    ? 'text-purple-600 border-2 border-purple-600'
-                    : 'text-gray-700 hover:text-purple-600'
-                    }`}
-                >
-                  Home
-                </Link>
-                <Link
-                  href="/about"
-                  onClick={closeMobileMenu}
-                  className={`transition-colors font-medium px-4 py-2 rounded-full text-center ${pathname === '/about'
-                    ? 'text-purple-600 border-2 border-purple-600'
-                    : 'text-gray-700 hover:text-purple-600'
-                    }`}
-                >
-                  About Us
-                </Link>
-                <Link
-                  href="/courses"
-                  onClick={closeMobileMenu}
-                  className={`transition-colors font-medium px-4 py-2 rounded-full text-center ${pathname?.startsWith('/courses')
-                    ? 'text-purple-600 border-2 border-purple-600'
-                    : 'text-gray-700 hover:text-purple-600'
-                    }`}
-                >
-                  Courses
-                </Link>
+      {/* ===================== MOBILE OVERLAY MENU ===================== */}
+      {/* Backdrop */}
+      <div
+        className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-300 lg:hidden ${
+          mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={closeMobileMenu}
+      />
 
-                {/* Our Wings Mobile Dropdown */}
-                <div className="flex flex-col">
-                  <button
-                    onClick={() => setMobileWingsOpen(!mobileWingsOpen)}
-                    className={`transition-colors font-medium px-4 py-2 rounded-full text-center flex items-center justify-center gap-1 ${isWingsActive
-                        ? 'text-purple-600 border-2 border-purple-600'
-                        : 'text-gray-700 hover:text-purple-600'
-                      }`}
-                  >
-                    Our Wings
-                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileWingsOpen ? 'rotate-180' : ''}`} />
-                  </button>
+      {/* Slide-in Panel */}
+      <div
+        className={`fixed top-0 right-0 h-full w-[85%] max-w-sm bg-white z-50 transform transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-2xl lg:hidden flex flex-col ${
+          mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        {/* Panel Header */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+          <Link href="/" onClick={closeMobileMenu} className="flex items-center">
+            <div className="relative w-10 h-10">
+              <Image
+                src="/images/logo.png"
+                alt="IDEA Spoken Logo"
+                fill
+                sizes="40px"
+                className="object-contain"
+              />
+            </div>
+          </Link>
+          <button
+            onClick={closeMobileMenu}
+            className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors text-gray-600 hover:text-gray-900"
+            aria-label="Close menu"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
 
-                  {mobileWingsOpen && (
-                    <div className="mt-2 bg-gray-50 rounded-xl py-2">
-                      {wingsDropdownItems.map((item, index) => {
-                        const href = getWingHref(item);
-                        const isActive = pathname === href || pathname?.startsWith(href + '/');
-                        return (
-                          <Link
-                            key={index}
-                            href={href}
-                            className={`block px-6 py-2.5 text-base transition-colors ${isActive
-                                ? 'text-purple-600 font-medium bg-purple-50'
-                                : 'text-gray-600 hover:text-purple-600'
-                              }`}
-                            onClick={closeMobileMenu}
-                          >
-                            {item.title}
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
+        {/* Nav Links */}
+        <nav className="flex-1 overflow-y-auto py-4 px-4">
+          <div className="space-y-1">
+            <Link
+              href="/"
+              onClick={closeMobileMenu}
+              className={`flex items-center px-4 py-3.5 rounded-xl text-[15px] font-medium transition-all ${
+                pathname === '/'
+                  ? 'bg-purple-50 text-purple-700 border-l-[3px] border-purple-600'
+                  : 'text-gray-700 hover:bg-gray-50 hover:text-purple-600 border-l-[3px] border-transparent'
+              }`}
+            >
+              Home
+            </Link>
 
-                {/* <Link
-                  href="/blog"
-                  className={`transition-colors font-medium px-4 py-2 rounded-full text-center ${pathname?.startsWith('/blog')
-                    ? 'text-purple-600 border-2 border-purple-600'
-                    : 'text-gray-700 hover:text-purple-600'
-                    }`}
-                >
-                  Blog
-                </Link> */}
-                <Link
-                  href="/contact"
-                  onClick={closeMobileMenu}
-                  className={`transition-colors font-medium px-4 py-2 rounded-full text-center ${pathname === '/contact'
-                    ? 'text-purple-600 border-2 border-purple-600'
-                    : 'text-gray-700 hover:text-purple-600'
-                    }`}
-                >
-                  Contact
-                </Link>
-                <div className="flex flex-col gap-3 pt-4 border-t border-gray-200">
-                  {!isLoggedIn ? (
-                    <Link
-                      href="/auth/login"
-                      onClick={closeMobileMenu}
-                      className="px-4 py-2 border-2 border-purple-600 text-purple-600 rounded-full hover:bg-purple-50 transition-colors font-medium text-sm text-center"
-                    >
-                      Student Login
-                    </Link>
-                  ) : (
-                    <div className="flex items-center justify-center">
-                      <UserMenu userName={userName} />
-                    </div>
-                  )}
+            <Link
+              href="/about"
+              onClick={closeMobileMenu}
+              className={`flex items-center px-4 py-3.5 rounded-xl text-[15px] font-medium transition-all ${
+                pathname === '/about'
+                  ? 'bg-purple-50 text-purple-700 border-l-[3px] border-purple-600'
+                  : 'text-gray-700 hover:bg-gray-50 hover:text-purple-600 border-l-[3px] border-transparent'
+              }`}
+            >
+              About Us
+            </Link>
 
-                  <Link
-                    href="/courses"
-                    onClick={closeMobileMenu}>
-                    <button
-                      className="bg-[#704FE6] text-center w-full rounded-full h-12 relative text-white text-base group overflow-hidden cursor-pointer"
-                      type="button"
-                    >
+            <Link
+              href="/courses"
+              onClick={closeMobileMenu}
+              className={`flex items-center px-4 py-3.5 rounded-xl text-[15px] font-medium transition-all ${
+                pathname?.startsWith('/courses')
+                  ? 'bg-purple-50 text-purple-700 border-l-[3px] border-purple-600'
+                  : 'text-gray-700 hover:bg-gray-50 hover:text-purple-600 border-l-[3px] border-transparent'
+              }`}
+            >
+              Courses
+            </Link>
 
-                      <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">Browse Courses</p>
+            {/* Our Wings - Mobile Accordion */}
+            <div>
+              <button
+                onClick={() => setMobileWingsOpen(!mobileWingsOpen)}
+                className={`flex items-center justify-between w-full px-4 py-3.5 rounded-xl text-[15px] font-medium transition-all ${
+                  isWingsActive
+                    ? 'bg-gradient-to-r from-purple-50 to-indigo-50 text-purple-700'
+                    : 'text-gray-700 hover:bg-gray-50 hover:text-purple-600'
+                }`}
+              >
+                <span className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-600 to-indigo-500"></span>
+                  Our Wings
+                </span>
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform duration-300 ${mobileWingsOpen ? 'rotate-180' : ''}`}
+                />
+              </button>
 
-                      <div
-                        className="bg-[#785DD7] rounded-full h-12 w-1/4 flex items-center justify-center absolute right-0 top-0 group-hover:w-full z-10 duration-500"
+              {/* Wings sub-items with smooth height transition */}
+              <div
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                  mobileWingsOpen ? 'max-h-[500px] opacity-100 mt-1' : 'max-h-0 opacity-0'
+                }`}
+              >
+                <div className="ml-4 pl-4 border-l-2 border-purple-200 space-y-0.5">
+                  {wingsDropdownItems.map((item, index) => {
+                    const href = getWingHref(item);
+                    const isActive = pathname === href || pathname?.startsWith(href + '/');
+                    return (
+                      <Link
+                        key={index}
+                        href={href}
+                        className={`block px-4 py-2.5 rounded-lg text-sm transition-all ${
+                          isActive
+                            ? 'bg-purple-50 text-purple-700 font-semibold'
+                            : 'text-gray-600 hover:bg-gray-50 hover:text-purple-600'
+                        }`}
+                        onClick={closeMobileMenu}
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 1024 1024"
-                          height="25px"
-                          width="25px"
-                        >
-                          <path
-                            d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"
-                            fill="#ffffffff"
-                          ></path>
-                          <path
-                            d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"
-                            fill="#ffffffff"
-                            transform="scale(-1, 1) translate(-1024, 0)"
-                          ></path>
-                        </svg>
-                      </div>
-                    </button>
-
-                  </Link>
-
+                        {item.title}
+                      </Link>
+                    );
+                  })}
                 </div>
-              </nav>
+              </div>
+            </div>
+
+            <Link
+              href="/contact"
+              onClick={closeMobileMenu}
+              className={`flex items-center px-4 py-3.5 rounded-xl text-[15px] font-medium transition-all ${
+                pathname === '/contact'
+                  ? 'bg-purple-50 text-purple-700 border-l-[3px] border-purple-600'
+                  : 'text-gray-700 hover:bg-gray-50 hover:text-purple-600 border-l-[3px] border-transparent'
+              }`}
+            >
+              Contact
+            </Link>
+          </div>
+        </nav>
+
+        {/* CTA Buttons at bottom */}
+        <div className="px-4 py-5 border-t border-gray-100 space-y-3">
+          {!isLoggedIn ? (
+            <Link
+              href="/auth/login"
+              onClick={closeMobileMenu}
+              className="flex items-center justify-center h-12 border-2 border-purple-600 text-purple-600 rounded-full hover:bg-purple-50 transition-colors font-medium text-sm"
+            >
+              Student Login
+            </Link>
+          ) : (
+            <div className="flex items-center justify-center">
+              <UserMenu userName={userName} />
             </div>
           )}
+
+          <Link
+            href="/courses"
+            onClick={closeMobileMenu}
+          >
+            <button
+              className="bg-[#704FE6] text-center w-full rounded-full h-12 relative text-white text-base group overflow-hidden cursor-pointer"
+              type="button"
+            >
+              <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">Browse Courses</p>
+              <div
+                className="bg-[#785DD7] rounded-full h-12 w-1/4 flex items-center justify-center absolute right-0 top-0 group-hover:w-full z-10 duration-500"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 1024 1024"
+                  height="25px"
+                  width="25px"
+                >
+                  <path
+                    d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"
+                    fill="#ffffffff"
+                  ></path>
+                  <path
+                    d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"
+                    fill="#ffffffff"
+                    transform="scale(-1, 1) translate(-1024, 0)"
+                  ></path>
+                </svg>
+              </div>
+            </button>
+          </Link>
         </div>
       </div>
     </header>

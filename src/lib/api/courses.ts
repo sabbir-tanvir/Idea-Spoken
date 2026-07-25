@@ -128,7 +128,9 @@ export async function getCourseById(id: number): Promise<ApiCourseDetail | null>
     if (!response.ok) return null;
     const data = await response.json();
     if (data.success) return data.data as ApiCourseDetail;
+    
     return null;
+
   } catch (error) {
     console.error('Failed to fetch course by id:', error);
     return null;
@@ -170,7 +172,9 @@ export async function getUserCourses(token: string): Promise<ApiCourseDetail[]> 
     if (data.success) {
       // API returns enrollment wrappers — unwrap the nested course objects
       const enrollments = data.data as ApiEnrollment[];
-      return enrollments.map((e) => e.course);
+      const extractedCourses = enrollments.map((e) => e.course);
+      console.log('--- USER COURSES API RESPONSE ---', JSON.stringify(extractedCourses, null, 2));
+      return extractedCourses;
     }
     return [];
   } catch (error) {

@@ -4,15 +4,15 @@ import OurMission, { MissionCard } from '../OurMission';
 const YouthMission = () => {
   const missionCards: MissionCard[] = [
     {
-      icon: '/images/over.png',
+      icon: '/images/Over.png',
       title: 'আত্মবিশ্বাস তৈরি',
-      description: 'যুব ও শিক্ষার্থীদের হতাশা, হীনমন্যতা ও ভয় কাটিয়ে আত্মবিশ্বাসী করা',
+      description: 'যুব সমাজ-কে আত্মনির্ভরশীল করে গড়ে তোলার জন্য বিনামূল্যে বিভিন্ন প্রশিক্ষণ প্রদান',
       bgColor: 'bg-blue-100/50'
     },
     {
       icon: '/images/backk.png',
       title: 'Clear Vision',
-      description: 'Career, skill ও life direction নিয়ে clear vision তৈরি করা',
+      description: 'যুব সমাজ কে দক্ষ মানব সম্পদে পরিণত করা আমাদের লক্ষ্য',
       bgColor: 'bg-blue-100/50'
     }
   ];

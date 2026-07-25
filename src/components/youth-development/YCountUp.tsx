@@ -12,7 +12,7 @@ export default function CountUpSection() {
       duration: 2.5
     },
     {
-      end: 500,
+      end: 1500,
       suffix: "+",
       label: "সেমিনার সম্পন্ন",
       duration: 2
@@ -22,19 +22,13 @@ export default function CountUpSection() {
       suffix: "",
       label: "জেলার কার্যক্রম",
       duration: 1.5
-    },
-    {
-      end: 9,
-      suffix: "%",
-      label: "বছরের অভিজ্ঞতা",
-      duration: 2.5
     }
   ]
 
   return (
     <section className="bg-gray-50 py-6 md:py-10">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
           {stats.map((stat, index) => (
             <motion.div
               key={index}

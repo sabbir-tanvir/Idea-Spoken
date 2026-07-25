@@ -15,6 +15,7 @@ interface LessonCardProps {
 }
 
 export default function LessonCard({ lesson }: LessonCardProps) {
+  console.log('LessonCard rendered with lesson:', lesson);
   const isCompleted = lesson.status === 'completed';
   const isContinue = lesson.status === 'continue';
 

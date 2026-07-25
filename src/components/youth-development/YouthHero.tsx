@@ -90,7 +90,7 @@ export default function YouthHero({
               >
                 <span className="w-2 h-2 bg-white rounded-full"></span>
 
-                <span className="text-sm font-medium">Since 2015</span>
+                <span className="text-sm font-medium">Since 2020</span>
               </motion.div>
               <motion.div 
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/20 backdrop-blur-sm border border-white/30"

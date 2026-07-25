@@ -5,18 +5,18 @@ import { Presentation, Lightbulb, Building2 } from 'lucide-react';
 const activities = [
   {
     icon: Presentation,
-    title: 'সেমিনার ও ওয়ার্কশপ',
-    description: 'দেশের বিভিন্ন অঞ্চলে সেমিনার, ওয়ার্কশপ ও ক্যারিয়ার টক',
+    title: 'বিনামূল্যে বিভিন্ন সেমিনার ও ওয়ার্কশপের আয়োজন',
+    description: 'শিক্ষার্থীদের আত্ম-উন্নয়ন ও দক্ষতা বৃদ্ধির লক্ষ্যে বিনামূল্যে নানান সেমিনার ও ওয়ার্কশপের আয়োজন করা হয়।',
   },
   {
     icon: Lightbulb,
-    title: 'Skill Development',
-    description: 'Motivation, Skill Development, Life Planning সেশন',
+    title: 'বিনামূল্যে ইন্টার্নশিপ আয়োজন',
+    description: 'বিভিন্ন মেয়াদে বিনামূল্যে শিক্ষার্থীদের ইন্টার্নশিপের আওতায় এনে চাকরির বাজারে তাদের মানসিক ও কার্যকর দক্ষতা সাধন।',
   },
   {
     icon: Building2,
-    title: 'Campus Programs',
-    description: 'IDEA Campus Programs – যারা জানতে চায়, বুঝতে চায়, এগিয়ে যেতে চায় তাদের জন্য',
+    title: ' বিনামূল্যে সফট স্কিল ডেভেলপমেন্ট কোর্স',
+    description: 'পাবলিক স্পিকিং, প্রেজেন্টেশন, ভিডিও এডিটিং সহ একাধিক সফট স্কিল সম্পূর্ণ বিনামূল্যে শেখানোর হয় এই কোর্সের মাধ্যমে। ',
   },
 ];
 

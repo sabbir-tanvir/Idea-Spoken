@@ -89,3 +89,4 @@ export default function CoursePhilosophy({ data }: CoursePhilosophyProps) {
         </section>
     );
 }
+
