@@ -27,7 +27,7 @@ export default function SocialHome({
           className="object-cover"
           priority
         />
-        <motion.div 
+        <motion.div
           className="absolute inset-0 bg-[#704FE6]/70"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -39,14 +39,14 @@ export default function SocialHome({
       <div className="relative z-10 container mx-auto px-4 py-20 lg:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Side - Text Content */}
-          <motion.div 
+          <motion.div
             className="text-white space-y-6"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             {/* Top Badge */}
-            <motion.div 
+            <motion.div
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/20 backdrop-blur-sm border border-white/30"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -57,7 +57,7 @@ export default function SocialHome({
             </motion.div>
 
             {/* Main Heading */}
-            <motion.h1 
+            <motion.h1
               className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -67,7 +67,7 @@ export default function SocialHome({
             </motion.h1>
 
             {/* Description in Bengali */}
-            <motion.p 
+            <motion.p
               className="text-lg md:text-xl leading-relaxed text-white/90 max-w-2xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -77,41 +77,49 @@ export default function SocialHome({
             </motion.p>
 
             {/* Bottom Badges */}
-            <motion.div 
+            <motion.div
               className="flex flex-wrap gap-3 pt-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.9 }}
             >
-              <motion.div 
+              <motion.div
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/20 backdrop-blur-sm border border-white/30"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <span className="w-2 h-2 bg-white rounded-full"></span>
 
-                <span className="text-sm font-medium">Since 2015</span>
+                <span className="text-sm font-medium">১৩ ফেব্রুয়ারী, ২০১৫</span>
               </motion.div>
-              <motion.div 
+              <motion.div
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/20 backdrop-blur-sm border border-white/30"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <span className="text-xl">🎯</span>
-                <span className="text-sm font-medium">যশোর,বাংলাদেশ</span>
+                <span className="text-sm font-medium">শাহ আব্দুল করিম রোড খড়কি, যশোর</span>
+              </motion.div>
+              <motion.div
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/20 backdrop-blur-sm border border-white/30"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <span className="text-xl">👨🏻</span>
+                <span className="text-sm font-medium">জনাব মো: হামিদুল হক</span>
               </motion.div>
 
             </motion.div>
           </motion.div>
 
           {/* Right Side - Image */}
-          <motion.div 
+          <motion.div
             className="relative"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <motion.div 
+            <motion.div
               className="relative w-full max-w-146.5 h-90 mx-auto rounded-2xl overflow-hidden shadow-2xl"
               initial={{ scale: 0.9 }}
               animate={{ scale: 1 }}
