@@ -11,7 +11,7 @@ interface TopCourseProps {
 }
 
 export default function TopCourse({ courses }: TopCourseProps) {
-    const title = "দুটি স্পেশালাইজড কোর্স যা আপনার English দক্ষতাকে নতুন উচ্চতায় নিয়ে যাবে";
+    const title = "স্পেশালাইজড কোর্স যা আপনার English দক্ষতাকে নতুন উচ্চতায় নিয়ে যাবে";
     const titleParts = title.split("English");
 
     return (
