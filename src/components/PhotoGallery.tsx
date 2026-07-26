@@ -25,7 +25,7 @@ export default function PhotoGallery({
 }: PhotoGalleryProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
-  const galleryImages = images.slice(0, 6);
+  const galleryImages = images.slice(0, 9);
   const resolvedGalleryImages = useMemo(
     () =>
       galleryImages.map((image) => ({
