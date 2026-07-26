@@ -71,9 +71,9 @@ Open http://localhost:3000
 Create a `.env.local` file in the repository root.
 
 ```env
-NEXT_PUBLIC_BACKEND_URL=https://api.idealessons.com
+NEXT_PUBLIC_BACKEND_URL=https://api.example.com
 # Optional override if you want to set full API base explicitly
-# BASE_URL=https://api.idealessons.com/api/v1
+# BASE_URL=https://api.example.com/api/v1
 ```
 
 Variable reference:
