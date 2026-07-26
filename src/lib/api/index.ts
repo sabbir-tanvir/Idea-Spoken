@@ -399,7 +399,7 @@ export async function getSevenWingsData(): Promise<SevenWingsData> {
       "idea-social-welfare": "/social-welfare",
       "the-game-method": "/game-method",
       "idea-pitha-pathshala": "/pitha",
-      widen: "/widen",
+      "widen": "/widen",
       "bangla-pitha-research-institute": "/bangla-pitha-research-institute",
       "rise-and-thrive": "/rise-and-thrive",
     };
@@ -409,7 +409,7 @@ export async function getSevenWingsData(): Promise<SevenWingsData> {
       "idea-social-welfare": 2,
       "the-game-method": 3,
       "idea-pitha-pathshala": 4,
-      widen: 5,
+      "widen": 5,
       "bangla-pitha-research-institute": 6,
       "rise-and-thrive": 7,
     };
