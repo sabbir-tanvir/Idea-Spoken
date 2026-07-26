@@ -20,7 +20,7 @@ async function PithaPatsala() {
       coverImageUrl={media.coverImageUrl ?? undefined}
       coverImageAlt={media.coverImageAlt}
     />
-    <CountUpSection />
+    {/* <CountUpSection /> */}
     <BanglaPithaResearch />
         <PhotoGallery images={media.gallery} />
 
