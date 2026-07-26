@@ -13,7 +13,7 @@ interface HeroSectionProps {
 export default function HeroSection({
   title = "IDEA Pitha Pathshala",
   description = "৯ নভেম্বর ২০১৭ সালে মাত্র ৩ হাজার টাকা আর ৩৮ জন শিক্ষার্থী নিয়ে, কোনো বড় বিনিয়োগ ছাড়াই শুরু হয় IDEA Pitha Pathshala। উদ্দেশ্য ছিল – যুব সমাজের জন্য স্থানীয় উপকরণ দিয়ে পিঠা বানিয়ে আয়ের পথ তৈরি করা।",
-  coverImageUrl = "/home/vai.jpg",
+  coverImageUrl = "/home/pitaH.webp",
   coverImageAlt = "Hamidul Huq",
 }: HeroSectionProps) {
   return (
@@ -21,7 +21,7 @@ export default function HeroSection({
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/home/bgg.jpg"
+          src="/home/pitabg.webp"
           alt="Background"
           fill
           className="object-cover"
