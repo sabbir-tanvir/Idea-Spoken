@@ -93,7 +93,7 @@ export default function Hero({ data }: HeroProps) {
                     >
                         <div className="relative h-[400px] md:h-[500px] rounded-3xl overflow-hidden shadow-2xl">
                             <Image
-                                src="/images/cing.jpg"
+                                src="/images/homeHero.jpeg"
                                 alt="Students"
                                 fill
                                 priority
