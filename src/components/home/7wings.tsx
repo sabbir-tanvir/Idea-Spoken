@@ -63,7 +63,7 @@ const fallbackData: SevenWingsData = {
             id: 7,
             title: "Rise and Thrive with Hamidul Huq",
             description: "আত্ম-উন্নয়ন ও Mind Programming এর intensive প্রোগ্রাম",
-            image: "/images/wings/rise-thrive.jpg",
+            image: "/home/rise-thi.jpeg",
             slug: "/rise-and-thrive"
         }
     ]
