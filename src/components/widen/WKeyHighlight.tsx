@@ -29,22 +29,22 @@ const WKeyHighlight = () => {
 
   return (
     <>
-
-
       {/* Key Highlights Section */}
       <KeyHighlights 
         title="Key Highlights"
         subtitle="উইনির উল্লেখযোগ্য কার্যক্রম"
         highlights={highlights}
       />
-            {/* Vision Card Section */}
+
+      {/* Vision Card Section */}
       <section className="py-20 bg-gray-50">
-        <div className="container max-w-6xl mx-auto px-4 ">
-            <VisionCard 
-              icon={<Globe className="w-16 h-16" />}
-              title="Our Vision"
-              subtitle='উদ্যোক্তা, শিক্ষা ও মানবিক উদ্যোগকে একসাথে এগিয়ে নিয়ে দেশের প্রতিটি প্রান্তে আত্মনির্ভর, দক্ষ ও সামাজিকভাবে দায়বদ্ধ একটি প্রজন্ম গড়ে তোলা।'
-            />
+        <div className="container max-w-6xl mx-auto px-4">
+          <VisionCard 
+            icon={<Globe className="w-16 h-16" />}
+            title="Our Impact"
+            subtitle="করোনা কালীন সময়ে উদ্যোক্তা তৈরী
+শিক্ষার্থী-উদ্যোক্তা তৈরীর অন্যতম অনলাইন প্লাটফর্ম এবং উদ্যোক্তাদের বিনামূল্যে দক্ষতা উন্নয়নে সদা তৎপর।"
+          />
         </div>
       </section>
     </>
