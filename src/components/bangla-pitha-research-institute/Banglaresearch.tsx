@@ -1,36 +1,29 @@
 
-import { BookOpen, Lightbulb, Home, Globe } from "lucide-react"
+import { MapPin, Sparkles, BookOpen } from "lucide-react"
 import ResearchArea from "../ResearchArea"
 
 export default function BanglaPithaResearch() {
     const researchCards = [
         {
             icon: (
+                <MapPin className="w-8 h-8 text-white" />
+            ),
+            title: "আঞ্চলিক পিঠা কে পুনরুদ্ধার",
+            subtitle: "দেশের বিভিন্ন অঞ্চলের ঐতিহ্যবাহী ও বিলুপ্তপ্রায় পিঠা পুনরুদ্ধার"
+        },
+        {
+            icon: (
+                <Sparkles className="w-8 h-8 text-white" />
+            ),
+            title: "স্বাস্থ্যসম্মত পিঠা উদ্ভাবন",
+            subtitle: "ঋতু, বয়স ও চাহিদা ভেদে স্বাস্থ্যসম্মত পিঠা উদ্ভাবন"
+        },
+        {
+            icon: (
                 <BookOpen className="w-8 h-8 text-white" />
             ),
-            title: "ঐতিহ্যবাহী পিঠা",
-            subtitle: "Professional Development Sessions"
-        },
-        {
-            icon: (
-                <Lightbulb className="w-8 h-8 text-white" />
-            ),
-            title: "আধুনিক ফিউশন",
-            subtitle: "Traditional + Modern Combination"
-        },
-        {
-            icon: (
-                <Home className="w-8 h-8 text-white" />
-            ),
-            title: "স্বাস্থ্যকর বিকল্প",
-            subtitle: "Low Sugar, Gluten-Free Options"
-        },
-        {
-            icon: (
-                <Globe className="w-8 h-8 text-white" />
-            ),
-            title: "আঞ্চলিক বৈচিত্র্য",
-            subtitle: "৬৪ জেলার Unique পিঠা"
+            title: "সকল পিঠার রেসিপি সংরক্ষণ",
+            subtitle: "ঐতিহ্যবাহী সকল পিঠার তথ্য ও রেসিপি ডিজিটাল উপায়ে সংরক্ষণ"
         }
     ]
 
