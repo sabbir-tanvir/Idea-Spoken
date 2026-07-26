@@ -97,7 +97,7 @@ export default function Hero({ data }: HeroProps) {
                                 alt="Students"
                                 fill
                                 priority
-                                quality={85}
+                                quality={100}
                                 sizes="(max-width: 1024px) 100vw, 50vw"
                                 className="object-cover"
                             />
