@@ -26,7 +26,7 @@ async function PithaPatsala() {
 
     <BanglaPithaInovation />
     <BanglaPithaActivation />
-    <BanglaPithaContact />
+    {/* <BanglaPithaContact /> */}
 
     </>
   )
