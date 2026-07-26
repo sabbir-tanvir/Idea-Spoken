@@ -9,12 +9,16 @@ export default function OurImpactText() {
             Our Impact
           </h2>
 
-          <p className="text-xl md:text-3xl text-gray-500 leading-relaxed mb-6">
-            বরিশাল ও দেশের বিভিন্ন জেলায় শিক্ষার্থী ও যুবকদের নিয়ে ছোট-বড় অসংখ্য উদ্যোগ পরিচালনা করেছি
+          <p className="text-xl md:text-3xl text-gray-500 leading-relaxed mb-8">
+            আইডিয়ার স্বেচ্ছাসেবক দের বিভিন্ন কাজ সারাদেশ জুড়ে উদাহরণ সৃষ্টি করেছে। প্রতি সপ্তাহে অনাহারী মানুষের কাছে আইডিয়া ফ্রাইডে মিল পৌঁছে দেওয়া অন্যতম, সারাদেশের বিভিন্ন প্রান্তের শিক্ষার্থীরা এটি অনুকরণ করে। এছাড়াও আইডিয়া লস প্রজেক্ট, ভিন্নধর্মী থার্টি-ফাস্ট উদযাপন এও সারাদেশের মানুষ যোগ হয়। 'আমরা যোগ হলে সবারই খাবার মেলে' এই স্লোগানে ৬৪ টি জেলায় অনাহারী মানুষের কাছে পৌঁছে যায় ভালো মানের খাবার।
           </p>
 
-          <p className="text-xl md:text-2xl font-semibold text-indigo-500 leading-relaxed">
-            "ছোট অবদানও বড় পরিবর্তন আনতে পারে" – এই বিশ্বাস নিয়ে কাজ
+          <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+            How you can help
+          </h3>
+
+          <p className="text-xl md:text-2xl text-gray-500 leading-relaxed">
+            আপনিও অংশ নিতে পারেন এমন মানবিক উদ্যোগে। সাধ্য অনুযায়ী নিজের এলাকায় ভালো কাজ করে অথবা আমাদের মাধ্যমে।
           </p>
         </div>
       </div>
