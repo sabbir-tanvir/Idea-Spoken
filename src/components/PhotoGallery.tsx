@@ -35,19 +35,28 @@ export default function PhotoGallery({
     [galleryImages]
   );
 
+  const allResolvedImages = useMemo(
+    () =>
+      images.map((image) => ({
+        ...image,
+        resolvedUrl: toAbsoluteUrl(image.url),
+      })),
+    [images]
+  );
+
   useEffect(() => {
     console.log("[PhotoGallery] image src urls:", resolvedGalleryImages.map((image) => image.resolvedUrl));
   }, [resolvedGalleryImages]);
 
   const handleNext = useCallback(() => {
-    setSelectedIndex((prev) => (prev !== null ? (prev + 1) % resolvedGalleryImages.length : null));
-  }, [resolvedGalleryImages.length]);
+    setSelectedIndex((prev) => (prev !== null ? (prev + 1) % allResolvedImages.length : null));
+  }, [allResolvedImages.length]);
 
   const handlePrev = useCallback(() => {
     setSelectedIndex((prev) =>
-      prev !== null ? (prev - 1 + resolvedGalleryImages.length) % resolvedGalleryImages.length : null
+      prev !== null ? (prev - 1 + allResolvedImages.length) % allResolvedImages.length : null
     );
-  }, [resolvedGalleryImages.length]);
+  }, [allResolvedImages.length]);
 
   const handleClose = useCallback(() => {
     setSelectedIndex(null);
@@ -74,7 +83,7 @@ export default function PhotoGallery({
     };
   }, [selectedIndex, handleClose, handleNext, handlePrev]);
 
-  const activeImage = selectedIndex !== null ? resolvedGalleryImages[selectedIndex] : null;
+  const activeImage = selectedIndex !== null ? allResolvedImages[selectedIndex] : null;
 
   return (
     <section className="py-10 md:py-14 lg:py-18 bg-white">
@@ -100,35 +109,66 @@ export default function PhotoGallery({
             Gallery images will be added soon.
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-[200px] md:auto-rows-[250px] gap-4">
-            {resolvedGalleryImages.map((image, index) => (
-              <motion.div
-                key={image.id}
-                onClick={() => setSelectedIndex(index)}
-                className={`relative overflow-hidden rounded-2xl bg-purple-100 group cursor-pointer ${
-                  index === 0 && resolvedGalleryImages.length > 2 ? "lg:row-span-2" : ""
-                }`}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ scale: 1.02 }}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={image.resolvedUrl}
-                  alt={image.alt || title}
-                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <div className="p-3 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/40 shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    <ZoomIn className="w-6 h-6" />
+          <>
+            {/* Mobile: Horizontal scroll snap slider */}
+            <div className="md:hidden overflow-x-auto snap-x snap-mandatory scroll-smooth -mx-4 px-4 flex gap-3 pb-2 scrollbar-hide">
+              {resolvedGalleryImages.map((image, index) => (
+                <motion.div
+                  key={image.id}
+                  onClick={() => setSelectedIndex(index)}
+                  className="snap-start shrink-0 w-[75vw] h-[220px] relative overflow-hidden rounded-2xl bg-purple-100 group cursor-pointer"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.5, delay: index * 0.08 }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={image.resolvedUrl}
+                    alt={image.alt || title}
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <div className="p-3 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/40 shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                      <ZoomIn className="w-6 h-6" />
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Desktop/Tablet: Grid */}
+            <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 auto-rows-[200px] md:auto-rows-[250px] gap-4">
+              {resolvedGalleryImages.map((image, index) => (
+                <motion.div
+                  key={image.id}
+                  onClick={() => setSelectedIndex(index)}
+                  className={`relative overflow-hidden rounded-2xl bg-purple-100 group cursor-pointer ${
+                    index === 0 && resolvedGalleryImages.length > 2 ? "lg:row-span-2" : ""
+                  }`}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  whileHover={{ scale: 1.02 }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={image.resolvedUrl}
+                    alt={image.alt || title}
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <div className="p-3 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/40 shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                      <ZoomIn className="w-6 h-6" />
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </>
         )}
       </div>
 
@@ -149,7 +189,7 @@ export default function PhotoGallery({
               onClick={(e) => e.stopPropagation()}
             >
               <span className="text-sm font-medium tracking-wide bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
-                {selectedIndex + 1} / {resolvedGalleryImages.length}
+                {selectedIndex + 1} / {allResolvedImages.length}
               </span>
               <button
                 onClick={handleClose}
@@ -161,7 +201,7 @@ export default function PhotoGallery({
             </div>
 
             {/* Navigation Previous Button */}
-            {resolvedGalleryImages.length > 1 && (
+            {allResolvedImages.length > 1 && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -198,7 +238,7 @@ export default function PhotoGallery({
             </motion.div>
 
             {/* Navigation Next Button */}
-            {resolvedGalleryImages.length > 1 && (
+            {allResolvedImages.length > 1 && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -212,7 +252,7 @@ export default function PhotoGallery({
             )}
 
             {/* Mobile Bottom Navigation Controls */}
-            {resolvedGalleryImages.length > 1 && (
+            {allResolvedImages.length > 1 && (
               <div
                 className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-4 md:hidden z-10"
                 onClick={(e) => e.stopPropagation()}
