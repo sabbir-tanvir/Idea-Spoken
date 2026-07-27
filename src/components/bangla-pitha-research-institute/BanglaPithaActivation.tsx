@@ -67,7 +67,7 @@ export default function BanglaPithaActivation() {
         <VisionCard
           icon={<Globe className="w-16 h-16" />}
           title="Our Vision"
-          subtitle='"Local to Global" – গ্রামের পিঠাকে বিশ্বমেলার স্টলে তোলার স্বপ্ন।'
+          subtitle='"বাংলার ঐতিহ্যে কে প্রজন্ম থেকে প্রজন্মান্তরে পৌঁছে দেওয়া এবং সংস্কৃতি কে বাঁচিয়ে রাখা।'
         />
       </div>
     </section>
