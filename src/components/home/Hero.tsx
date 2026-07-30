@@ -1,17 +1,97 @@
 "use client";
 
 import { HomeHeroData } from "@/lib/api";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 
 interface HeroProps {
     data: HomeHeroData;
 }
 
+const CAROUSEL_INTERVAL_MS = 4500;
+
+function HeroImageCarousel({ images }: { images: string[] }) {
+    const [current, setCurrent] = useState(0);
+    const hasMultiple = images.length > 1;
+
+    const goTo = useCallback(
+        (index: number) => {
+            setCurrent((index + images.length) % images.length);
+        },
+        [images.length]
+    );
+
+    useEffect(() => {
+        if (!hasMultiple) return;
+
+        const timer = setInterval(() => {
+            setCurrent((prev) => (prev + 1) % images.length);
+        }, CAROUSEL_INTERVAL_MS);
+
+        return () => clearInterval(timer);
+    }, [hasMultiple, images.length]);
+
+    return (
+        <div className="relative mx-auto w-full max-w-md lg:max-w-none">
+            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl shadow-2xl ring-1 ring-slate-900/5 md:aspect-[5/6] lg:max-h-[580px]">
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={images[current]}
+                        initial={{ opacity: 0, scale: 1.04 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.98 }}
+                        transition={{ duration: 0.65, ease: "easeInOut" }}
+                        className="absolute inset-0"
+                    >
+                        <Image
+                            src={images[current]}
+                            alt={`IDEA students ${current + 1}`}
+                            fill
+                            priority={current === 0}
+                            quality={75}
+                            sizes="(max-width: 768px) 90vw, (max-width: 1024px) 45vw, 520px"
+                            className="object-cover object-center"
+                        />
+                    </motion.div>
+                </AnimatePresence>
+
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/35 via-transparent to-transparent" />
+
+                {hasMultiple && (
+                    <div className="absolute bottom-5 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2">
+                        {images.map((_, index) => (
+                            <button
+                                key={index}
+                                type="button"
+                                aria-label={`Show slide ${index + 1}`}
+                                onClick={() => goTo(index)}
+                                className={`h-2 rounded-full transition-all duration-300 ${
+                                    index === current
+                                        ? "w-7 bg-white"
+                                        : "w-2 bg-white/50 hover:bg-white/75"
+                                }`}
+                            />
+                        ))}
+                    </div>
+                )}
+            </div>
+
+            <div
+                aria-hidden
+                className="absolute -right-3 -top-3 -z-10 hidden h-full w-full rounded-3xl bg-purple-100/80 lg:block"
+            />
+        </div>
+    );
+}
+
 export default function Hero({ data }: HeroProps) {
     if (!data) return null;
+
+    const carouselImages =
+        data.images && data.images.length > 0 ? data.images : [data.image];
 
     return (
         <section
@@ -84,24 +164,14 @@ export default function Hero({ data }: HeroProps) {
                         </motion.div>
                     </motion.div>
 
-                    {/* Right: Image */}
+                    {/* Right: Image Carousel */}
                     <motion.div
                         className="relative"
                         initial={{ opacity: 0, x: 30 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
                     >
-                        <div className="relative h-[400px] md:h-[500px] rounded-3xl overflow-hidden shadow-2xl">
-                            <Image
-                                src="/images/homeHero.jpeg"
-                                alt="Students"
-                                fill
-                                priority
-                                quality={100}
-                                sizes="(max-width: 1024px) 100vw, 50vw"
-                                className="object-cover"
-                            />
-                        </div>
+                        <HeroImageCarousel images={carouselImages} />
 
                         <Link href="#our-wings" scroll>
                             <motion.div

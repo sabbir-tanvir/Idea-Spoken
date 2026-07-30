@@ -117,6 +117,7 @@ export interface HomeHeroData {
   ctaText: string;
   exploreText: string;
   image: string;
+  images?: string[];
 }
 
 export interface WhyIdeaCard {
