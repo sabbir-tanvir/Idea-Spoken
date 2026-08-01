@@ -23,7 +23,7 @@ Create a reusable component following the template + content provider architectu
    - Pass all props to template component
    - Standard icon size: `w-8 h-8` for cards, `w-5 h-5` for buttons
 
-**Styling Requirements:**
+**Styling Requirements:** 
 
 - **Colors**: Use `purple-600` for primary CTAs and icons, `purple-50/100/200` for accent backgrounds
 - **Typography**: 
@@ -33,7 +33,7 @@ Create a reusable component following the template + content provider architectu
 - **Buttons**: 
   - Primary: `px-6 md:px-8 py-3 md:py-4 bg-purple-600 text-white rounded-full hover:bg-purple-700`
   - Secondary: `border-2 border-purple-600 text-purple-600 bg-transparent`
-- **Cards**: Use `rounded-3xl` or `rounded-2xl` with soft shadows
+- **Cards**: Use `rounded-3xl` or `rounded-2xl for smaller cards with the 
 - **Forms**: 
   - Inputs: `px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500`
   - Match button padding (`py-3`) to input height
