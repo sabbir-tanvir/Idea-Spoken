@@ -11,6 +11,10 @@ export default async function Home() {
   const sevenWingsData = await getSevenWingsData();
   const courses = await getCourses();
 
+  console.log("----- SERVER LOG: SEVEN WINGS API RESPONSE -----");
+  console.log(sevenWingsData.wings.map(w => w.title));
+  console.log("------------------------------------------------");
+
   return (
     <>
       <Hero data={heroData} />

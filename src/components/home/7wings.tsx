@@ -74,6 +74,8 @@ export default function SevenWings({ data }: SevenWingsProps) {
     const content = data && data.wings?.length > 0 ? data : fallbackData;
     const [avatarError, setAvatarError] = useState(false);
 
+    console.log("7 Wings Data Sequence:", content.wings);
+
     return (
         <section id="our-wings" className="py-20 md:py-24 lg:py-32 bg-white">
             <div className="container mx-auto px-4">
@@ -96,7 +98,7 @@ export default function SevenWings({ data }: SevenWingsProps) {
                             {content.description}
                         </p>
                     </div>
-                    
+
                     {/* All Blog Post Button */}
                     {/* <Link 
                         href="/blog"

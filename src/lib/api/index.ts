@@ -406,11 +406,11 @@ export async function getSevenWingsData(): Promise<SevenWingsData> {
     };
 
     const orderBySlug: Record<string, number> = {
-      "the-game-method": 1,
+      "game-method": 1,
       "rise-and-thrive": 2,
-      "idea-pitha-pathshala": 3,
-      " idea-social-welfare": 4,
-      "idea-youth-development-center": 5,
+      "pitha": 3,
+      "social-welfare": 4,
+      "youth-development": 5,
       "widen": 6,
       "bangla-pitha-research-institute": 7,
     };
