@@ -145,37 +145,44 @@ export default function SevenWings({ data }: SevenWingsProps) {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                    <div className="relative bg-linear-to-br max-w-5xl from-purple-50 via-slate-50 to-purple-50/50 border border-gray-700 shadow-2xl shadow-purple-300 rounded-3xl p-5 sm:p-8 md:p-12 overflow-hidden">
+                    <div className="relative w-full max-w-5xl bg-linear-to-br from-purple-50 via-slate-50 to-purple-50/50 border border-gray-200 shadow-2xl shadow-purple-300/50 rounded-3xl p-6 sm:p-8 md:p-12 overflow-hidden">
                         {/* Decorative shape on right */}
-                        <div className="absolute right-0 bottom-0 w-48 h-48 md:w-64 md:h-64">
+                        <div className="absolute right-0 bottom-0 w-48 h-48 md:w-64 md:h-64 pointer-events-none">
                             <div className="absolute right-0 bottom-0 w-full h-full bg-purple-200/40 rounded-tl-full" />
                         </div>
 
-                        {/* Quote */}
-                        <blockquote className="relative z-10 text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium text-slate-800 leading-normal sm:leading-relaxed mb-8 max-w-none sm:max-w-4xl">
-                            &ldquo;আইডিয়ার যাত্রা শুরু হয়েছিল একঝাঁক শিক্ষার্থীর স্বপ্ন আর একটি বৃক্ষরোপণ অভিযান দিয়ে  আজ এটি শিক্ষা, উন্নয়ন, উদ্যোক্তা সৃষ্টি ও চরিত্র গঠনের এক সমন্বিত প্ল্যাটফর্ম &rdquo;
-                        </blockquote>
-
-                        {/* Author */}
-                        <div className="relative z-10 flex items-center gap-4">
-                            <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-purple-200">
-                                {!avatarError ? (
-                                    <Image
-                                        src="/images/vai.jpg"
-                                        alt="Md. Hamidul Huq"
-                                        fill
-                                        className="object-cover"
-                                        onError={() => setAvatarError(true)}
-                                    />
-                                ) : (
-                                    <div className="w-full h-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold text-xl">
-                                        MH
-                                    </div>
-                                )}
+                        <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
+                            {/* Founder Image on Left */}
+                            <div className="shrink-0">
+                                <div className="relative w-40 h-40 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full md:rounded-3xl overflow-hidden border-4 border-white shadow-xl shadow-purple-200">
+                                    {!avatarError ? (
+                                        <Image
+                                            src="/images/vai.jpg"
+                                            alt="Md. Hamidul Huq"
+                                            fill
+                                            className="object-cover"
+                                            onError={() => setAvatarError(true)}
+                                        />
+                                    ) : (
+                                        <div className="w-full h-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold text-4xl md:text-5xl lg:text-6xl">
+                                            MH
+                                        </div>
+                                    )}
+                                </div>
                             </div>
-                            <div>
-                                <p className="text-lg md:text-xl font-bold text-slate-900">Md. Hamidul Huq</p>
-                                <p className="text-base text-slate-500">Founder, IDEA</p>
+
+                            {/* Quote and Author Info on Right */}
+                            <div className="flex-1 text-center md:text-left">
+                                {/* Quote */}
+                                <blockquote className="text-xl sm:text-2xl md:text-3xl font-medium text-slate-800 leading-relaxed mb-6 md:mb-8">
+                                    &ldquo;আইডিয়ার যাত্রা শুরু হয়েছিল একঝাঁক শিক্ষার্থীর স্বপ্ন আর একটি বৃক্ষরোপণ অভিযান দিয়ে  আজ এটি শিক্ষা, উন্নয়ন, উদ্যোক্তা সৃষ্টি ও চরিত্র গঠনের এক সমন্বিত প্ল্যাটফর্ম &rdquo;
+                                </blockquote>
+
+                                {/* Author */}
+                                <div>
+                                    <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-1">Md. Hamidul Huq</h3>
+                                    <p className="text-lg md:text-xl font-medium text-purple-600">Founder, IDEA</p>
+                                </div>
                             </div>
                         </div>
                     </div>
