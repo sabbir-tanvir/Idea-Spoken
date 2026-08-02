@@ -18,11 +18,25 @@ const fallbackData: SevenWingsData = {
     buttonText: "All Blog Post",
     wings: [
         {
-            id: 1,
-            title: "IDEA Youth Development Center",
-            description: "যুব সমাজকে দক্ষ, সচেতন ও আত্মবিশ্বাসী করে গড়ে তোলা",
-            image: "/images/wings/youth-development.jpg",
-            slug: "youth-development"
+            id: 3,
+            title: "IDEA SPOKEN-The Game Method",
+            description: "গেম-ভিত্তিক English শেখার অভিনব পদ্ধতি",
+            image: "/images/wings/spoken-english.jpg",
+            slug: "/game-method"
+        },
+        {
+            id: 7,
+            title: "Rise and Thrive with Hamidul Huq",
+            description: "আত্ম-উন্নয়ন ও Mind Programming এর intensive প্রোগ্রাম",
+            image: "/rise-thi.jpeg",
+            slug: "/rise-and-thrive"
+        },
+        {
+            id: 4,
+            title: "IDEA PITHA PARK",
+            description: "পিঠা তৈরির আদ্যোগ শত তৈরি করা সুযোগের জন্য",
+            image: "/images/wings/pitha-pathshala.jpg",
+            slug: "pitha"
         },
         {
             id: 2,
@@ -32,39 +46,25 @@ const fallbackData: SevenWingsData = {
             slug: "social-welfare"
         },
         {
-            id: 3,
-            title: "IDEA SPOKEN – The Game Method",
-            description: "গেম-ভিত্তিক English শেখার অভিনব পদ্ধতি",
-            image: "/images/wings/spoken-english.jpg",
-            slug: "/game-method"
-        },
-        {
-            id: 4,
-            title: "IDEA Pitha Pathshala",
-            description: "পিঠা তৈরির আদ্যোগ শত তৈরি করা সুযোগের জন্য",
-            image: "/images/wings/pitha-pathshala.jpg",
-            slug: "pitha"
+            id: 1,
+            title: "IDEA Youth Development Centre",
+            description: "যুব সমাজকে দক্ষ, সচেতন ও আত্মবিশ্বাসী করে গড়ে তোলা",
+            image: "/images/wings/youth-development.jpg",
+            slug: "youth-development"
         },
         {
             id: 5,
-            title: "WIDEN",
+            title: "We Inspire New IDEAs for Students ( WINI )",
             description: "Bangladeshi Students & Entrepreneurs এর অনলাইন প্ল্যাটফর্ম",
             image: "/images/wings/widen.jpg",
             slug: "/widen"
         },
         {
             id: 6,
-            title: "Bangla Pitha Research Institute",
+            title: "Bangladesh Pitha Research Institute",
             description: "বাংলার ঐতিহ্য পিঠা সংস্কৃতির গবেষণা ও সংরক্ষণ",
             image: "/images/wings/pitha-research.jpg",
             slug: "/bangla-pitha-research-institute"
-        },
-        {
-            id: 7,
-            title: "Rise and Thrive with Hamidul Huq",
-            description: "আত্ম-উন্নয়ন ও Mind Programming এর intensive প্রোগ্রাম",
-            image: "/rise-thi.jpeg",
-            slug: "/rise-and-thrive"
         }
     ]
 };
