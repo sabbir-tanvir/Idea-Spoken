@@ -409,7 +409,7 @@ export async function getSevenWingsData(): Promise<SevenWingsData> {
       "the-game-method": 1,
       "rise-and-thrive": 2,
       "idea-pitha-pathshala": 3,
-      "idea-social-welfare": 4,
+      " idea-social-welfare": 4,
       "idea-youth-development-center": 5,
       "widen": 6,
       "bangla-pitha-research-institute": 7,
@@ -421,19 +421,14 @@ export async function getSevenWingsData(): Promise<SevenWingsData> {
 
     const mappedWings: WingCardData[] = blogsData.blogs
       .filter((blog) => blog.published)
-      .sort((a, b) => {
-        const aOrder = orderBySlug[a.slug] ?? 999;
-        const bOrder = orderBySlug[b.slug] ?? 999;
-        return aOrder - bOrder;
-      })
       .map((blog) => {
         const route = routeByBlogSlug[blog.slug] ?? "/our-wings";
         const fallbackWing = fallbackBySlug.get(route.replace(/^\//, ""));
         const coverUrl = blog.coverImage?.url;
         const image = getFullImageUrl(
           coverUrl ||
-            fallbackWing?.image ||
-            "/images/wings/youth-development.jpg",
+          fallbackWing?.image ||
+          "/images/wings/youth-development.jpg",
         );
 
         return {
@@ -443,6 +438,11 @@ export async function getSevenWingsData(): Promise<SevenWingsData> {
           image,
           slug: route,
         };
+      })
+      .sort((a, b) => {
+        const aOrder = orderBySlug[a.slug.replace(/^\//, "")] ?? 999;
+        const bOrder = orderBySlug[b.slug.replace(/^\//, "")] ?? 999;
+        return aOrder - bOrder;
       });
 
     if (!mappedWings.length) return fallback;
