@@ -21,7 +21,7 @@ export default function Footer() {
               <h3 className="text-2xl font-bold">IDEA</h3>
             </div>
             <p className="text-gray-400 text-sm mb-4">
-              Institute of Development, Education and Achievement - শিক্ষা, উন্নয়ন ও অর্জনের প্রতিষ্ঠান
+              Institute of Development, Education and Achievement - উন্নয়ন, শিখন ও অর্জন প্রতিষ্ঠান
             </p>
             <div className="flex gap-3">
               <a href="#" className="w-10 h-10 bg-gray-700 hover:bg-purple-600 rounded-full flex items-center justify-center transition-colors">
@@ -117,14 +117,14 @@ export default function Footer() {
                 <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                <span>info@idea-bd.com</span>
+                <span>ideaspokengamemethod@gmail.com</span>
               </li>
             </ul>
           </div>
         </div>
         
         <div className="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400">
-          <p>&copy; 2025 IDEA - Institute of Development, Education and Achievement. All rights reserved.</p>
+          <p>&copy; 2026 IDEA - Institute of Development, Education and Achievement. All rights reserved.</p>
         </div>
       </div>
     </footer>
