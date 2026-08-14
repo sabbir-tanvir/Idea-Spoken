@@ -53,7 +53,7 @@ export default function SocialHome({
               transition={{ duration: 0.6, delay: 0.3 }}
             >
               <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-              <span className="text-sm font-medium">Registration No: যুউঅ-১৭/২০২০</span>
+              <span className="text-sm font-medium">রেজি: নং: ১৬৪৯</span>
             </motion.div>
 
             {/* Main Heading */}
@@ -97,7 +97,6 @@ export default function SocialHome({
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <span className="text-xl">🎯</span>
                 <span className="text-sm font-medium">শাহ আব্দুল করিম রোড খড়কি, যশোর</span>
               </motion.div>
               <motion.div
@@ -105,8 +104,7 @@ export default function SocialHome({
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <span className="text-xl">👨🏻</span>
-                <span className="text-sm font-medium">জনাব মো: হামিদুল হক</span>
+                <span className="text-sm font-medium">প্রতিষ্ঠাতা : মোঃ হামিদুল হক</span>
               </motion.div>
 
             </motion.div>
