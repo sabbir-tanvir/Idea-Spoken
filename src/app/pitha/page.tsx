@@ -3,6 +3,7 @@ import HeroSection from '@/components/pitha/PheroSection';
 import CountUpSection from '@/components/pitha/PCountUp';
 import OurJourney from '@/components/pitha/OurJourney';
 import PhotoGallery from '@/components/PhotoGallery';
+import WingActivities from '@/components/WingActivities';
 import OurImpact from '@/components/pitha/OurImpact';
 import PReview from '@/components/pitha/PReview';
 import Wcontact from '@/components/pitha/PContact';
@@ -21,6 +22,7 @@ async function PithaPatsala() {
     />
     <CountUpSection />
     <OurJourney />
+    <WingActivities activities={media.activities} />
     <PhotoGallery images={media.gallery} />
     <OurImpact />
     <PReview />

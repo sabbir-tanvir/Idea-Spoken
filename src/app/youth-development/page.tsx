@@ -1,5 +1,6 @@
 import PEvent from '@/components/bangla-pitha-research-institute/BanglaPithaEvent';
 import PhotoGallery from '@/components/PhotoGallery';
+import WingActivities from '@/components/WingActivities';
 
 import React from 'react';
 import { getWingMediaBySlug } from '@/lib/api';
@@ -28,6 +29,7 @@ export default async function Home() {
       />
       <CountUpSection />
       <YouthMission />
+      <WingActivities activities={media.activities} />
 
       <PhotoGallery images={media.gallery} />
       <WhatWeDo />

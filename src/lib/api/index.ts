@@ -157,10 +157,35 @@ interface ApiBlogMedia {
   alt?: string;
 }
 
+interface ApiBlogActivity {
+  id: number;
+  title: string;
+  description: string;
+  sortOrder: number;
+  images: {
+    id: number;
+    sortOrder: number;
+    media: ApiBlogMedia;
+  }[];
+}
+
 export interface BlogGalleryImage {
   id: number;
   url: string;
   alt: string;
+}
+
+export interface WingActivityImage {
+  id: number;
+  url: string;
+  alt: string;
+}
+
+export interface WingActivity {
+  id: number;
+  title: string;
+  description: string;
+  images: WingActivityImage[];
 }
 
 export interface WingMediaData {
@@ -169,6 +194,7 @@ export interface WingMediaData {
   coverImageUrl: string | null;
   coverImageAlt: string;
   gallery: BlogGalleryImage[];
+  activities: WingActivity[];
 }
 
 interface ApiBlog {
@@ -179,6 +205,7 @@ interface ApiBlog {
   published: boolean;
   coverImage: ApiBlogMedia | null;
   gallery: ApiBlogMedia[];
+  activities?: ApiBlogActivity[];
 }
 
 interface BlogsApiResponse {
@@ -251,6 +278,25 @@ async function fetchBlogs(): Promise<{
   };
 }
 
+async function fetchBlogBySlug(slug: string): Promise<ApiBlog | null> {
+  const apiBase = getApiBaseUrl();
+  try {
+    const response = await fetch(`${apiBase}/blogs/slug/${slug}`, {
+      next: { revalidate: 60 },
+    });
+
+    if (!response.ok) return null;
+
+    const payload = await response.json();
+    if (!payload.success || !payload.data) return null;
+
+    return payload.data;
+  } catch (error) {
+    console.error(`Failed to fetch blog by slug ${slug}:`, error);
+    return null;
+  }
+}
+
 export async function getWingGalleryBySlug(
   slug: string,
 ): Promise<BlogGalleryImage[]> {
@@ -260,27 +306,15 @@ export async function getWingGalleryBySlug(
 
 export async function getWingMediaBySlug(slug: string): Promise<WingMediaData> {
   try {
-    const blogsData = await fetchBlogs();
-    if (!blogsData) {
+    const blog = await fetchBlogBySlug(slug);
+    if (!blog || !blog.published) {
       return {
         title: "",
         description: "",
         coverImageUrl: null,
         coverImageAlt: "Wing cover",
         gallery: [],
-      };
-    }
-
-    const blog = blogsData.blogs.find(
-      (item) => item.slug === slug && item.published,
-    );
-    if (!blog) {
-      return {
-        title: "",
-        description: "",
-        coverImageUrl: null,
-        coverImageAlt: "Wing cover",
-        gallery: [],
+        activities: [],
       };
     }
 
@@ -292,12 +326,24 @@ export async function getWingMediaBySlug(slug: string): Promise<WingMediaData> {
       alt: image.alt ?? blog.title,
     }));
 
+    const activities = (blog.activities ?? []).map((activity) => ({
+      id: activity.id,
+      title: activity.title,
+      description: activity.description,
+      images: (activity.images ?? []).map((img) => ({
+        id: img.id,
+        url: getFullImageUrl(img.media.url),
+        alt: img.media.alt ?? activity.title,
+      })),
+    }));
+
     return {
       title: blog.title,
       description: blog.description ?? "",
       coverImageUrl,
       coverImageAlt: blog.coverImage?.alt ?? blog.title,
       gallery,
+      activities,
     };
   } catch (error) {
     console.error("Failed to fetch wing media:", error);
@@ -307,6 +353,7 @@ export async function getWingMediaBySlug(slug: string): Promise<WingMediaData> {
       coverImageUrl: null,
       coverImageAlt: "Wing cover",
       gallery: [],
+      activities: [],
     };
   }
 }

@@ -1,5 +1,5 @@
 import PhotoGallery from '@/components/PhotoGallery'
-import WActivities from '@/components/widen/WActivities'
+import WingActivities from '@/components/WingActivities'
 import Wcontact from '@/components/widen/Wcontact'
 import CountUpSection from '@/components/widen/WCountUp'
 import HeroSection from '@/components/widen/WidenHero'
@@ -19,7 +19,7 @@ export default async function WidenPage() {
       coverImageAlt={media.coverImageAlt}
     />
     <CountUpSection />
-    <WActivities />
+    <WingActivities activities={media.activities} />
     <PhotoGallery images={media.gallery} />
     <WKeyHighlight />
     <Wcontact />

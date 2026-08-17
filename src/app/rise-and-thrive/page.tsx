@@ -3,7 +3,7 @@ import AboutHamidul from "@/components/rise-and-thrive/AboutHamidul";
 import CountUpSection from "@/components/rise-and-thrive/CountUp";
 import HeroSection from "@/components/rise-and-thrive/HeroSection";
 import HomeResearch from "@/components/rise-and-thrive/HomeResearch";
-import OurActivities from "@/components/rise-and-thrive/OurActivities";
+import WingActivities from "@/components/WingActivities";
 import PhotoGallery from "@/components/PhotoGallery";
 import Review from "@/components/rise-and-thrive/Review";
 import UpcomingWorkshop from "@/components/rise-and-thrive/UpcomingWorkshop";
@@ -31,7 +31,7 @@ export default async function Home() {
             <WhatYouWillLearn />
             <PhotoGallery images={media.gallery} />
             <HomeResearch />
-            <OurActivities />
+            <WingActivities activities={media.activities} />
             <UpcomingWorkshop events={events} />
             <AboutHamidul />
             <Review />

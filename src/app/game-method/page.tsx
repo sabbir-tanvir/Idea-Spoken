@@ -1,4 +1,5 @@
 import PhotoGallery from '@/components/PhotoGallery'
+import WingActivities from '@/components/WingActivities'
 import GameMethodApproachProvider from '@/components/game-method/GameMethodApproachProvider'
 import HeroSection from '@/components/widen/WidenHero'
 import React from 'react'
@@ -16,6 +17,7 @@ export default async function GameMethodPage() {
         coverImageAlt={media.coverImageAlt}
       />
       <GameMethodApproachProvider />
+      <WingActivities activities={media.activities} />
       <PhotoGallery images={media.gallery} />
     </>
   )

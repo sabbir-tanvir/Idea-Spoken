@@ -1,6 +1,7 @@
 import React from 'react'
 import CountUpSection from '@/components/pitha/PCountUp';
 import PhotoGallery from '@/components/PhotoGallery';
+import WingActivities from '@/components/WingActivities';
 import PMission from '@/components/bangla-pitha-research-institute/BanglaPithaMission';
 import BanglaPithaContact from '@/components/bangla-pitha-research-institute/BanglaPithaContact';
 import BanglaPithaResearch from '@/components/bangla-pitha-research-institute/Banglaresearch';
@@ -22,6 +23,7 @@ async function PithaPatsala() {
     />
     {/* <CountUpSection /> */}
     <BanglaPithaResearch />
+    <WingActivities activities={media.activities} />
         <PhotoGallery images={media.gallery} />
 
     <BanglaPithaInovation />
