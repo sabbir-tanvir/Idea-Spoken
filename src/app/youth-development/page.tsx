@@ -35,9 +35,7 @@ export default async function Home() {
       <WhatWeDo />
       <UpcomingWorkshop events={events} />
       <Review />
-
       <PEvent />
-
     </>
   );
 };
