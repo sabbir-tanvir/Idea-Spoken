@@ -22,10 +22,10 @@ export default function WhoIsItFor() {
     <section className="py-20 md:py-24 lg:py-32  bg-white">
       <div className="container mx-auto px-4 ">
         {/* First Row - Flex Layout with 3 items */}
-        <div className="flex flex-col md:flex-row gap-6 lg:gap-8 items-start mb-6 lg:mb-8">
+        <div className="flex flex-col md:flex-row gap-6 lg:gap-8 items-center md:items-start mb-6 lg:mb-8">
           {/* Left Card */}
           <motion.div
-            className="flex-1 bg-white border border-2px-[#D0C1FF] rounded-2xl mt-16 p-8 md:p-10 shadow-sm shadow-[rgba(208,193,255,1)] hover:shadow-xl hover:shadow-blue-300 transition-shadow duration-300"
+            className="flex-1 w-full order-2 md:order-1 bg-white border border-2px-[#D0C1FF] rounded-2xl md:mt-16 p-8 md:p-10 shadow-sm shadow-[rgba(208,193,255,1)] hover:shadow-xl hover:shadow-blue-300 transition-shadow duration-300"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
@@ -39,7 +39,7 @@ export default function WhoIsItFor() {
 
           {/* Center Heading - aligned higher */}
           <motion.div 
-            className="flex-1 flex flex-col justify-start pt-12 md:pt-4"
+            className="flex-1 w-full flex flex-col justify-center md:justify-start order-1 md:order-2 pt-0 md:pt-4 pb-4 md:pb-0"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -55,7 +55,7 @@ export default function WhoIsItFor() {
 
           {/* Right Card */}
           <motion.div
-            className="flex-1 bg-white border border-2px-[#D0C1FF] rounded-2xl p-8 mt-16 md:p-10 shadow-sm shadow-[rgba(208,193,255,1)] hover:shadow-xl hover:shadow-blue-300 transition-shadow duration-300"
+            className="flex-1 w-full order-3 md:order-3 bg-white border border-2px-[#D0C1FF] rounded-2xl p-8 md:mt-16 md:p-10 shadow-sm shadow-[rgba(208,193,255,1)] hover:shadow-xl hover:shadow-blue-300 transition-shadow duration-300"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
