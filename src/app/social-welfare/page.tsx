@@ -24,7 +24,7 @@ export default async function Home() {
         coverImageUrl={media.coverImageUrl ?? undefined}
         coverImageAlt={media.coverImageAlt}
       />
-      <KeyProjects />
+      {/* <KeyProjects /> */}
       <WingActivities activities={media.activities} />
       <PhotoGallery images={media.gallery} />
       <OurImpactText />

@@ -58,7 +58,7 @@ const WingActivities: React.FC<WingActivitiesProps> = ({
   }
 
   return (
-    <section className="py-20 md:py-24 lg:py-32 bg-white">
+    <section className="py-20 md:py-20 lg:py-20 bg-white">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
