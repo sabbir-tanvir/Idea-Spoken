@@ -187,6 +187,9 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
               <Link href="/courses" className={getNavLinkClasses(pathname?.startsWith('/courses') ?? false)}>
                 Courses
               </Link>
+              <Link href="/notice-board" className={getNavLinkClasses(pathname?.startsWith('/notice-board') ?? false)}>
+                Notice Board
+              </Link>
 
               {/* Our Wings with Dropdown - Gradient Badge Style */}
               <div
@@ -381,6 +384,18 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
               }`}
             >
               Courses
+            </Link>
+
+            <Link
+              href="/notice-board"
+              onClick={closeMobileMenu}
+              className={`flex items-center px-4 py-3.5 rounded-xl text-[15px] font-medium transition-all ${
+                pathname?.startsWith('/notice-board')
+                  ? 'bg-purple-50 text-purple-700 border-l-[3px] border-purple-600'
+                  : 'text-gray-700 hover:bg-gray-50 hover:text-purple-600 border-l-[3px] border-transparent'
+              }`}
+            >
+              Notice Board
             </Link>
 
             {/* Our Wings - Mobile Accordion */}
