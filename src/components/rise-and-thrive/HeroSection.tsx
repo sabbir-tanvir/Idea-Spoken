@@ -1,7 +1,9 @@
 "use client"
 
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { motion } from "motion/react"
+import { motion, AnimatePresence } from "motion/react"
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface HeroSectionProps {
   title?: string;
@@ -10,12 +12,37 @@ interface HeroSectionProps {
   coverImageAlt?: string;
 }
 
+const defaultCarouselImages = [
+  "/images/rise/2.webp",
+  "/images/rise/3.webp",
+  "/images/rise/4.webp",
+  "/images/rise/5.webp",
+];
+
 export default function HeroSection({
   title = "Rise And Thrive With Hamidul Huq",
   description = '"Rise And Thrive With Hamidul Huq" বলতে এমনকিছুগো আয়— উন্নয়ন, Mind Programming ও Life Transformation—এর Intensive কোর্স, যে যারে অব্যাহতভাবে নিজেদেরে মানসিক বাধা মিটিয়ে কাঙ্ক্ষিতভাবে এগিয়ে যাওয়ার পথ খুঁজে পান',
   coverImageUrl = "/home/vai.jpg",
   coverImageAlt = "Hamidul Huq",
 }: HeroSectionProps) {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Auto carousel timer
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % defaultCarouselImages.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, []);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % defaultCarouselImages.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + defaultCarouselImages.length) % defaultCarouselImages.length);
+  };
+
   return (
     <section className="relative min-h-127.75 w-full overflow-hidden">
       {/* Background Image with Overlay */}
@@ -110,27 +137,57 @@ export default function HeroSection({
             </motion.div>
           </motion.div>
 
-          {/* Right Side - Image */}
+          {/* Right Side - Automatic Image Carousel */}
           <motion.div 
             className="relative"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <motion.div 
-              className="relative w-full max-w-146.5 h-90 mx-auto rounded-2xl overflow-hidden shadow-2xl"
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              whileHover={{ scale: 1.02 }}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={coverImageUrl}
-                alt={coverImageAlt}
-                className="h-full w-full object-cover"
-              />
-            </motion.div>
+            <div className="relative w-full max-w-146.5 h-80 sm:h-100 mx-auto rounded-3xl overflow-hidden shadow-2xl border-4 border-white/20 group">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={currentSlide}
+                  src={defaultCarouselImages[currentSlide]}
+                  alt={`Rise And Thrive ${currentSlide + 1}`}
+                  initial={{ opacity: 0, scale: 1.05 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.7 }}
+                  className="h-full w-full object-cover"
+                />
+              </AnimatePresence>
+
+              {/* Navigation Arrows */}
+              <button
+                onClick={prevSlide}
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/60 cursor-pointer"
+                aria-label="Previous Slide"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button
+                onClick={nextSlide}
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/60 cursor-pointer"
+                aria-label="Next Slide"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+
+              {/* Slide Dots Indicator */}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10 bg-black/40 px-3 py-1.5 rounded-full backdrop-blur-sm">
+                {defaultCarouselImages.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentSlide(idx)}
+                    className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                      currentSlide === idx ? "w-6 bg-white" : "w-2.5 bg-white/50 hover:bg-white/80"
+                    }`}
+                    aria-label={`Go to slide ${idx + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>

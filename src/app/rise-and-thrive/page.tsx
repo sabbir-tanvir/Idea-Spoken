@@ -9,6 +9,7 @@ import Review from "@/components/rise-and-thrive/Review";
 import UpcomingWorkshop from "@/components/rise-and-thrive/UpcomingWorkshop";
 import WhatYouWillLearn from "@/components/rise-and-thrive/WhatUwillLearn";
 import WhoIsItFor from "@/components/rise-and-thrive/Whoisthisfor";
+import WhyRiseAndThrive from "@/components/rise-and-thrive/WhyRiseAndThrive";
 import { getWingMediaBySlug } from "@/lib/api";
 import { getEvents } from "@/lib/api/events";
 
@@ -27,6 +28,7 @@ export default async function Home() {
                 coverImageAlt={media.coverImageAlt}
             />
             <CountUpSection />
+            <WhyRiseAndThrive />
             <WhoIsItFor />
             <WhatYouWillLearn />
             <PhotoGallery images={media.gallery} />
