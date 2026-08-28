@@ -13,14 +13,10 @@ interface BanglaPithaHeroSectionProps {
 }
 
 const defaultPithaCarouselImages = [
-  "/images/pitha/1.jpeg",
-  "/images/pitha/2.jpeg",
-  "/images/pitha/3.jpeg",
-  "/images/pitha/4.jpeg",
-  "/images/pitha/5.jpeg",
-  "/images/pitha/6.jpeg",
-  "/images/pitha/7.jpeg",
-  "/images/pitha/8.jpeg",
+  "/images/pithar/a.jpeg",
+  "/images/pithar/aa.jpeg",
+  "/images/pithar/aaa.jpeg",
+  "/images/pithar/aaaa.jpeg",
 ];
 
 export default function BanglaPithaHeroSection({

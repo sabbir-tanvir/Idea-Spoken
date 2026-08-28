@@ -24,7 +24,7 @@ async function PithaPatsala() {
     {/* <CountUpSection /> */}
     <BanglaPithaResearch />
     <WingActivities activities={media.activities} />
-        <PhotoGallery images={media.gallery} />
+    <PhotoGallery images={media.gallery} />
 
     <BanglaPithaInovation />
     <BanglaPithaActivation />
