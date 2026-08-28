@@ -1,7 +1,8 @@
-import React from 'react'
+import React from 'react';
 import HeroSection from '@/components/pitha/PheroSection';
 import CountUpSection from '@/components/pitha/PCountUp';
 import OurJourney from '@/components/pitha/OurJourney';
+import PithaMenu from '@/components/pitha/PithaMenu';
 import PhotoGallery from '@/components/PhotoGallery';
 import WingActivities from '@/components/WingActivities';
 import OurImpact from '@/components/pitha/OurImpact';
@@ -14,22 +15,22 @@ async function PithaPatsala() {
 
   return (
     <>
-    <HeroSection
-      title={media.title || undefined}
-      description={media.description || undefined}
-      coverImageUrl={media.coverImageUrl ?? undefined}
-      coverImageAlt={media.coverImageAlt}
-    />
-    <CountUpSection />
-    <OurJourney />
-    <WingActivities activities={media.activities} />
-    <PhotoGallery images={media.gallery} />
-    <OurImpact />
-    <PReview />
-    <Wcontact />
-
+      <HeroSection
+        title={media.title || undefined}
+        description={media.description || undefined}
+        coverImageUrl={media.coverImageUrl ?? undefined}
+        coverImageAlt={media.coverImageAlt}
+      />
+      <CountUpSection />
+      <OurJourney />
+      <PithaMenu />
+      <WingActivities activities={media.activities} />
+      <PhotoGallery images={media.gallery} />
+      <OurImpact />
+      <PReview />
+      <Wcontact />
     </>
-  )
+  );
 }
 
 export default PithaPatsala;
