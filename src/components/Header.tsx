@@ -98,11 +98,11 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
           <div className="flex justify-between items-center">
             {/* Contact Info - Hidden on mobile, visible on sm+ */}
             <div className="hidden sm:flex flex-wrap py-3 items-center gap-4 text-xs sm:text-sm">
-              <a href="tel:+8801949212679" className="flex items-center gap-2 hover:text-yellow-300 transition-colors">
+              <a href="tel:+8801990822023" className="flex items-center gap-2 hover:text-yellow-300 transition-colors">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
-                <span>+880 1949-212679</span>
+                <span>+880 1990-822023</span>
               </a>
               <span className="border-r-2 border-white/30 h-5"></span>
               <a href="mailto:info@idea-bd.com" className="flex items-center gap-2 hover:text-yellow-300 transition-colors">
@@ -123,11 +123,11 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
 
             {/* Mobile: Phone number on left */}
             <div className="flex sm:hidden py-2 items-center text-xs">
-              <a href="tel:+8801949212679" className="flex items-center gap-1.5 hover:text-yellow-300 transition-colors">
+              <a href="tel:+8801990822023" className="flex items-center gap-1.5 hover:text-yellow-300 transition-colors">
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
-                <span>+880 1949-212679</span>
+                <span>+880 1990-822023</span>
               </a>
             </div>
 
