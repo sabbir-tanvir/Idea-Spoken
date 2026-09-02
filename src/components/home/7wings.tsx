@@ -147,7 +147,7 @@ export default function SevenWings({ data }: SevenWingsProps) {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                    <div className="relative w-full max-w-5xl bg-linear-to-br from-purple-50 via-slate-50 to-purple-50/50 border border-gray-200 shadow-2xl shadow-purple-300/50 rounded-3xl p-6 sm:p-8 md:p-12 overflow-hidden">
+                    <div className="relative w-full max-w-8xl bg-linear-to-br from-purple-50 via-slate-50 to-purple-50/50 border border-gray-200 shadow-2xl shadow-purple-300/50 rounded-3xl p-6 sm:p-8 md:p-12 overflow-hidden">
                         {/* Decorative shape on right */}
                         <div className="absolute right-0 bottom-0 w-48 h-48 md:w-64 md:h-64 pointer-events-none">
                             <div className="absolute right-0 bottom-0 w-full h-full bg-purple-200/40 rounded-tl-full" />
@@ -156,7 +156,7 @@ export default function SevenWings({ data }: SevenWingsProps) {
                         <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
                             {/* Founder Image on Left */}
                             <div className="shrink-0">
-                                <div className="relative w-40 h-40 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full md:rounded-3xl overflow-hidden border-4 border-white shadow-xl shadow-purple-200">
+                                <div className="relative w-40 h-40 md:w-56 md:h-56 lg:w-80 lg:h-96 rounded-full md:rounded-3xl overflow-hidden border-4 border-white shadow-xl shadow-purple-200">
                                     {!avatarError ? (
                                         <Image
                                             src="/images/vai.jpg"
@@ -177,7 +177,7 @@ export default function SevenWings({ data }: SevenWingsProps) {
                             <div className="flex-1 text-center md:text-left">
                                 {/* Quote */}
                                 <blockquote className="text-xl sm:text-2xl md:text-3xl font-medium text-slate-800 leading-relaxed mb-6 md:mb-8">
-                                    &ldquo;আইডিয়ার যাত্রা শুরু হয়েছিল একঝাঁক শিক্ষার্থীর স্বপ্ন আর একটি বৃক্ষরোপণ অভিযান দিয়ে  আজ এটি শিক্ষা, উন্নয়ন, উদ্যোক্তা সৃষ্টি ও চরিত্র গঠনের এক সমন্বিত প্ল্যাটফর্ম &rdquo;
+                                    &ldquo;তরুণদের হতাশা,হীনমন্যতা দূর কেরে তাদের কাজে লাগিয়ে আত্মউন্নয়ন ও সামাজিক দায়বদ্ধতা তৈরি করার পাশাপাশি কর্মসংস্থান সৃষ্টির লক্ষ্যে এই প্লাটফর্ম  তৈরি করা। পাবলিক বিশ্ববিদ্যালয় কিংবা জাতীয় বিশ্ববিদ্যালয় – আমার কাছে এর আলাদা কোনো বিশেষ পার্থক্য নেই। যথাযথ দিকনির্দেশনা পেলে প্রত্যেক শিক্ষার্থীই তার নিজ নিজ যায়গায় আলো ছড়াতে পারে। সেভাবেই আমি আমার আইডিয়ার সেনানী প্রস্তুত করছি। অর্থ উপার্জন নয় আইডিয়ার মূল লক্ষ্য দেশের জন্য দক্ষ জনশক্তি তৈরি করা &rdquo;
                                 </blockquote>
 
                                 {/* Author */}

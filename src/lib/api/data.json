@@ -282,34 +282,34 @@
     },
     "whyIdea": {
         "badge": "কেন IDEA?",
-        "title": "Why Learn With IDEA?",
-        "description": "আমাদের শিক্ষা পদ্ধতি অন্যদের থেকে আলাদা কারণ আমরা বিশ্বাস করি শেখা হওয়া উচিত আনন্দময়",
+        "title": "What is the uniqueness of IDEA ?",
+        "description": "Why Learn With IDEA",
         "cards": [
             {
                 "id": 1,
-                "title": "গেম মেথডে শেখা",
-                "description": "গেম মেথডে Spoken English শেখার ইউনিক পদ্ধতি যা শেখাকে করে সহজ ও মজাদার",
+                "title": "গেইম মেথডের মাধ্যমে ইংরেজি শিখন",
+                "description": "জনাব মো: হামিদুল হক Gamification Process কে ব্যবহার করে IDEA SPOKEN-The Game  Method তৈরি করেছেন যা ইংরেজি শিখনকে করেছে সহজ ও শিক্ষার্থীবান্ধব।",
                 "icon": "gamepad",
                 "bgColor": "blue"
             },
             {
                 "id": 2,
-                "title": "বাস্তব অভিজ্ঞতা",
-                "description": "বাস্তব জীবনের অভিজ্ঞতায় ভিত্তিক কোর্স ডিজাইন যা সরাসরি কাজে লাগে",
+                "title": "Soft Skill Development",
+                "description": "আইডিয়ার দক্ষ টিম বিভিন্ন ধরনের সফট স্কিল ডেভলপমেন্ট কোর্স অনলাইনে যুক্ত করেছে।",
                 "icon": "seedling",
                 "bgColor": "purple"
             },
             {
                 "id": 3,
                 "title": "Debate স্কিল",
-                "description": "Debate-এর মাধ্যমে ভাবনা, যুক্তি ও প্রেজেন্টেশন স্কিল ডেভেলপমেন্ট",
+                "description": " IDEA Debating Society (English and Bangla) এর মাধ্যমে শিক্ষার্থীদের চিন্তা, যুক্তি ও উপস্থাপনা দক্ষতার উন্নয়ন করা।",
                 "icon": "code",
                 "bgColor": "green"
             },
             {
                 "id": 4,
                 "title": "সমন্বিত প্ল্যাটফর্ম",
-                "description": "যুব উন্নয়ন, সোস্যাল ওয়েলফেয়ার, পিঠা উদ্যোক্তা, মাইন্ড প্রোগ্রামিং – সব এক প্ল্যাটফর্মে",
+                "description": "IDEA-র ৭টি অঙ্গসংগঠনের সমন্বয়ে গঠিত প্ল্যাটফর্ম, যেখানে যুব উন্নয়ন, সোস্যাল ওয়েলফেয়ার, উদ্যোক্তা উন্নয়ন এবং মানসিক বিকাশের কার্যক্রম পরিচালিত হয়।",
                 "icon": "home",
                 "bgColor": "pink"
             }

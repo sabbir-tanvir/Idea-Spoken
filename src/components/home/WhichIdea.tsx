@@ -12,34 +12,34 @@ interface WhichIdeaProps {
 // Fallback data
 const fallbackData: WhyIdeaData = {
     badge: "কেন IDEA?",
-    title: "Why Learn With IDEA?",
-    description: "আমাদের শিক্ষা পদ্ধতি অন্যদের থেকে আলাদা কারণ আমরা বিশ্বাস করি শেখা হওয়া উচিত আনন্দময়",
+    title: "What is the uniqueness of IDEA ?",
+    description: "Why Learn With IDEA",
     cards: [
         {
             id: 1,
-            title: "গেম মেথডে শেখা",
-            description: "গেম মেথডে Spoken English শেখার ইউনিক পদ্ধতি যা শেখাকে করে সহজ ও মজাদার",
+            title: "গেইম মেথডের মাধ্যমে ইংরেজি শিখন",
+            description: "জনাব মো: হামিদুল হক Gamification Process কে ব্যবহার করে IDEA SPOKEN-The Game  Method তৈরি করেছেন যা ইংরেজি শিখনকে করেছে সহজ ও শিক্ষার্থীবান্ধব।জনাব মো: হামিদুল হক Gamification Process কে ব্যবহার করে IDEA SPOKEN-The Game  Method তৈরি করেছেন যা ইংরেজি শিখনকে করেছে সহজ ও শিক্ষার্থীবান্ধব।",
             icon: "gamepad",
             bgColor: "blue"
         },
         {
             id: 2,
-            title: "বাস্তব অভিজ্ঞতা",
-            description: "বাস্তব জীবনের অভিজ্ঞতায় ভিত্তিক কোর্স ডিজাইন যা সরাসরি কাজে লাগে",
+            title: "Soft Skill Development",
+            description: "আইডিয়ার দক্ষ টিম বিভিন্ন ধরনের সফট স্কিল ডেভলপমেন্ট কোর্স অনলাইনে যুক্ত করেছে।",
             icon: "seedling",
             bgColor: "green"
         },
         {
             id: 3,
-            title: "Debate স্কিল",
-            description: "Debate-এর মাধ্যমে ভাবনা, যুক্তি ও প্রেজেন্টেশন স্কিল ডেভেলপমেন্ট",
+            title: "Mind Programming",
+            description: "মস্তিষ্কের অসীম ক্ষমতাকে যথাযথভাবে ব্যবহার করার কৌশল ও অভ্যাস বদলের মাধ্যমে আত্ম-উন্নয়ন শিখন",
             icon: "code",
             bgColor: "green"
         },
         {
             id: 4,
             title: "সমন্বিত প্ল্যাটফর্ম",
-            description: "যুব উন্নয়ন, সোস্যাল ওয়েলফেয়ার, পিঠা উদ্যোক্তা, মাইন্ড প্রোগ্রামিং – সব এক প্ল্যাটফর্মে",
+            description: "সমাজকল্যাণ, যুব উন্নয়ন, কর্মসংস্থান তৈরি ও আত্মউন্নয়নের এক সম্মিলিত প্লাটফর্ম আইডিয়া",
             icon: "home",
             bgColor: "pink"
         }
@@ -104,9 +104,9 @@ export default function WhichIdea({ data }: WhichIdeaProps) {
                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-5">
                         {content.title}
                     </h2>
-                    <p className="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">
+                    {/* <p className="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">
                         {content.description}
-                    </p>
+                    </p> */}
                 </motion.div>
 
                 {/* Cards Grid */}

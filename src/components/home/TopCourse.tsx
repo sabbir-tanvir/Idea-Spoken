@@ -11,7 +11,7 @@ interface TopCourseProps {
 }
 
 export default function TopCourse({ courses }: TopCourseProps) {
-    const title = "স্পেশালাইজড কোর্স যা আপনার English দক্ষতাকে নতুন উচ্চতায় নিয়ে যাবে";
+    const title = "আমাদের কোর্সসমূহ :";
     const titleParts = title.split("English");
 
     return (
@@ -59,37 +59,26 @@ export default function TopCourse({ courses }: TopCourseProps) {
             <div className="relative z-10 container mx-auto px-4">
                 {/* Header */}
                 <motion.div
-                    className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-12 md:mb-16"
+                    className="text-center flex flex-col items-center justify-center mb-12 md:mb-16"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
                 >
-                    <div className="relative">
+                    <div className="relative inline-block text-center">
                         <span className="inline-flex items-center rounded-full bg-purple-100 px-5 py-2 text-base font-semibold text-purple-700 mb-4">
                             TOP POPULAR COURSE
                         </span>
                         
                         {/* Pencil decoration */}
-                        <div className="absolute -right-16 top-0 hidden md:block">
-                            <Pencil className="w-10 h-10 text-yellow-400 rotate-45" />
+                        <div className="absolute -right-12 -top-2 hidden md:block">
+                            <Pencil className="w-9 h-9 text-yellow-400 rotate-45" />
                         </div>
                         
-                        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 max-w-3xl leading-tight">
-                            {titleParts[0]}
-                            <span className="text-purple-600">English</span>
-                            {titleParts[1]}
+                        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 max-w-3xl leading-tight text-center">
+                            {title}
                         </h2>
                     </div>
-                    
-                    {/* Load More Button */}
-                    {/* <Link 
-                        href="/courses"
-                        className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-purple-600 text-white font-medium text-base transition-all duration-300 hover:bg-purple-700 shrink-0"
-                    >
-                        Load More Course
-                        <ArrowRight className="w-5 h-5" />
-                    </Link> */}
                 </motion.div>
 
                 {/* Course Cards Grid */}
