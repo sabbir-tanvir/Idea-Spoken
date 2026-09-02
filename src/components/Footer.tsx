@@ -67,33 +67,31 @@ export default function Footer() {
           {/* Quick Links */}
           <div>
             <h3 className="text-xl font-bold mb-4">Quick Links</h3>
-            <ul className="space-y-3">
-              <li>
-                <Link href="/about" className="text-gray-400 hover:text-white transition-colors">
-                  About IDEA
-                </Link>
-              </li>
-              <li>
-                <Link href="/youth-development" className="text-gray-400 hover:text-white transition-colors">
-                  Youth Development
-                </Link>
-              </li>
-              <li>
-                <Link href="/social-welfare" className="text-gray-400 hover:text-white transition-colors">
-                  Social Welfare
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-gray-400 hover:text-white transition-colors">
-                  Contact Us
-                </Link>
-              </li>
-              <li>
-                <Link href="/dashboard" className="text-gray-400 hover:text-white transition-colors">
-                  Student Dashboard
-                </Link>
-              </li>
-            </ul>
+            <div className="space-y-3">
+              <p className="font-semibold text-white text-base">Hamidul Huq Shaheen</p>
+              <ul className="space-y-2.5">
+                <li>
+                  <a
+                    href="https://www.facebook.com/share/1LYa7ei12Y/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-purple-400 transition-colors inline-block"
+                  >
+                    FB Page
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://youtube.com/@ideaspoken?si=3yeAx6PJUkAFEPZr"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-purple-400 transition-colors inline-block"
+                  >
+                    Youtube
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
           
           {/* Contact */}
