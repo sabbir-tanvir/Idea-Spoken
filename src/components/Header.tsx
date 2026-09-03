@@ -7,15 +7,15 @@ import { ChevronDown, X } from 'lucide-react';
 import Image from 'next/image';
 import UserMenu from './UserMenu';
 
-// Wings dropdown items - routes that have dedicated pages use absolute paths
+// Wings dropdown items - exact sequence and official wing names
 const wingsDropdownItems = [
-  { title: 'Rise and Thrive', slug: '/rise-and-thrive', hasPage: true },
-  { title: 'WINI', slug: '/widen', hasPage: true },
-  { title: 'IDEA SPOKEN – The Game Method', slug: '/game-method', hasPage: true },
-  { title: 'IDEA Pitha Pathshala', slug: '/pitha', hasPage: true },
-  { title: 'Bangla Pitha Research Institute', slug: '/bangla-pitha-research-institute', hasPage: true },
-  { title: 'IDEA Youth Development Center', slug: 'youth-development', hasPage: false },
-  { title: 'IDEA Social Welfare Organization', slug: 'social-welfare', hasPage: false },
+  { title: 'IDEA SPOKEN-The Game Method', slug: '/english-debate', hasPage: true },
+  { title: 'Rise and Thrive with Hamidul Huq', slug: '/rise-and-thrive', hasPage: true },
+  { title: 'IDEA PITHA PARK', slug: '/pitha', hasPage: true },
+  { title: 'IDEA Social Welfare Organization', slug: '/social-welfare', hasPage: true },
+  { title: 'IDEA Youth Development Centre', slug: '/youth-development', hasPage: true },
+  { title: 'We Inspire New IDEAs for Students ( WINI )', slug: '/widen', hasPage: true },
+  { title: 'Bangladesh Pitha Research Institute', slug: '/bangla-pitha-research-institute', hasPage: true },
 ];
 
 interface HeaderProps {
