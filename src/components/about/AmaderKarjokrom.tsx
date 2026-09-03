@@ -375,35 +375,45 @@ export default function AmaderKarjokrom({ data }: AmaderKarjokromProps) {
                     </div>
                 </div>
 
-                {/* 4. STATS BAR (Optional highlight) */}
+                {/* 4. STATS BAR (Original Map Background & Pill Design) */}
                 {data?.stats && (
                     <motion.div
-                        className="rounded-3xl py-8 px-8 md:px-16 max-w-5xl mx-auto shadow-xl border border-purple-200 relative overflow-hidden"
+                        className="rounded-full py-8 px-8 md:px-16 max-w-5xl mx-auto shadow-md"
                         initial={{ opacity: 0, scale: 0.95 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
                         style={{
                             backgroundImage: `url('/images/map.jpg')`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center'
                         }}
                     >
-                        <div className="absolute inset-0 bg-purple-900/80 backdrop-blur-xs"></div>
-                        <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-white">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                             {data.stats.map((stat, index) => (
-                                <div key={index} className="flex items-center gap-4">
-                                    <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-purple-200 shrink-0">
+                                <motion.div
+                                    key={index}
+                                    className="flex items-center gap-4"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: 0.3 + (index * 0.1) }}
+                                >
+                                    {/* Icon */}
+                                    <div className="w-14 h-14 rounded-full bg-purple-300/50 flex items-center justify-center text-purple-700 shrink-0">
                                         {getStatIcon(stat.icon)}
                                     </div>
+
+                                    {/* Text */}
                                     <div>
-                                        <div className="text-2xl md:text-3xl font-extrabold text-white">
+                                        <div className="text-2xl md:text-3xl font-bold text-slate-800">
                                             {stat.value}
                                         </div>
-                                        <div className="text-xs md:text-sm text-purple-200 font-medium">
+                                        <div className="text-sm text-slate-600 font-medium">
                                             {stat.label}
                                         </div>
                                     </div>
-                                </div>
+                                </motion.div>
                             ))}
                         </div>
                     </motion.div>
