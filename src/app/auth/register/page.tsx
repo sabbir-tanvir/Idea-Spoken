@@ -1,11 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { useActionState } from 'react';
+import { useActionState, useState } from 'react';
 import { registerUser } from '@/lib/auth/actions';
 import { ActionResult } from '@/lib/auth/types';
+import { Eye, EyeOff } from 'lucide-react';
 
 export default function RegisterPage() {
+  const [showPassword, setShowPassword] = useState(false);
   const [state, formAction, isPending] = useActionState<ActionResult | null, FormData>(
     registerUser,
     null
@@ -84,15 +86,29 @@ export default function RegisterPage() {
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
                 Password*
               </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                required
-                disabled={isPending}
-                className="w-full px-4 py-3 border text-gray-700  border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#704FE6] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
-                placeholder="Enter your password"
-              />
+              <div className="relative">
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  disabled={isPending}
+                  className="w-full px-4 py-3 pr-12 border text-gray-700 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#704FE6] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  placeholder="Enter your password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
+                </button>
+              </div>
               {state?.errors?.password && (
                 <p className="mt-1 text-sm text-red-600">{state.errors.password[0]}</p>
               )}
