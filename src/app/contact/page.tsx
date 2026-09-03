@@ -110,34 +110,47 @@ export default function ContactPage() {
                   {contactData.subtitle}
                 </p>
 
-                {/* Contact Info Cards */}
-                <div className="space-y-6 mb-12 relative z-10">
+                {/* Contact Info Cards - 3 Separate Boxes */}
+                <div className="space-y-5 mb-12 relative z-10">
                   {/* Address */}
-                  <div className="flex items-start gap-4 p-5 rounded-2xl border border-slate-100 bg-white shadow-sm">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-orange-50 text-orange-500">
+                  <div className="flex items-start gap-4 p-5 rounded-2xl border border-slate-100 bg-white shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-purple-50 text-purple-600">
                       <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={1.8}>
                         <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z" />
                         <circle cx="12" cy="9" r="2.5" />
                       </svg>
                     </div>
                     <div>
-                      <p className="text-base text-slate-500 mb-1">{contactData.address.label}</p>
+                      <p className="text-xs font-bold uppercase tracking-wider text-purple-600 mb-1">{contactData.address.label}</p>
                       <p className="text-lg font-bold text-slate-900">{contactData.address.line1}</p>
                       <p className="text-lg font-bold text-slate-900">{contactData.address.line2}</p>
                     </div>
                   </div>
 
-                  {/* Contact */}
-                  <div className="flex items-start gap-4 p-5 rounded-2xl border border-slate-100 bg-white shadow-sm">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-orange-50 text-orange-500">
+                  {/* Phone */}
+                  <div className="flex items-start gap-4 p-5 rounded-2xl border border-slate-100 bg-white shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-purple-50 text-purple-600">
                       <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={1.8}>
                         <path d="M5 4.5a2 2 0 0 1 2-2h2l2 4-2 1.4a11 11 0 0 0 5.6 5.6L16 12l4 2v2a2 2 0 0 1-2 2h-.5A13.5 13.5 0 0 1 4.5 6.5V6a2 2 0 0 1 .5-1.5Z" />
                       </svg>
                     </div>
                     <div>
-                      <p className="text-base text-slate-500 mb-1">{contactData.contact.label}</p>
-                      <p className="text-lg font-bold text-orange-500">{contactData.contact.phone}</p>
-                      <p className="text-lg font-bold text-slate-900">{contactData.contact.email}</p>
+                      <p className="text-xs font-bold uppercase tracking-wider text-purple-600 mb-1">Phone Number</p>
+                      <p className="text-lg font-bold text-slate-900">{contactData.contact.phone}</p>
+                    </div>
+                  </div>
+
+                  {/* Email */}
+                  <div className="flex items-start gap-4 p-5 rounded-2xl border border-slate-100 bg-white shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-purple-50 text-purple-600">
+                      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={1.8}>
+                        <rect x="3.5" y="6" width="17" height="12" rx="2" />
+                        <path d="m4 7 8 6 8-6" />
+                      </svg>
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs font-bold uppercase tracking-wider text-purple-600 mb-1">Email Address</p>
+                      <p className="text-base sm:text-lg font-bold text-slate-900 break-all">{contactData.contact.email}</p>
                     </div>
                   </div>
                 </div>
