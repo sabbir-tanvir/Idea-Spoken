@@ -4,7 +4,7 @@ import { AboutData } from "@/lib/api";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Box } from "lucide-react";
+import { ArrowRight, Box, Compass, GraduationCap, Award } from "lucide-react";
 
 interface OurMissionProps {
     data: AboutData;
@@ -14,82 +14,62 @@ export default function OurMission({ data }: OurMissionProps) {
     if (!data) return null;
 
     return (
-        <section className="py-20 md:py-32 px-4 md:px-8 bg-white overflow-hidden">
+        <section className="py-16 md:py-24 lg:py-28 px-4 md:px-8 bg-white overflow-hidden">
             <div className="container mx-auto">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
 
-                    {/* Left: Images Grid - Stacked Layout */}
+                    {/* Left Column: Images Grid (5 cols on lg) */}
                     <motion.div
-                        className="relative"
-                        initial={{ opacity: 0, x: -50 }}
+                        className="lg:col-span-5 relative sticky top-28"
+                        initial={{ opacity: 0, x: -40 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
                     >
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                            {/* Tall Image - Left */}
-                            <div className="relative h-80 sm:h-112.5 md:h-137.5 rounded-2xl overflow-hidden shadow-xl">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6">
+                            {/* Main Image */}
+                            <div className="relative h-80 sm:h-96 lg:h-[460px] rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
                                 <Image
                                     src="/images/vai.jpg"
-                                    alt="Students"
+                                    alt="Founder & Team"
                                     fill
                                     className="object-cover"
+                                    priority
                                 />
+                                <div className="absolute inset-0 bg-gradient-to-t from-purple-950/60 via-transparent to-transparent" />
+                                <div className="absolute bottom-6 left-6 right-6 text-white">
+                                    <p className="text-xs font-bold uppercase tracking-widest text-purple-300 mb-1">
+                                        IDEA Platform
+                                    </p>
+                                    <h3 className="text-xl font-bold">
+                                        Institute of Development, Education and Achievement
+                                    </h3>
+                                </div>
                             </div>
 
-                            {/* Right Column - Experience Badge + Short Image */}
-                            <div className="grid grid-cols-2 sm:grid-cols-1 gap-4 sm:gap-6">
-                                {/* Experience Badge - Square Card */}
+                            {/* Experience Card + Secondary Image */}
+                            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+                                {/* Experience Badge */}
                                 <motion.div
-                                    className="bg-white p-4 rounded-2xl shadow-xl border-2 border-dashed border-red-300"
-                                    initial={{ scale: 0.8, opacity: 0 }}
+                                    className="bg-linear-to-br from-purple-50 via-slate-50 to-purple-100 p-5 rounded-2xl shadow-lg border border-purple-200 flex flex-col items-center justify-center text-center"
+                                    initial={{ scale: 0.9, opacity: 0 }}
                                     whileInView={{ scale: 1, opacity: 1 }}
                                     viewport={{ once: true }}
-                                    transition={{ duration: 0.6, delay: 0.3 }}
+                                    transition={{ duration: 0.6, delay: 0.2 }}
                                 >
-                                    <div className="flex flex-col items-center justify-center py-6 px-4">
-                                        {/* Progress Circle */}
-                                        <div className="relative w-24 h-24 md:w-28 md:h-28 mb-4">
-                                            <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-                                                {/* Background circle */}
-                                                <circle
-                                                    cx="50"
-                                                    cy="50"
-                                                    r="42"
-                                                    fill="none"
-                                                    stroke="#f3f4f6"
-                                                    strokeWidth="8"
-                                                />
-                                                {/* Progress arc */}
-                                                <circle
-                                                    cx="50"
-                                                    cy="50"
-                                                    r="42"
-                                                    fill="none"
-                                                    stroke="#ef4444"
-                                                    strokeWidth="8"
-                                                    strokeLinecap="round"
-                                                    strokeDasharray="264"
-                                                    strokeDashoffset="66"
-                                                />
-                                            </svg>
-                                            <div className="absolute inset-0 flex items-center justify-center">
-                                                <span className="text-3xl md:text-4xl font-bold text-slate-900">
-                                                    {data.yearsExperience}+
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <span className="text-lg md:text-xl font-semibold text-slate-700 text-center">
-                                            Years Experience
-                                        </span>
-                                    </div>
+                                    <span className="text-4xl sm:text-5xl font-extrabold text-purple-900 mb-1">
+                                        {data.yearsExperience}+
+                                    </span>
+                                    <span className="text-xs sm:text-sm font-bold text-purple-700 uppercase tracking-wide">
+                                        Years Experience
+                                    </span>
                                 </motion.div>
 
-                                {/* Short Image - Bottom */}
-                                <div className="relative min-h-45 sm:min-h-50 md:min-h-70 rounded-2xl overflow-hidden shadow-xl">
+                                {/* Secondary Image */}
+                                <div className="relative h-32 sm:h-36 lg:h-36 rounded-2xl overflow-hidden shadow-md">
                                     <Image
                                         src="/images/youth.jpg"
-                                        alt="Discussion"
+                                        alt="Activities"
                                         fill
                                         className="object-cover"
                                     />
@@ -97,68 +77,127 @@ export default function OurMission({ data }: OurMissionProps) {
                             </div>
                         </div>
 
-                        {/* Decorative Shape (Top-Left) */}
-                        <div className="hidden sm:block absolute -top-10 -left-10 text-emerald-400">
-                            <Image src="/images/arrow.png" alt="" width={100} height={100} />
+                        {/* Decorative Arrow */}
+                        <div className="hidden sm:block absolute -top-8 -left-8 text-purple-400 pointer-events-none">
+                            <Image src="/images/arrow.png" alt="" width={80} height={80} />
                         </div>
                     </motion.div>
 
-                    {/* Right: Content */}
+                    {/* Right Column: Content (7 cols on lg) */}
                     <motion.div
-                        initial={{ opacity: 0, x: 50 }}
+                        className="lg:col-span-7 space-y-8"
+                        initial={{ opacity: 0, x: 40 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
                     >
-                        <div className="flex items-center gap-2 mb-4">
-                            <Box className="w-5 h-5 text-red-500" />
-                            <span className="text-red-500 font-bold uppercase tracking-wider text-base">About Us</span>
+                        {/* Header Badge & Title */}
+                        <div>
+                            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-100 border border-purple-200 mb-4">
+                                <Box className="w-4 h-4 text-purple-700" />
+                                <span className="text-purple-800 font-bold uppercase tracking-wider text-xs">
+                                    About Us
+                                </span>
+                            </div>
+
+                            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight">
+                                {data.title}
+                            </h2>
                         </div>
 
-                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6 leading-tight">
-                            {data.title.split(' ').map((word, i) => (
-                                <span key={i} className={word === "Professional" ? "text-red-500" : ""}>
-                                    {word}{' '}
-                                </span>
+                        {/* Main Description */}
+                        <div className="space-y-4 text-slate-700 text-base sm:text-lg leading-relaxed border-l-4 border-purple-500 pl-5 bg-purple-50/40 py-4 pr-4 rounded-r-2xl">
+                            {data.description.split('\n\n').map((paragraph, idx) => (
+                                <p key={idx} className="font-medium text-slate-800">
+                                    {paragraph}
+                                </p>
                             ))}
-                        </h2>
+                        </div>
 
-                        <p className="text-base font-semibold text-slate-500 mb-6 uppercase tracking-wide">
-                            {data.subtitle}
-                        </p>
+                        {/* Three Pillars: Development, Education, Achievement */}
+                        <div className="space-y-6 pt-2">
 
-                        <p className="text-slate-600 leading-relaxed mb-10 text-lg">
-                            {data.description}
-                        </p>
+                            {/* IDEA - Development */}
+                            {data.development && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    className="bg-white rounded-2xl p-6 border border-slate-200 shadow-md hover:border-purple-300 transition-all"
+                                >
+                                    <div className="flex items-center gap-3 mb-3">
+                                        <div className="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center shrink-0">
+                                            <Compass className="w-5 h-5" />
+                                        </div>
+                                        <h3 className="text-xl font-bold text-slate-900">
+                                            {data.development.title}
+                                        </h3>
+                                    </div>
+                                    <p className="text-slate-600 text-sm sm:text-base leading-relaxed pl-13">
+                                        {data.development.text}
+                                    </p>
+                                </motion.div>
+                            )}
 
-                        {/* Mission & Vision Grid */}
-                        <div className="grid md:grid-cols-2 gap-8 mb-10">
-                            <div>
-                                <h3 className="text-slate-900 font-bold uppercase mb-3 flex items-center gap-2">
-                                    {data.mission.title}
-                                </h3>
-                                <p className="text-slate-600 text-base leading-relaxed">
-                                    {data.mission.text}
-                                </p>
-                            </div>
-                            <div>
-                                <h3 className="text-slate-900 font-bold uppercase mb-3 flex items-center gap-2">
-                                    {data.vision.title}
-                                </h3>
-                                <p className="text-slate-600 text-base leading-relaxed">
-                                    {data.vision.text}
-                                </p>
-                            </div>
+                            {/* IDEA - Education */}
+                            {data.education && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    className="bg-white rounded-2xl p-6 border border-slate-200 shadow-md hover:border-purple-300 transition-all"
+                                >
+                                    <div className="flex items-center gap-3 mb-3">
+                                        <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center shrink-0">
+                                            <GraduationCap className="w-5 h-5" />
+                                        </div>
+                                        <h3 className="text-xl font-bold text-slate-900">
+                                            {data.education.title}
+                                        </h3>
+                                    </div>
+                                    <div className="text-slate-600 text-sm sm:text-base leading-relaxed pl-13 space-y-3">
+                                        {data.education.text.split('\n\n').map((para, idx) => (
+                                            <p key={idx}>{para}</p>
+                                        ))}
+                                    </div>
+                                </motion.div>
+                            )}
+
+                            {/* IDEA - Achievement */}
+                            {data.achievement && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    className="bg-white rounded-2xl p-6 border border-slate-200 shadow-md hover:border-purple-300 transition-all"
+                                >
+                                    <div className="flex items-center gap-3 mb-3">
+                                        <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                                            <Award className="w-5 h-5" />
+                                        </div>
+                                        <h3 className="text-xl font-bold text-slate-900">
+                                            {data.achievement.title}
+                                        </h3>
+                                    </div>
+                                    <p className="text-slate-600 text-sm sm:text-base leading-relaxed pl-13">
+                                        {data.achievement.text}
+                                    </p>
+                                </motion.div>
+                            )}
+
                         </div>
 
                         {/* CTA Button */}
-                        <Link href="#">
-                            <button className="bg-emerald-400 hover:bg-emerald-500 text-white font-medium px-8 py-3.5 rounded-full transition-all flex items-center gap-2 shadow-lg shadow-emerald-100">
-                                {data.buttonText}
-                                <ArrowRight className="w-5 h-5" />
-                            </button>
-                        </Link>
+                        <div className="pt-4">
+                            <Link href="/courses">
+                                <button className="bg-purple-700 hover:bg-purple-800 text-white font-bold px-8 py-3.5 rounded-full transition-all flex items-center gap-2 shadow-lg shadow-purple-200 cursor-pointer">
+                                    {data.buttonText}
+                                    <ArrowRight className="w-5 h-5" />
+                                </button>
+                            </Link>
+                        </div>
                     </motion.div>
+
                 </div>
             </div>
         </section>

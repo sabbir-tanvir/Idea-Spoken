@@ -76,10 +76,18 @@ export interface CourseCardData {
   image: string;
 }
 
+export interface AboutPillar {
+  title: string;
+  text: string;
+}
+
 export interface AboutData {
   title: string;
   subtitle: string;
   description: string;
+  development?: AboutPillar;
+  education?: AboutPillar;
+  achievement?: AboutPillar;
   mission: {
     title: string;
     text: string;
@@ -95,7 +103,9 @@ export interface AboutData {
 
 export interface TimelineEvent {
   year: string;
+  date?: string;
   title: string;
+  registration?: string;
   description: string;
   icon: string;
 }
@@ -453,6 +463,7 @@ export async function getSevenWingsData(): Promise<SevenWingsData> {
     };
 
     const orderBySlug: Record<string, number> = {
+      "english-debate": 1,
       "game-method": 1,
       "rise-and-thrive": 2,
       "pitha": 3,

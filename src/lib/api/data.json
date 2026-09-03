@@ -191,9 +191,21 @@
         "image": "/images/course-thumb.jpg"
     },
     "about": {
-        "title": "Benefit From Our Online Learning Expertise Earn Professional",
-        "subtitle": "Institute of Development, Education and Achievement (IDEA)",
-        "description": "একটি শিক্ষা ও উন্নয়নমুখী প্ল্যাটফর্ম, যা ২০১৪ সালে এক ঝাঁক স্বপ্নবাজ শিক্ষার্থীর বৃক্ষরোপণ অভিযানের মাধ্যমে ধারণা হিসেবে শুরু হয় এবং ২০১৫ সালে আনুষ্ঠানিকভাবে আত্মপ্রকাশ করে",
+        "title": "Institute of Development, Education and Achievement (IDEA)",
+        "subtitle": "About Us",
+        "description": "মানুষ যা ভাবতে পারে, চিন্তা করতে পারে, বিশ্বাস করতে পারে—তা অর্জন করতে পারে! প্রয়োজন শুধু এই বিশ্বাসকে কর্ম কৌশলে রূপান্তর করা, কর্ম কৌশলকে দক্ষতায় রূপান্তর করা আর অর্জিত জ্ঞানকে প্রজ্ঞায় রূপান্তর করা।\n\nতবেই নিশ্চিত হবে উন্নয়ন, হাতের মুঠোয় আসবে কাঙ্ক্ষিত অর্জন। এই মূলমন্ত্রে বিশ্বাস করেই IDEA-এর জন্ম।\n\nমূলতঃ স্থানীয় সম্পদ সদ্ব্যবহারের মাধ্যমে মানব সম্পদ উন্নয়ন, যথাযথ শিক্ষণ পরিবেশ নিশ্চিতকরণের মাধ্যমে শিক্ষার মানোন্নয়ন এবং আলোকিত মানুষ হিসেবে গড়ে তোলার জন্য শিক্ষার্থীদের ক্যারিয়ার গাইডলাইন প্রদানে IDEA একটি অনন্য প্রতিষ্ঠানে পরিণত হয়েছে। IDEA বিশ্বাস করে শিক্ষার্থীদের অন্তর্নিহিত সৃজনশীল আইডিয়াই বদলে দিতে পারে লাখো জীবন। আনতে পারে কাঙ্ক্ষিত সাফল্য।",
+        "development": {
+            "title": "IDEA – Development",
+            "text": "IDEA বিশ্বাস করে—উন্নয়ন পিপাসু মানুষের আশেপাশেই ছড়িয়ে আছে উন্নয়নের প্রয়োজনীয় উপকরণ। আপাত অযত্নে পড়ে থাকা উন্নয়ন উপকরণসমূহের যথাযথ লালনে IDEA সমন্বয়কের ভূমিকা পালন করে। সেই ধারাবাহিকতায় কাজ করছে আইডিয়ার ৭ টি অঙ্গসংগঠন"
+        },
+        "education": {
+            "title": "IDEA – Education",
+            "text": "যথাযথ শিক্ষণ পরিবেশ নিশ্চিতকরণের মাধ্যমে শিক্ষার মানোন্নয়ন ও আলোকিত মানুষ গড়ে তুলতে IDEA-Education প্রতিজ্ঞাবদ্ধ। কোমলমতি শিশু থেকে বিদ্যালয়ের দুরন্ত কৈশোর, তারুণ্যদীপ্ত কলেজ জীবন কিংবা স্বপ্নের মর্যাদাপূর্ণ চাকুরীর প্রত্যাশা—সবই যেন গতানুগতিক শৃঙ্খলে বাধা।\n\nIDEA-Education বিশ্বাস করে, শৃঙ্খলাই শৃঙ্খল মুক্তির পথ। তাই শিক্ষা সাফল্যে প্রয়োজন আন্তরিক প্রচেষ্টা, পরিবেশ, শৃঙ্খলা, সহজকৃত কৌশল এবং যথাযথ কাণ্ডারী—দক্ষ শিক্ষক। জনাব মোঃ হামিদুল হকের দিকনির্দেশনায় IDEA-Education হলো এই সব কিছুর নান্দনিক সংমিশ্রণ।\n\nআইডিয়া স্পোকেন- দ্য গেইম মেথড, আইডিয়া সফট স্কিল ডেভলপমেন্ট কোর্স, রাইজ অ্যান্ড থ্রাইভ উইথ হামিদুল হক, আইডিয়া ডিবেটিং সোসাইটি সহ নানাবিধ Educational কর্মকান্ড পরিচালনা করে আইডিয়া।"
+        },
+        "achievement": {
+            "title": "IDEA – Achievement",
+            "text": "উদ্যোক্তা তৈরি ও তরুণ সমাজকে আত্মনির্ভরশীল করে তোলার জন্য আইডিয়া কাজ করে চলেছে। আইডিয়া পিঠা পার্ক, বাংলাদেশ শিক্ষার্থী ও উদ্যোক্তা গ্রুপ উইনি, বাংলাদেশ পিঠা গবেষণা ইন্সটিটিউট, আইডিয়া যুব উন্নয়ন কেন্দ্র তরুণদের দক্ষ ও সাবলম্বী করে তোলার কাজে নিয়োজিত।"
+        },
         "mission": {
             "title": "OUR MISSION:",
             "text": "যুব সমাজকে দক্ষ, সচেতন ও আত্মবিশ্বাসী করে গড়ে তোলা এবং সমাজের উন্নয়নে অবদান রাখা"
@@ -202,7 +214,7 @@
             "title": "OUR VISSION:",
             "text": "শিক্ষা, উদ্যোক্তা সৃষ্টি ও চরিত্র গঠনের এক সমন্বিত প্ল্যাটফর্ম তৈরি করা"
         },
-        "yearsExperience": 8,
+        "yearsExperience": 10,
         "images": [
             "/images/about-1.jpg",
             "/images/about-2.jpg"
@@ -211,34 +223,60 @@
     },
     "timeline": [
         {
-            "year": "2014",
-            "title": "বৃক্ষরোপণ অভিযান",
-            "description": "একদণীক স্বপ্নবাজ শিক্ষার্থীর বৃক্ষরোপণ অভিযানের মাধ্যমে IDEA-র ধারণার তৈরি",
-            "icon": "seedling"
+            "year": "২০১৫",
+            "date": "১৩ ফেব্রুয়ারি, ২০১৫",
+            "title": "আইডিয়া সমাজকল্যাণ সংস্থা",
+            "registration": "রেজি: ১৬৪৯",
+            "description": "রেজি: ১৬৪৯ • প্রতিষ্ঠা: ১৩ ফেব্রুয়ারি, ২০১৫",
+            "icon": "handshake"
         },
         {
-            "year": "2015",
-            "title": "আনুষ্ঠানিক যাত্রা",
-            "description": "IDEA Youth Development Center-এর মাধ্যমে আনুষ্ঠানিক কার্যক্রম শুরু",
+            "year": "২০১৫",
+            "date": "২১ নভেম্বর, ২০১৫",
+            "title": "IDEA Spoken-The Game Method",
+            "registration": "",
+            "description": "প্রতিষ্ঠা: ২১ নভেম্বর, ২০১৫",
+            "icon": "gamepad"
+        },
+        {
+            "year": "২০১৭",
+            "date": "২০১৭",
+            "title": "আইডিয়া পিঠা পার্ক",
+            "registration": "ট্রেড লাইসেন্স নং: ০৪৮০০",
+            "description": "ট্রেড লাইসেন্স নং: ০৪৮০০ • প্রতিষ্ঠা: ২০১৭",
+            "icon": "store"
+        },
+        {
+            "year": "২০২০",
+            "date": "১৩ ফেব্রুয়ারি, ২০২০",
+            "title": "আইডিয়া যুব উন্নয়ন কেন্দ্র",
+            "registration": "রেজি: ইউডি/যশোর-১৭/২০২০",
+            "description": "রেজি: ইউডি/যশোর-১৭/২০২০ • প্রতিষ্ঠা: ১৩ ফেব্রুয়ারি, ২০২০",
             "icon": "flag"
         },
         {
-            "year": "2017",
-            "title": "আইডিয়া পিঠা পাঠশালা",
-            "description": "মাত্র ৫০,০০০ আগার ০৬ জন শিক্ষাবৃত্তি নিয়ে পিঠা পাঠশালার যাত্রা",
+            "year": "২০২০",
+            "date": "১২ জুলাই, ২০২০",
+            "title": "বাংলাদেশ শিক্ষার্থী ও উদ্যোক্তা গ্রুপ (উইনি)",
+            "registration": "",
+            "description": "প্রতিষ্ঠা: ১২ জুলাই, ২০২০",
+            "icon": "users"
+        },
+        {
+            "year": "২০২২",
+            "date": "১৩ নভেম্বর, ২০২২",
+            "title": "বাংলাদেশ পিঠা গবেষণা ইন্সটিটিউট",
+            "registration": "",
+            "description": "প্রতিষ্ঠা: ১৩ নভেম্বর, ২০২২",
             "icon": "book"
         },
         {
-            "year": "2020",
-            "title": "WIDEN প্ল্যাটফর্ম",
-            "description": "Covid-১৯ এ অনলাইন প্ল্যাটফর্মের মাধ্যমে ০০ হাজার শিক্ষার্থীকে সেবা",
-            "icon": "laptop"
-        },
-        {
-            "year": "2024",
-            "title": "Online Courses",
-            "description": "IDEA SPOKEN ও English Debate Mastery কোর্সের মাধ্যমে দেশব্যাপী পৌঁছানো",
-            "icon": "graduation"
+            "year": "২০২৪",
+            "date": "১৩ ফেব্রুয়ারি, ২০২৪",
+            "title": "Rise & Thrive with Hamidul Huq",
+            "registration": "",
+            "description": "প্রতিষ্ঠা: ১৩ ফেব্রুয়ারি, ২০২৪",
+            "icon": "sparkles"
         }
     ],
     "activities": {
@@ -323,52 +361,52 @@
         "wings": [
             {
                 "id": 1,
-                "title": "IDEA Youth Development Center",
-                "description": "যুব সমাজকে দক্ষ, সচেতন ও আত্মবিশ্বাসী করে গড়ে তোলা",
-                "image": "/images/wings/youth-development.jpg",
-                "slug": "youth-development"
-            },
-            {
-                "id": 2,
-                "title": "IDEA Social Welfare Organization",
-                "description": "সমাজের অসহায় মানুষের পাশে দাঁড়ানো ও স্বেচ্ছাসেবী কাজ",
-                "image": "/images/wings/social-welfare.jpg",
-                "slug": "social-welfare"
-            },
-            {
-                "id": 3,
-                "title": "IDEA SPOKEN – The Game Method",
+                "title": "IDEA SPOKEN-The Game Method",
                 "description": "গেম-ভিত্তিক English শেখার অভিনব পদ্ধতি",
                 "image": "/images/wings/spoken-english.jpg",
                 "slug": "/english-debate"
             },
             {
-                "id": 4,
-                "title": "IDEA Pitha Pathshala",
-                "description": "পিঠা তৈরির আদ্যোগ শত তৈরি করা সুযোগের জন্য",
+                "id": 2,
+                "title": "Rise and Thrive with Hamidul Huq",
+                "description": "আত্ম-উন্নয়ন ও Mind Programming এর intensive প্রোগ্রাম",
+                "image": "/images/wings/rise-thrive.jpg",
+                "slug": "/rise-and-thrive"
+            },
+            {
+                "id": 3,
+                "title": "IDEA PITHA PARK",
+                "description": "ঐতিহ্যবাহী পিঠা শিল্প ও উদ্যোক্তা তৈরির অনন্য উদ্যোগ",
                 "image": "/images/wings/pitha-pathshala.jpg",
-                "slug": "pitha-pathshala"
+                "slug": "/pitha"
+            },
+            {
+                "id": 4,
+                "title": "IDEA Social Welfare Organization",
+                "description": "সমাজের অসহায় মানুষের পাশে দাঁড়ানো ও স্বেচ্ছাসেবী কাজ",
+                "image": "/images/wings/social-welfare.jpg",
+                "slug": "/social-welfare"
             },
             {
                 "id": 5,
-                "title": "WIDEN",
+                "title": "IDEA Youth Development Centre",
+                "description": "যুব সমাজকে দক্ষ, সচেতন ও আত্মবিশ্বাসী করে গড়ে তোলা",
+                "image": "/images/wings/youth-development.jpg",
+                "slug": "/youth-development"
+            },
+            {
+                "id": 6,
+                "title": "We Inspire New IDEAs for Students ( WINI )",
                 "description": "Bangladeshi Students & Entrepreneurs এর অনলাইন প্ল্যাটফর্ম",
                 "image": "/images/wings/widen.jpg",
                 "slug": "/widen"
             },
             {
-                "id": 6,
-                "title": "Bangla Pitha Research Institute",
+                "id": 7,
+                "title": "Bangladesh Pitha Research Institute",
                 "description": "বাংলার ঐতিহ্য পিঠা সংস্কৃতির গবেষণা ও সংরক্ষণ",
                 "image": "/images/wings/pitha-research.jpg",
-                "slug": "/pitha"
-            },
-            {
-                "id": 7,
-                "title": "Rise and Thrive with Hamidul Huq",
-                "description": "আত্ম-উন্নয়ন ও Mind Programming এর intensive প্রোগ্রাম",
-                "image": "/images/wings/rise-thrive.jpg",
-                "slug": "/rise-and-thrive"
+                "slug": "/bangla-pitha-research-institute"
             }
         ]
     },

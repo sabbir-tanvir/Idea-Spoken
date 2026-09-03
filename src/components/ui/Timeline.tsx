@@ -2,7 +2,19 @@
 
 import { TimelineEvent } from "@/lib/api";
 import { motion } from "framer-motion";
-import { Sprout, Flag, BookOpen, Laptop, GraduationCap, X } from "lucide-react";
+import {
+  Sprout,
+  Flag,
+  BookOpen,
+  Laptop,
+  GraduationCap,
+  HeartHandshake,
+  Gamepad2,
+  Store,
+  Users,
+  Sparkles,
+  Award
+} from "lucide-react";
 
 interface TimelineProps {
   events: TimelineEvent[];
@@ -15,7 +27,12 @@ const getIcon = (iconName: string) => {
     case "book": return <BookOpen className="w-6 h-6" />;
     case "laptop": return <Laptop className="w-6 h-6" />;
     case "graduation": return <GraduationCap className="w-6 h-6" />;
-    default: return <X className="w-6 h-6" />;
+    case "handshake": return <HeartHandshake className="w-6 h-6" />;
+    case "gamepad": return <Gamepad2 className="w-6 h-6" />;
+    case "store": return <Store className="w-6 h-6" />;
+    case "users": return <Users className="w-6 h-6" />;
+    case "sparkles": return <Sparkles className="w-6 h-6" />;
+    default: return <Award className="w-6 h-6" />;
   }
 };
 
@@ -33,7 +50,7 @@ export default function Timeline({ events }: TimelineProps) {
       }}
     >
       {/* Overlay for better text readability */}
-      <div className="absolute inset-0 "></div>
+      <div className="absolute inset-0 bg-white/10"></div>
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Heading */}
@@ -70,7 +87,7 @@ export default function Timeline({ events }: TimelineProps) {
               <div className="pt-1 pb-2 pr-1">
                 <span className="text-2xl font-bold text-slate-600">{event.year}</span>
                 <h3 className="text-lg font-bold text-purple-700 mt-1">{event.title}</h3>
-                <p className="text-sm text-slate-500 mt-2 leading-relaxed">{event.description}</p>
+                <p className="text-sm text-slate-600 mt-2 leading-relaxed">{event.description}</p>
               </div>
             </motion.div>
           ))}
@@ -99,7 +116,7 @@ export default function Timeline({ events }: TimelineProps) {
                       <div className="text-right pr-4">
                         <span className="text-2xl md:text-3xl font-bold text-slate-600">{event.year}</span>
                         <h3 className="text-lg md:text-xl font-bold text-purple-700 mt-1">{event.title}</h3>
-                        <p className="text-sm text-slate-500 mt-2">{event.description}</p>
+                        <p className="text-sm text-slate-600 mt-2">{event.description}</p>
                       </div>
                       {/* Dotted Line Connector */}
                       <div className="flex items-center">
@@ -129,7 +146,7 @@ export default function Timeline({ events }: TimelineProps) {
                       <div className="text-left pl-4">
                         <span className="text-2xl md:text-3xl font-bold text-slate-600">{event.year}</span>
                         <h3 className="text-lg md:text-xl font-bold text-purple-700 mt-1">{event.title}</h3>
-                        <p className="text-sm text-slate-500 mt-2">{event.description}</p>
+                        <p className="text-sm text-slate-600 mt-2">{event.description}</p>
                       </div>
                     </>
                   )}
