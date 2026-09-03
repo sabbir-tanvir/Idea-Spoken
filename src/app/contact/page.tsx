@@ -2,24 +2,23 @@
 
 import { useState } from "react";
 
-// TODO: Replace this with API data when available.
 const contactData = {
   title: "Get in Touch",
-  subtitle: "Suspendisse ultrice gravida dictum fusce placerat ultricies integer",
+  subtitle: "Have a question or query? Feel free to send us a message or reach out using the details below.",
   address: {
     label: "Our Address",
-    line1: "1564 Goosetown Drive",
-    line2: "Matthews, NC 28105",
+    line1: "Khorki, jashore,",
+    line2: "Bangladesh",
   },
   hours: {
     label: "Hours Of Operation",
-    value: "Mon - Fri: 9.00am to 5.00pm",
-    note: "[2nd Sat Holiday]",
+    value: "Sat - Thu: 9.00am to 8.00pm",
+    note: "[Friday Closed]",
   },
   contact: {
     label: "Contact",
-    phone: "+99- 35895-4565",
-    email: "supportyou@info.com",
+    phone: "+880 1990-822023",
+    email: "ideaspokengamemethod@gmail.com",
   },
   socials: [
     { name: "Facebook", icon: "facebook" },
@@ -96,8 +95,8 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 pt-16 md:pt-24">
-      <div className="container mx-auto px-4">
+    <div className="min-h-screen bg-slate-50 pt-16 pb-16 md:pt-24">
+      <div className="container mx-auto">
         <div className="mx-auto max-w-6xl">
           {/* Main Card */}
           <div className="rounded-3xl bg-white shadow-xl overflow-hidden">
@@ -125,21 +124,6 @@ export default function ContactPage() {
                       <p className="text-base text-slate-500 mb-1">{contactData.address.label}</p>
                       <p className="text-lg font-bold text-slate-900">{contactData.address.line1}</p>
                       <p className="text-lg font-bold text-slate-900">{contactData.address.line2}</p>
-                    </div>
-                  </div>
-
-                  {/* Hours */}
-                  <div className="flex items-start gap-4 p-5 rounded-2xl border border-slate-100 bg-white shadow-sm">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-orange-50 text-orange-500">
-                      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={1.8}>
-                        <circle cx="12" cy="12" r="8.5" />
-                        <path d="M12 7.5v5l3 2" />
-                      </svg>
-                    </div>
-                    <div>
-                      <p className="text-base text-slate-500 mb-1">{contactData.hours.label}</p>
-                      <p className="text-lg font-bold text-slate-900">{contactData.hours.value}</p>
-                      <p className="text-base text-slate-500">{contactData.hours.note}</p>
                     </div>
                   </div>
 
@@ -200,6 +184,15 @@ export default function ContactPage() {
 
               {/* Right Side - Contact Form */}
               <div className="p-8 md:p-12 bg-white border-l border-slate-100">
+                <div className="mb-6">
+                  <h2 className="text-2xl font-bold text-slate-900 mb-1">
+                    Submit Your Message / Query
+                  </h2>
+                  <p className="text-sm text-slate-500">
+                    Fill out the form below and our team will get back to you as soon as possible.
+                  </p>
+                </div>
+
                 <form className="space-y-6" onSubmit={handleSubmit}>
                   {submitResult && (
                     <div
@@ -301,7 +294,7 @@ export default function ContactPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="inline-flex items-center justify-center rounded-xl bg-purple-600 px-8 py-3.5 text-base font-semibold uppercase tracking-wider text-white transition-colors hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+                    className="inline-flex items-center justify-center rounded-xl bg-purple-600 px-8 py-3.5 text-base font-semibold uppercase tracking-wider text-white transition-colors hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 cursor-pointer"
                   >
                     {isSubmitting ? "Sending..." : "Send Message"}
                   </button>
@@ -313,54 +306,7 @@ export default function ContactPage() {
       </div>
 
       {/* Full Width Footer Section */}
-      <section className="bg-slate-900 py-10 mt-16">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-5xl">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-0 md:divide-x md:divide-slate-700">
-              {/* Address */}
-              <div className="flex items-center gap-4 justify-center md:justify-start md:pl-4 lg:pl-8">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-slate-600 text-white">
-                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.8}>
-                    <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z" />
-                    <circle cx="12" cy="9" r="2.5" />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-base text-purple-400 mb-1">Address:</p>
-                  <p className="text-lg font-semibold text-white">1925 Boggess Street</p>
-                </div>
-              </div>
 
-              {/* Phone */}
-              <div className="flex items-center gap-4 justify-center">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-slate-600 text-white">
-                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.8}>
-                    <path d="M5 4.5a2 2 0 0 1 2-2h2l2 4-2 1.4a11 11 0 0 0 5.6 5.6L16 12l4 2v2a2 2 0 0 1-2 2h-.5A13.5 13.5 0 0 1 4.5 6.5V6a2 2 0 0 1 .5-1.5Z" />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-base text-purple-400 mb-1">Phone:</p>
-                  <p className="text-lg font-semibold text-white">(00) 875 784 568</p>
-                </div>
-              </div>
-
-              {/* Email */}
-              <div className="flex items-center gap-4 justify-center md:justify-end md:pr-4 lg:pr-8">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-slate-600 text-white">
-                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.8}>
-                    <rect x="3.5" y="6" width="17" height="12" rx="2" />
-                    <path d="m4 7 8 6 8-6" />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-base text-purple-400 mb-1">Email:</p>
-                  <p className="text-lg font-semibold text-white">info@gmail.com</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
