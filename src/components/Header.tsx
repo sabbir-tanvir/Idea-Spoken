@@ -162,14 +162,25 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
       <div className="bg-white ">
         <div className="max-w-[1540px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center py-2">
-            {/* Logo Section */}
-            <Link href="/" className="flex items-center">
-              <div className="relative w-12 h-12 sm:w-16 sm:h-16">
+            {/* Logo Section - Dual Logos */}
+            <Link href="/" className="flex items-center gap-2 group shrink-0">
+              <div className="relative w-11 h-11 sm:w-14 sm:h-14 transition-transform group-hover:scale-105">
                 <Image
-                  src="/images/logo.png"
-                  alt="IDEA Spoken Logo"
+                  src="/logo.png"
+                  alt="IDEA Spoken Logo 1"
                   fill
-                  sizes="(max-width: 640px) 48px, 64px"
+                  sizes="(max-width: 640px) 44px, 56px"
+                  className="object-contain"
+                  priority
+                />
+              </div>
+              <div className="h-7 sm:h-9 w-px bg-slate-200"></div>
+              <div className="relative w-11 h-11 sm:w-14 sm:h-14 transition-transform group-hover:scale-105">
+                <Image
+                  src="/logo2.png"
+                  alt="IDEA Spoken Logo 2"
+                  fill
+                  sizes="(max-width: 640px) 44px, 56px"
                   className="object-contain"
                   priority
                 />
@@ -327,13 +338,23 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
       >
         {/* Panel Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-          <Link href="/" onClick={closeMobileMenu} className="flex items-center">
-            <div className="relative w-10 h-10">
+          <Link href="/" onClick={closeMobileMenu} className="flex items-center gap-2">
+            <div className="relative w-9 h-9">
               <Image
-                src="/images/logo.png"
-                alt="IDEA Spoken Logo"
+                src="/logo.png"
+                alt="IDEA Spoken Logo 1"
                 fill
-                sizes="40px"
+                sizes="36px"
+                className="object-contain"
+              />
+            </div>
+            <div className="h-6 w-px bg-gray-200"></div>
+            <div className="relative w-9 h-9">
+              <Image
+                src="/logo2.png"
+                alt="IDEA Spoken Logo 2"
+                fill
+                sizes="36px"
                 className="object-contain"
               />
             </div>

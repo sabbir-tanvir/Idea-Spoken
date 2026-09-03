@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function HeroAbout() {
     return (
-        <section className="relative overflow-hidden bg-gradient-to-r from-pink-100 via-purple-100 to-blue-100 pt-28 pb-12 sm:pt-32 sm:pb-14">
+        <section className="relative overflow-hidden bg-gradient-to-r from-pink-100 via-purple-100 to-blue-100 pt-16 pb-8 sm:pt-24 sm:pb-12">
             {/* Decorative Elements */}
 
             {/* Left Orange Circles */}
@@ -63,7 +63,7 @@ export default function HeroAbout() {
             {/* Content */}
             <div className="container mx-auto px-4 relative z-10 text-center">
                 <motion.h1
-                    className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 mb-3 tracking-tight"
+                    className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 mb-2 tracking-tight"
                     initial={{ y: 15, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.6 }}
@@ -72,7 +72,7 @@ export default function HeroAbout() {
                 </motion.h1>
 
                 <motion.div
-                    className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/50 backdrop-blur-md border border-white/60 text-slate-600 font-semibold text-xs sm:text-sm shadow-xs"
+                    className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/50 backdrop-blur-md border border-white/60 text-slate-600 font-semibold text-xs sm:text-sm shadow-xs"
                     initial={{ y: 15, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.6, delay: 0.15 }}
