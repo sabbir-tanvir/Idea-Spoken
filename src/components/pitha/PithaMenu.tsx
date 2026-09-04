@@ -147,12 +147,12 @@ export default function PithaMenu() {
             </div>
             <div>
               <p className="text-xs text-purple-200 uppercase font-semibold tracking-wider">অর্ডারের জন্য যোগাযোগ করুন</p>
-              <h4 className="text-lg font-bold text-white">০১৭৮৩-৪১৪০২৪, ০১৯২৯-১৭৯২১৮</h4>
+              <h4 className="text-lg font-bold text-white">01783-414354, 01977567539</h4>
             </div>
           </div>
 
           <a
-            href="tel:01783414024"
+            href="tel:01783414354"
             className="shrink-0 bg-white text-purple-700 hover:bg-purple-50 px-5 py-2.5 rounded-full font-bold text-sm shadow-md transition-all border border-white/40"
           >
             কল করুন
