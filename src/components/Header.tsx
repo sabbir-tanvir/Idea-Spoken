@@ -9,7 +9,7 @@ import UserMenu from './UserMenu';
 
 // Wings dropdown items - exact sequence and official wing names
 const wingsDropdownItems = [
-  { title: 'IDEA SPOKEN-The Game Method', slug: '/english-debate', hasPage: true },
+  { title: 'IDEA SPOKEN-The Game Method', slug: '/game-method', hasPage: true },
   { title: 'Rise and Thrive with Hamidul Huq', slug: '/rise-and-thrive', hasPage: true },
   { title: 'IDEA PITHA PARK', slug: '/pitha', hasPage: true },
   { title: 'IDEA Social Welfare Organization', slug: '/social-welfare', hasPage: true },
@@ -75,7 +75,7 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
   // Check if current path is one of the wings
   const isWingsActive = pathname?.startsWith('/widen') ||
     pathname?.startsWith('/pitha') ||
-    pathname?.startsWith('/english-debate') ||
+    pathname?.startsWith('/game-method') ||
     pathname?.startsWith('/rise-and-thrive') ||
     pathname?.startsWith('/game-method') ||
     pathname?.startsWith('/bangla-pitha-research-institute') ||
