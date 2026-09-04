@@ -18,7 +18,7 @@ const youthDevelopmentLeaders: Leader[] = [
     name: 'মোঃ হামিদুল হক',
     role: 'প্রতিষ্ঠাতা ও প্রধান উপদেষ্টা',
     designation: 'প্রতিষ্ঠাতা ও প্রধান উপদেষ্টা',
-    image: '/images/youth/hamidd.jpg',
+    image: '/images/social/hamid.jpg',
   },
   {
     name: 'তানজিয়া জাহান মমতাজ',
