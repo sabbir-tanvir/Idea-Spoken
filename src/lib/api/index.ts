@@ -273,19 +273,24 @@ async function fetchBlogs(): Promise<{
   const apiBase = getApiBaseUrl();
   const backendOrigin = getBackendOrigin(apiBase);
 
-  const response = await fetch(`${apiBase}/blogs`, {
-    next: { revalidate: 60 },
-  });
+  try {
+    const response = await fetch(`${apiBase}/blogs`, {
+      next: { revalidate: 60 },
+    });
 
-  if (!response.ok) return null;
+    if (!response.ok) return null;
 
-  const payload: BlogsApiResponse = await response.json();
-  if (!payload.success || !payload.data?.length) return null;
+    const payload: BlogsApiResponse = await response.json();
+    if (!payload.success || !payload.data?.length) return null;
 
-  return {
-    blogs: payload.data,
-    backendOrigin,
-  };
+    return {
+      blogs: payload.data,
+      backendOrigin,
+    };
+  } catch (error) {
+    console.error("Failed to fetch blogs:", error);
+    return null;
+  }
 }
 
 async function fetchBlogBySlug(slug: string): Promise<ApiBlog | null> {
