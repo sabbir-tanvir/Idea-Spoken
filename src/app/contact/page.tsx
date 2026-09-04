@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 const contactData = {
-  title: "Get in Touch",
+  title: "Contact Us",
   subtitle: "Have a question or query? Feel free to send us a message or reach out using the details below.",
   address: {
     label: "Our Address",
@@ -12,12 +12,11 @@ const contactData = {
   },
   hours: {
     label: "Hours Of Operation",
-    value: "Sat - Thu: 9.00am to 8.00pm",
-    note: "[Friday Closed]",
+    value: "Sat - Fri: 09:00am to 09:00 PM",
   },
   contact: {
     label: "Contact",
-    phone: "+880 1990-822023",
+    phone: "01990-822023, 01616-031402",
     email: "ideaspokengamemethod@gmail.com",
   },
   socials: [
@@ -110,47 +109,60 @@ export default function ContactPage() {
                   {contactData.subtitle}
                 </p>
 
-                {/* Contact Info Cards - 3 Separate Boxes */}
-                <div className="space-y-5 mb-12 relative z-10">
+                {/* Contact Info Cards */}
+                <div className="space-y-4 mb-12 relative z-10">
                   {/* Address */}
-                  <div className="flex items-start gap-4 p-5 rounded-2xl border border-slate-100 bg-white shadow-sm hover:shadow-md transition-shadow">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-purple-50 text-purple-600">
-                      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={1.8}>
+                  <div className="flex items-start gap-4 p-4 rounded-2xl border border-slate-100 bg-white shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-purple-50 text-purple-600">
+                      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.8}>
                         <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z" />
                         <circle cx="12" cy="9" r="2.5" />
                       </svg>
                     </div>
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-wider text-purple-600 mb-1">{contactData.address.label}</p>
-                      <p className="text-lg font-bold text-slate-900">{contactData.address.line1}</p>
-                      <p className="text-lg font-bold text-slate-900">{contactData.address.line2}</p>
+                      <p className="text-xs font-bold uppercase tracking-wider text-purple-600 mb-0.5">{contactData.address.label}</p>
+                      <p className="text-base font-bold text-slate-900">{contactData.address.line1} {contactData.address.line2}</p>
+                    </div>
+                  </div>
+
+                  {/* Hours Of Operation */}
+                  <div className="flex items-start gap-4 p-4 rounded-2xl border border-slate-100 bg-white shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-purple-50 text-purple-600">
+                      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.8}>
+                        <circle cx="12" cy="12" r="8.5" />
+                        <path d="M12 7.5v5l3 2" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-wider text-purple-600 mb-0.5">{contactData.hours.label}</p>
+                      <p className="text-base font-bold text-slate-900">{contactData.hours.value}</p>
                     </div>
                   </div>
 
                   {/* Phone */}
-                  <div className="flex items-start gap-4 p-5 rounded-2xl border border-slate-100 bg-white shadow-sm hover:shadow-md transition-shadow">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-purple-50 text-purple-600">
-                      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={1.8}>
+                  <div className="flex items-start gap-4 p-4 rounded-2xl border border-slate-100 bg-white shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-purple-50 text-purple-600">
+                      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.8}>
                         <path d="M5 4.5a2 2 0 0 1 2-2h2l2 4-2 1.4a11 11 0 0 0 5.6 5.6L16 12l4 2v2a2 2 0 0 1-2 2h-.5A13.5 13.5 0 0 1 4.5 6.5V6a2 2 0 0 1 .5-1.5Z" />
                       </svg>
                     </div>
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-wider text-purple-600 mb-1">Phone Number</p>
-                      <p className="text-lg font-bold text-slate-900">{contactData.contact.phone}</p>
+                      <p className="text-xs font-bold uppercase tracking-wider text-purple-600 mb-0.5">Phone Number</p>
+                      <p className="text-base font-bold text-slate-900">{contactData.contact.phone}</p>
                     </div>
                   </div>
 
                   {/* Email */}
-                  <div className="flex items-start gap-4 p-5 rounded-2xl border border-slate-100 bg-white shadow-sm hover:shadow-md transition-shadow">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-purple-50 text-purple-600">
-                      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={1.8}>
+                  <div className="flex items-start gap-4 p-4 rounded-2xl border border-slate-100 bg-white shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-purple-50 text-purple-600">
+                      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.8}>
                         <rect x="3.5" y="6" width="17" height="12" rx="2" />
                         <path d="m4 7 8 6 8-6" />
                       </svg>
                     </div>
                     <div className="min-w-0">
-                      <p className="text-xs font-bold uppercase tracking-wider text-purple-600 mb-1">Email Address</p>
-                      <p className="text-base sm:text-lg font-bold text-slate-900 break-all">{contactData.contact.email}</p>
+                      <p className="text-xs font-bold uppercase tracking-wider text-purple-600 mb-0.5">Email Address</p>
+                      <p className="text-sm sm:text-base font-bold text-slate-900 break-all">{contactData.contact.email}</p>
                     </div>
                   </div>
                 </div>
@@ -199,7 +211,7 @@ export default function ContactPage() {
               <div className="p-8 md:p-12 bg-white border-l border-slate-100">
                 <div className="mb-6">
                   <h2 className="text-2xl font-bold text-slate-900 mb-1">
-                    Submit Your Message / Query
+                    আপনার অভিযোগ/পরামর্শ আমাদের জানান
                   </h2>
                   <p className="text-sm text-slate-500">
                     Fill out the form below and our team will get back to you as soon as possible.
