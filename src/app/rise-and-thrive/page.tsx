@@ -12,6 +12,22 @@ import WhoIsItFor from "@/components/rise-and-thrive/Whoisthisfor";
 import WhyRiseAndThrive from "@/components/rise-and-thrive/WhyRiseAndThrive";
 import { getWingMediaBySlug } from "@/lib/api";
 import { getEvents } from "@/lib/api/events";
+import WingLeadership, { Leader } from "@/components/WingLeadership";
+
+const riseAndThriveLeaders: Leader[] = [
+  {
+    name: "মোঃ হামিদুল হক",
+    role: "প্রতিষ্ঠাতা ও প্রধান উপদেষ্টা",
+    designation: "প্রতিষ্ঠাতা ও প্রধান উপদেষ্টা",
+    image: "/images/social/hamid.jpg",
+  },
+  {
+    name: "মল্লিকা আফরোজ",
+    role: "কোর্ডিনেটর",
+    designation: "কোর্ডিনেটর, রাইজ অ্যান্ড থ্রাইভ উইথ হামিদুল হক",
+    image: "/images/rise/malika.jpg",
+  },
+];
 
 export default async function Home() {
     const [media, events] = await Promise.all([
@@ -26,6 +42,11 @@ export default async function Home() {
                 description={media.description || undefined}
                 coverImageUrl={media.coverImageUrl ?? undefined}
                 coverImageAlt={media.coverImageAlt}
+            />
+            <WingLeadership
+                title="রাইজ অ্যান্ড থ্রাইভ এর নেতৃত্ব"
+                subtitle="আমাদের কার্যক্রম পরিচালনা ও দিকনির্দেশনায় নিয়োজিত টিম"
+                leaders={riseAndThriveLeaders}
             />
             <CountUpSection />
             <WhyRiseAndThrive />
