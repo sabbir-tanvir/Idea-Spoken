@@ -102,8 +102,7 @@ export default async function CoursesPage() {
               Our Courses
             </h2>
             <p className="mx-auto mt-5 max-w-3xl text-lg text-slate-600 md:text-xl">
-              IDEA-র স্পেশালাইজড কোর্স যা আপনার English দক্ষতা এবং আত্মবিশ্বাসকে
-              নতুন উচ্চতায় নিয়ে যাবে 
+              আত্মউন্নয়নের এই যাত্রায় আইডিয়া সবসময় আপনার সাথে আছে।
             </p>
           </div>
 
