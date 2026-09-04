@@ -13,67 +13,46 @@ export default async function CoursesPage() {
           <div className="relative grid gap-12 lg:grid-cols-2 lg:items-start">
             {/* Left Content */}
             <div className="space-y-6 lg:space-y-8 lg:pt-12">
-              <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2 text-base font-medium text-slate-600 shadow-sm">
-                Never stop learning
+              <span className="inline-flex items-center gap-2 rounded-full border border-purple-200 bg-purple-50 px-5 py-2.5 text-base font-semibold text-purple-700 shadow-xs">
+                Boost yourself with our online Education
               </span>
-              <h1 className="text-4xl font-bold leading-tight text-slate-900 md:text-5xl lg:text-6xl">
-                Grow up your skills by{' '}
-                <span className="text-blue-600">
-                  online courses with Onlearning
+              <h1 className="text-4xl font-extrabold leading-tight text-slate-900 md:text-5xl lg:text-6xl">
+                The most powerful investment in your life is{' '}
+                <span className="text-purple-600">
+                  investment in Education
                 </span>
               </h1>
             </div>
 
-            {/* Right Content - Image with floating elements */}
-            <div className="relative flex items-end justify-center lg:justify-end">
-              <div className="relative">
-                {/* Main Image - positioned at bottom */}
-                <div className="relative z-10">
+            {/* Right Content - Image with Hamidul Huq details */}
+            <div className="relative flex flex-col items-center justify-center lg:items-end lg:justify-end">
+              <div className="relative group">
+                {/* Main Image */}
+                <div className="relative z-10 overflow-hidden rounded-3xl border-4 border-white shadow-2xl bg-slate-100 max-w-md">
                   <Image
-                    src="/images/courses-hero.png"
-                    alt="Student learning online"
-                    width={550}
-                    height={650}
-                    className="h-auto w-full max-w-lg object-contain"
+                    src="/images/hamid.jpg"
+                    alt="Md. Hamidul Huq"
+                    width={500}
+                    height={600}
+                    className="h-auto w-full object-cover object-top transition-transform duration-500 hover:scale-105"
                     priority
                   />
                 </div>
 
-                {/* 250k Card - Left side, positioned higher */}
-                <div className="absolute -left-8 top-1/3 z-20 rounded-2xl border border-slate-100 bg-white px-5 py-4 shadow-xl md:-left-16 lg:-left-20">
-                  <div className="flex items-center gap-4">
-                    <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
-                      <svg
-                        viewBox="0 0 24 24"
-                        className="h-6 w-6"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth={1.8}
-                      >
-                        <rect x="3" y="4" width="18" height="16" rx="2" />
-                        <path d="M7 2v4M17 2v4M3 10h18" />
-                      </svg>
-                    </span>
-                    <div>
-                      <p className="text-xl font-bold text-slate-800">250k</p>
-                      <p className="text-base font-medium text-slate-500">
-                        Assisted Student
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Orange Chart Icon - Top right */}
-                <div className="absolute -right-4 top-0 z-20 flex h-16 w-16 items-center justify-center rounded-2xl bg-orange-500 text-white shadow-xl md:-right-8 md:h-20 md:w-20">
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="h-8 w-8 md:h-10 md:w-10"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path d="M5 17V7m5 10V4m5 13V9m5 8V6" />
-                  </svg>
+                {/* Info Card */}
+                <div className="absolute -bottom-6 -left-4 md:-left-10 z-20 rounded-2xl border border-purple-100 bg-white/95 backdrop-blur-md p-5 shadow-xl max-w-xs md:max-w-sm">
+                  <h3 className="text-lg md:text-xl font-bold text-slate-900">
+                    Md. Hamidul Huq
+                  </h3>
+                  <p className="text-xs md:text-sm font-bold text-purple-600 mt-0.5">
+                    Mind Programmer
+                  </p>
+                  <p className="text-xs md:text-sm font-medium text-slate-600">
+                    Founder and Social Psychologist
+                  </p>
+                  <p className="text-xs text-slate-500 mt-1.5 font-medium border-t border-slate-100 pt-1.5">
+                    Institute of Development, Education and Education (IDEA)
+                  </p>
                 </div>
               </div>
             </div>
@@ -82,8 +61,8 @@ export default async function CoursesPage() {
       </section>
 
       {/* Play Button - Centered between sections */}
-      <div className="relative z-30 -mt-20 flex justify-center md:-mt-24">
-        <div className="relative flex h-36 w-36 items-center justify-center md:h-44 md:w-44">
+      <div className="relative z-30 -mt-16 flex justify-center md:-mt-20">
+        <div className="relative flex h-40 w-40 items-center justify-center md:h-48 md:w-48">
           {/* Rotating text circle */}
           <svg
             className="absolute h-full w-full animate-spin-slow"
@@ -95,20 +74,20 @@ export default async function CoursesPage() {
                 d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
               />
             </defs>
-            <text className="fill-slate-600 text-[10px] font-semibold uppercase tracking-[0.3em]">
+            <text className="fill-purple-700 text-[8.5px] font-bold uppercase tracking-[0.22em]">
               <textPath href="#circlePath">
-                Explore More • Explore More •{' '}
+                How to Purchase our courses ? Video •{' '}
               </textPath>
             </text>
           </svg>
           {/* Center play button */}
-          <div className="absolute flex h-20 w-20 cursor-pointer items-center justify-center rounded-full bg-purple-600 text-white shadow-lg transition-transform hover:scale-110 md:h-24 md:w-24">
+          <div className="absolute flex h-20 w-20 cursor-pointer items-center justify-center rounded-full bg-purple-600 text-white shadow-xl transition-transform hover:scale-110 md:h-24 md:w-24">
             <svg viewBox="0 0 24 24" className="h-8 w-8 md:h-10 md:w-10">
               <path d="M8 5v14l11-7z" fill="currentColor" />
             </svg>
           </div>
           {/* Outer ring with white background */}
-          <div className="absolute h-full w-full rounded-full border-2 border-purple-200 bg-white/80 backdrop-blur-sm" style={{ zIndex: -1 }} />
+          <div className="absolute h-full w-full rounded-full border-2 border-purple-200 bg-white/90 backdrop-blur-sm" style={{ zIndex: -1 }} />
         </div>
       </div>
 
