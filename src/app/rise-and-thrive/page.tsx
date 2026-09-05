@@ -13,6 +13,7 @@ import WhyRiseAndThrive from "@/components/rise-and-thrive/WhyRiseAndThrive";
 import { getWingMediaBySlug } from "@/lib/api";
 import { getEvents } from "@/lib/api/events";
 import WingLeadership, { Leader } from "@/components/WingLeadership";
+import RiseAndThriveDocumentary from "@/components/rise-and-thrive/RiseAndThriveDocumentary";
 
 const riseAndThriveLeaders: Leader[] = [
   {
@@ -49,6 +50,7 @@ export default async function Home() {
                 leaders={riseAndThriveLeaders}
             />
             <CountUpSection />
+            <RiseAndThriveDocumentary />
             <WhyRiseAndThrive />
             <WhoIsItFor />
             <WhatYouWillLearn />
