@@ -5,6 +5,7 @@ import HeroSection from '@/components/widen/WidenHero'
 import React from 'react'
 import { getWingMediaBySlug } from '@/lib/api'
 import WingLeadership, { Leader } from '@/components/WingLeadership'
+import GameMethodDocumentary from '@/components/game-method/GameMethodDocumentary'
 
 const gameMethodLeaders: Leader[] = [
   {
@@ -37,6 +38,7 @@ export default async function GameMethodPage() {
         subtitle="আমাদের কার্যক্রম পরিচালনা ও দিকনির্দেশনায় নিয়োজিত সুধিজন"
         leaders={gameMethodLeaders}
       />
+      <GameMethodDocumentary />
       <GameMethodApproachProvider />
       <WingActivities activities={media.activities} />
       <PhotoGallery images={media.gallery} />
