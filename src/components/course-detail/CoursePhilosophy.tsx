@@ -23,7 +23,7 @@ export default function CoursePhilosophy({ courseDetail }: CoursePhilosophyProps
 
     return (
         <section className="bg-blue-50 w-full">
-            <div className="container mx-auto px-4 pt-20 lg:pt-32">
+            <div className="container mx-auto pb-20 pt-20 lg:pt-32">
                 <motion.div
                     className="text-center max-w-4xl mx-auto"
                     initial={{ opacity: 0, y: 20 }}

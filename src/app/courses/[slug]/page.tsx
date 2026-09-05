@@ -24,7 +24,7 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
     <main className="min-h-screen bg-white">
       <CourseHero courseDetail={courseDetail} />
       <CoursePhilosophy courseDetail={courseDetail} />
-      <CourseWhatYoullLearn courseDetail={courseDetail} />
+      {/* <CourseWhatYoullLearn courseDetail={courseDetail} /> */}
       <CourseHighlights courseDetail={courseDetail} />
       <CourseModules courseDetail={courseDetail} />
       <CourseOffer courseDetail={courseDetail} />
