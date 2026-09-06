@@ -536,3 +536,6 @@ export async function getFullMockData() {
   await delay(200);
   return data;
 }
+
+export * from './media';
+

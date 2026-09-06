@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { ActivitiesData } from "@/lib/api";
+import { ActivitiesData, ApiTvMedia, ApiNewspaperClip } from "@/lib/api";
+import { getFullImageUrl } from "@/lib/getFullImageUrl";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -22,6 +23,8 @@ import {
 
 interface AmaderKarjokromProps {
     data?: ActivitiesData;
+    tvMedia?: ApiTvMedia[];
+    newspaperClips?: ApiNewspaperClip[];
 }
 
 // 7 Wings Data
@@ -70,130 +73,6 @@ const WINGS_LIST = [
     }
 ];
 
-// 10 TV Media Slots
-const TV_MEDIA_REPORTS = [
-    {
-        id: 1,
-        channel: "চ্যানেল আই",
-        topic: "জীবন যেখানে যেমন - আমাদের স্যার",
-        link: "https://youtu.be/IFLytBklp7A?si=jtnQChDRgCd57R13",
-        platform: "YouTube",
-        isAvailable: true
-    },
-    {
-        id: 2,
-        channel: "একাত্তর টিভি",
-        topic: "একজন আদর্শ শিক্ষকের গল্প",
-        link: "https://youtu.be/tFZGUYHbEGY?si=mteGOWwlbQ8xbJGx",
-        platform: "YouTube",
-        isAvailable: true
-    },
-    {
-        id: 3,
-        channel: "মাছরাঙা টেলিভিশন",
-        topic: "রাঙাসকাল – অতিথি : জনাব মোঃ হামিদুল হক",
-        link: "https://youtu.be/AyF4GWKZDEg?si=Bq3oK71Iq4pOalYX",
-        platform: "YouTube",
-        isAvailable: true
-    },
-    {
-        id: 4,
-        channel: "চ্যানেল ওয়ান",
-        topic: "একজন শিক্ষক, একজন আপনজনা",
-        link: "#",
-        platform: "TV",
-        isAvailable: false
-    },
-    {
-        id: 5,
-        channel: "একাত্তর টিভি",
-        topic: "যেভাবে শত শত শিক্ষার্থীদের বদলে দিলেন একজন শিক্ষক",
-        link: "https://www.facebook.com/share/v/1BQFxUCCg1/",
-        platform: "Facebook",
-        isAvailable: true
-    },
-    {
-        id: 6,
-        channel: "চ্যানেল ২৪",
-        topic: "আইডিয়া লস প্রজেক্ট",
-        link: "#",
-        platform: "TV",
-        isAvailable: false
-    },
-    {
-        id: 7,
-        channel: "ডিবিসি নিউজ",
-        topic: "শিক্ষায় নতুন দিগন্ত – আইডিয়া মডেল",
-        link: "#",
-        platform: "TV",
-        isAvailable: false
-    },
-    {
-        id: 8,
-        channel: "সময় টিভি",
-        topic: "তরুণদের আত্মনির্ভরশীলতায় আইডিয়ার ভূমিকা",
-        link: "#",
-        platform: "TV",
-        isAvailable: false
-    },
-    {
-        id: 9,
-        channel: "এটিএন বাংলা",
-        topic: "আইডিয়া স্পোকেন ও গেইম মেথড ফিচার",
-        link: "#",
-        platform: "TV",
-        isAvailable: false
-    },
-    {
-        id: 10,
-        channel: "ইন্ডিপেন্ডেন্ট টিভি",
-        topic: "আলোকিত মানুষ গড়ার কারিগর",
-        link: "#",
-        platform: "TV",
-        isAvailable: false
-    }
-];
-
-// Newspaper Placeholder Gallery
-const NEWSPAPER_CLIPS = [
-    {
-        id: 1,
-        title: "দৈনিক প্রথম আলো - বিশেষ প্রতিবেদন",
-        image: "/images/wings/youth-development.jpg",
-        date: "১৫ মে, ২০২২"
-    },
-    {
-        id: 2,
-        title: "দৈনিক ইত্তেফাক - আইডিয়ার সাফল্যগাথা",
-        image: "/images/wings/social-welfare.jpg",
-        date: "১০ আগস্ট, ২০২১"
-    },
-    {
-        id: 3,
-        title: "দৈনিক সমকাল - উদ্যোক্তা তৈরিতে আইডিয়া",
-        image: "/images/wings/pitha-pathshala.jpg",
-        date: "০৪ জানুয়ারি, ২০২৩"
-    },
-    {
-        id: 4,
-        title: "দৈনিক কালের কণ্ঠ - শিক্ষক হামিদুল হকের গল্প",
-        image: "/images/wings/pitha-research.jpg",
-        date: "১৮ নভেম্বর, ২০২০"
-    },
-    {
-        id: 5,
-        title: "দৈনিক যুগান্তর - পিঠা গবেষণা ও ঐতিহ্য",
-        image: "/images/wings/widen.jpg",
-        date: "১২ ফেব্রুয়ারি, ২০২৪"
-    },
-    {
-        id: 6,
-        title: "দৈনিক বাংলাদেশ প্রতিদিন - আইডিয়া স্পোকেন মেথড",
-        image: "/images/wings/rise-thrive.jpg",
-        date: "০৫ সেপ্টেম্বর, ২০২৪"
-    }
-];
-
 const getStatIcon = (iconName: string) => {
     switch (iconName) {
         case "users": return <Users className="w-6 h-6" />;
@@ -204,7 +83,11 @@ const getStatIcon = (iconName: string) => {
     }
 };
 
-export default function AmaderKarjokrom({ data }: AmaderKarjokromProps) {
+export default function AmaderKarjokrom({ 
+    data, 
+    tvMedia = [], 
+    newspaperClips = [] 
+}: AmaderKarjokromProps) {
     const [selectedImage, setSelectedImage] = useState<{ src: string; title: string } | null>(null);
 
     return (
@@ -267,7 +150,7 @@ export default function AmaderKarjokrom({ data }: AmaderKarjokromProps) {
                     </div>
                 </div>
 
-                {/* 2. TV MEDIA REPORTS (10 SLOTS) */}
+                {/* 2. TV MEDIA REPORTS (Dynamic from backend) */}
                 <div className="space-y-6">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-xl bg-red-600 text-white flex items-center justify-center font-bold">
@@ -281,53 +164,70 @@ export default function AmaderKarjokrom({ data }: AmaderKarjokromProps) {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {TV_MEDIA_REPORTS.map((report) => (
-                            <motion.div
-                                key={report.id}
-                                initial={{ opacity: 0, y: 15 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-purple-300 transition-all"
-                            >
-                                <div className="space-y-1">
-                                    <div className="flex items-center gap-2">
-                                        <span className="text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-red-100 text-red-700">
-                                            {report.channel}
-                                        </span>
-                                        <span className="text-xs font-semibold text-slate-400">
-                                            Slot #{report.id}
-                                        </span>
+                    {tvMedia.length > 0 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {tvMedia.map((report, index) => (
+                                <motion.div
+                                    key={report.id}
+                                    initial={{ opacity: 0, y: 15 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-purple-300 transition-all"
+                                >
+                                    <div className="space-y-1.5 flex-1 min-w-0">
+                                        <div className="flex items-center flex-wrap gap-2">
+                                            <span className="text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-red-100 text-red-700">
+                                                {report.channel}
+                                            </span>
+                                            {report.platform && (
+                                                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                                                    report.platform.toLowerCase() === 'youtube'
+                                                        ? 'bg-red-50 text-red-600 border border-red-200'
+                                                        : report.platform.toLowerCase() === 'facebook'
+                                                        ? 'bg-blue-50 text-blue-600 border border-blue-200'
+                                                        : 'bg-slate-100 text-slate-600 border border-slate-200'
+                                                }`}>
+                                                    {report.platform}
+                                                </span>
+                                            )}
+                                            <span className="text-xs font-semibold text-slate-400">
+                                                #{index + 1}
+                                            </span>
+                                        </div>
+                                        <h4 className="text-base font-bold text-slate-900 pt-0.5 leading-snug">
+                                            {report.topic}
+                                        </h4>
                                     </div>
-                                    <h4 className="text-base font-bold text-slate-900 pt-1">
-                                        {report.topic}
-                                    </h4>
-                                </div>
 
-                                <div>
-                                    {report.isAvailable ? (
-                                        <a
-                                            href={report.link}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs transition-all shadow-md shadow-red-100 shrink-0 cursor-pointer"
-                                        >
-                                            <PlayCircle className="w-4 h-4" />
-                                            <span>রিপোর্ট দেখুন</span>
-                                            <ExternalLink className="w-3.5 h-3.5 opacity-80" />
-                                        </a>
-                                    ) : (
-                                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 text-slate-400 font-medium text-xs border border-slate-200">
-                                            <span>শীঘ্রই আসছে</span>
-                                        </span>
-                                    )}
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
+                                    <div className="shrink-0">
+                                        {report.isAvailable && report.link && report.link !== "#" ? (
+                                            <a
+                                                href={report.link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs transition-all shadow-md shadow-red-100 shrink-0 cursor-pointer"
+                                            >
+                                                <PlayCircle className="w-4 h-4" />
+                                                <span>রিপোর্ট দেখুন</span>
+                                                <ExternalLink className="w-3.5 h-3.5 opacity-80" />
+                                            </a>
+                                        ) : (
+                                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 text-slate-400 font-medium text-xs border border-slate-200">
+                                                <span>শীঘ্রই আসছে</span>
+                                            </span>
+                                        )}
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="text-center py-10 bg-white rounded-2xl border border-slate-200 text-slate-500">
+                            কোনো টিভি মিডিয়া রিপোর্ট পাওয়া যায়নি।
+                        </div>
+                    )}
                 </div>
 
-                {/* 3. NEWSPAPER CLIPS GALLERY ("আইডিয়ার পত্র-পত্রিকাদি") */}
+                {/* 3. NEWSPAPER CLIPS GALLERY (Dynamic from backend) */}
                 <div className="space-y-6">
                     <div className="flex items-center justify-between flex-wrap gap-4">
                         <div className="flex items-center gap-3">
@@ -341,38 +241,50 @@ export default function AmaderKarjokrom({ data }: AmaderKarjokromProps) {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                        {NEWSPAPER_CLIPS.map((clip) => (
-                            <motion.div
-                                key={clip.id}
-                                whileHover={{ y: -5 }}
-                                onClick={() => setSelectedImage({ src: clip.image, title: clip.title })}
-                                className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group relative"
-                            >
-                                <div className="relative h-56 w-full bg-slate-100 overflow-hidden">
-                                    <Image
-                                        src={clip.image}
-                                        alt={clip.title}
-                                        fill
-                                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                                    />
-                                    <div className="absolute inset-0 bg-purple-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                        <div className="w-12 h-12 rounded-full bg-white/90 text-purple-800 flex items-center justify-center shadow-lg">
-                                            <Maximize2 className="w-5 h-5" />
+                    {newspaperClips.length > 0 ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                            {newspaperClips.map((clip) => {
+                                const rawUrl = clip.image?.url || "";
+                                const imageUrl = getFullImageUrl(rawUrl) || "/images/wings/youth-development.jpg";
+                                const imageAlt = clip.image?.alt || clip.title;
+
+                                return (
+                                    <motion.div
+                                        key={clip.id}
+                                        whileHover={{ y: -5 }}
+                                        onClick={() => setSelectedImage({ src: imageUrl, title: clip.title })}
+                                        className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all cursor-pointer group relative"
+                                    >
+                                        <div className="relative h-56 w-full bg-slate-100 overflow-hidden">
+                                            <Image
+                                                src={imageUrl}
+                                                alt={imageAlt}
+                                                fill
+                                                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                            />
+                                            <div className="absolute inset-0 bg-purple-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                <div className="w-12 h-12 rounded-full bg-white/90 text-purple-800 flex items-center justify-center shadow-lg">
+                                                    <Maximize2 className="w-5 h-5" />
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div className="p-4 bg-white border-t border-slate-100">
-                                    <span className="text-[11px] font-bold text-purple-600 block mb-1">
-                                        {clip.date}
-                                    </span>
-                                    <h4 className="text-sm font-bold text-slate-800 group-hover:text-purple-700 transition-colors">
-                                        {clip.title}
-                                    </h4>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
+                                        <div className="p-4 bg-white border-t border-slate-100">
+                                            <span className="text-[11px] font-bold text-purple-600 block mb-1">
+                                                {clip.date}
+                                            </span>
+                                            <h4 className="text-sm font-bold text-slate-800 group-hover:text-purple-700 transition-colors line-clamp-2">
+                                                {clip.title}
+                                            </h4>
+                                        </div>
+                                    </motion.div>
+                                );
+                            })}
+                        </div>
+                    ) : (
+                        <div className="text-center py-10 bg-white rounded-2xl border border-slate-200 text-slate-500">
+                            কোনো পত্র-পত্রিকার ছবি পাওয়া যায়নি।
+                        </div>
+                    )}
                 </div>
 
                 {/* 4. STATS BAR (Original Map Background & Pill Design) */}
