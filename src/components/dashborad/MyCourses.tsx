@@ -14,6 +14,7 @@ import {
   BarChart3,
   CheckCircle2,
 } from "lucide-react";
+import CourseMaterialsSection from "./CourseMaterialsSection";
 
 interface MyCoursesProps {
   courses: ApiCourseDetail[];
@@ -448,6 +449,9 @@ export function CourseDetailView({
           ))
         )}
       </div>
+
+      {/* Course Materials */}
+      <CourseMaterialsSection courseId={course.id} />
     </motion.div>
   );
 }

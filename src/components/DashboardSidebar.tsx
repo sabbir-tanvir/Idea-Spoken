@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BookOpen, Award, CreditCard, Settings, LogOut, User, ChevronDown } from 'lucide-react';
+import { BookOpen, Award, CreditCard, Settings, LogOut, User, ChevronDown, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { logoutUser } from '@/lib/auth/actions';
 
@@ -25,6 +25,7 @@ export default function DashboardSidebar({
 
   const menuItems = [
     { href: '/dashboard', label: 'My Courses', icon: BookOpen },
+    { href: '/dashboard/materials', label: 'Materials', icon: FileText },
     { href: '/dashboard/certificates', label: 'Certificates', icon: Award },
     { href: '/dashboard/payment-history', label: 'Payment History', icon: CreditCard },
     { href: '/dashboard/profile-settings', label: 'Profile Settings', icon: Settings },
