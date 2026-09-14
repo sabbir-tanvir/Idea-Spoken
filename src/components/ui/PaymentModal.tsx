@@ -3,7 +3,20 @@
 import { useState, useCallback, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ArrowLeft, Copy, Check, Shield, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
+import {
+  X,
+  ArrowLeft,
+  Copy,
+  Check,
+  Shield,
+  Loader2,
+  CheckCircle,
+  AlertCircle,
+  Landmark,
+  CreditCard,
+  GitBranch,
+  Binary,
+} from 'lucide-react';
 import Image from 'next/image';
 import { submitPayment, PaymentMethod, PaymentActionResult } from '@/lib/api/payments';
 
@@ -20,14 +33,23 @@ export interface PaymentModalProps {
   currency?: string;
 }
 
+export interface BankDetails {
+  bankName: string;
+  accountName: string;
+  accountNo: string;
+  branch: string;
+  routingNo: string;
+}
+
 interface MethodConfig {
   id: PaymentMethod;
   label: string;
-  image: string;
+  image?: string;
   bgColor: string;
   sendTo: string;
   numberLabel: string;
   numberPlaceholder: string;
+  bankDetails?: BankDetails;
 }
 
 /* ------------------------------------------------------------------ */
@@ -40,8 +62,8 @@ const PAYMENT_METHODS: MethodConfig[] = [
     label: 'bKash',
     image: 'https://freelogopng.com/images/all_img/1656234841bkash-icon-png.png',
     bgColor: 'bg-gradient-to-r from-pink-500 to-pink-600',
-    sendTo: '01783-414354',
-    numberLabel: 'Your Bkash Number',
+    sendTo: '01990-822023',
+    numberLabel: 'Your bKash Number',
     numberPlaceholder: '01XXXXXXXXX',
   },
   {
@@ -49,7 +71,7 @@ const PAYMENT_METHODS: MethodConfig[] = [
     label: 'Nagad',
     image: 'https://freelogopng.com/images/all_img/1679248828Nagad-Logo-PNG.png',
     bgColor: 'bg-gradient-to-r from-orange-400 to-orange-500',
-    sendTo: '01783-414354',
+    sendTo: '01712-784041',
     numberLabel: 'Your Nagad Number',
     numberPlaceholder: '01XXXXXXXXX',
   },
@@ -57,19 +79,25 @@ const PAYMENT_METHODS: MethodConfig[] = [
     id: 'rocket',
     label: 'Rocket',
     image: 'https://static.vecteezy.com/system/resources/thumbnails/068/706/013/small_2x/rocket-color-logo-mobile-banking-icon-free-png.png',
-    bgColor: 'bg-gradient-to-r from-purple-400 to-purple-500',
-    sendTo: '01783-4143541',
+    bgColor: 'bg-gradient-to-r from-purple-500 to-purple-600',
+    sendTo: '01990-822023',
     numberLabel: 'Your Rocket Number',
     numberPlaceholder: '01XXXXXXXXX',
   },
   {
     id: 'brac_bank',
-    label: 'UPay',
-    image: 'https://static.vecteezy.com/system/resources/thumbnails/068/706/007/small_2x/upay-logo-color-mobile-banking-app-icon-free-png.png',
-    bgColor: 'bg-gradient-to-r from-blue-500 to-blue-600',
-    sendTo: '01783-414354',
-    numberLabel: 'Your Account Number',
-    numberPlaceholder: 'e.g. 1234567890',
+    label: 'Bank Transfer (WINI)',
+    bgColor: 'bg-gradient-to-r from-purple-700 via-purple-600 to-indigo-700',
+    sendTo: '0200019105430',
+    numberLabel: 'Sender Bank / Account Name',
+    numberPlaceholder: 'e.g. Sonali Bank / Rahim Uddin',
+    bankDetails: {
+      bankName: 'Agrani Bank Limited',
+      accountName: 'Bangladesh Sikkatri O Uddakta Group(WINI)',
+      branch: 'Jashore Branch, Jashore',
+      routingNo: '010410943',
+      accountNo: '0200019105430',
+    },
   },
 ];
 
@@ -96,7 +124,7 @@ export default function PaymentModal({
   const [selectedMethod, setSelectedMethod] = useState<MethodConfig | null>(null);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [transactionId, setTransactionId] = useState('');
-  const [copied, setCopied] = useState(false);
+  const [copiedField, setCopiedField] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [result, setResult] = useState<PaymentActionResult | null>(null);
 
@@ -111,7 +139,7 @@ export default function PaymentModal({
     setSelectedMethod(null);
     setPhoneNumber('');
     setTransactionId('');
-    setCopied(false);
+    setCopiedField(null);
     setIsSubmitting(false);
     setResult(null);
   }, []);
@@ -131,14 +159,14 @@ export default function PaymentModal({
     setSelectedMethod(null);
     setPhoneNumber('');
     setTransactionId('');
-    setCopied(false);
+    setCopiedField(null);
   }, []);
 
-  const handleCopy = useCallback(async (text: string) => {
+  const handleCopy = useCallback(async (text: string, field: string = 'sendTo') => {
     try {
       await navigator.clipboard.writeText(text.replace(/-/g, ''));
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setCopiedField(field);
+      setTimeout(() => setCopiedField(null), 2000);
     } catch {
       // Fallback: do nothing
     }
@@ -252,16 +280,28 @@ export default function PaymentModal({
                             e.stopPropagation();
                             handleSelectMethod(method);
                           }}
-                          className="relative group border-2 border-gray-100 rounded-xl p-4 hover:border-purple-300 hover:shadow-md transition-all duration-200 flex items-center justify-center h-24 cursor-pointer"
+                          className="relative group border-2 border-gray-100 rounded-xl p-3 hover:border-purple-300 hover:shadow-md transition-all duration-200 flex flex-col items-center justify-center h-24 cursor-pointer bg-white"
                         >
-                          <Image
-                            src={method.image}
-                            alt={method.label}
-                            width={140}
-                            height={60}
-                            className="object-contain max-h-14"
-                            unoptimized
-                          />
+                          {method.image ? (
+                            <Image
+                              src={method.image}
+                              alt={method.label}
+                              width={140}
+                              height={60}
+                              className="object-contain max-h-14"
+                              unoptimized
+                            />
+                          ) : (
+                            <div className="flex flex-col items-center justify-center gap-1 text-center">
+                              <div className="w-9 h-9 rounded-xl bg-purple-100 flex items-center justify-center">
+                                <Landmark className="w-5 h-5 text-purple-600" />
+                              </div>
+                              <span className="text-xs font-bold text-slate-800 leading-tight">
+                                Bank Transfer
+                                <span className="block text-[10px] text-purple-600 font-medium">WINI (Agrani Bank)</span>
+                              </span>
+                            </div>
+                          )}
                         </button>
                       ))}
                     </div>
@@ -293,43 +333,139 @@ export default function PaymentModal({
                       Back to payment methods
                     </button>
 
-                    {/* Method banner */}
-                    <div
-                      className={`${selectedMethod.bgColor} rounded-xl p-5 flex items-center justify-center mb-5`}
-                    >
-                      <Image
-                        src={selectedMethod.image}
-                        alt={selectedMethod.label}
-                        width={160}
-                        height={70}
-                        className="object-contain max-h-16 brightness-0 invert"
-                        unoptimized
-                      />
-                    </div>
+                    {/* Method header / banner */}
+                    {selectedMethod.bankDetails ? (
+                      /* ── Bank Account Info Card ── */
+                      <div className="mb-5 space-y-3">
+                        <div className={`${selectedMethod.bgColor} rounded-xl p-4 text-white relative overflow-hidden shadow-sm`}>
+                          <div className="flex items-center gap-3 relative z-10">
+                            <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shrink-0">
+                              <Landmark className="w-5 h-5 text-purple-100" />
+                            </div>
+                            <div>
+                              <span className="text-[10px] uppercase tracking-wider text-purple-200 font-semibold block">Bank Name</span>
+                              <h4 className="text-base font-bold leading-tight">{selectedMethod.bankDetails.bankName}</h4>
+                            </div>
+                          </div>
+                          <Landmark className="absolute -right-4 -bottom-4 w-24 h-24 text-white/5 pointer-events-none" />
+                        </div>
 
-                    {/* Send-to number */}
-                    <div className="mb-5">
-                      <p className="text-sm text-slate-400 mb-1">Send money to:</p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-2xl font-bold text-slate-900 tracking-wide">
-                          {selectedMethod.sendTo}
-                        </span>
-                        <button
-                          type="button"
-                          onClick={() => handleCopy(selectedMethod.sendTo)}
-                          className="p-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
-                          aria-label="Copy number"
-                        >
-                          {copied ? (
-                            <Check className="w-5 h-5 text-green-500" />
-                          ) : (
-                            <Copy className="w-5 h-5 text-slate-400" />
-                          )}
-                        </button>
+                        <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-3 text-sm">
+                          <div>
+                            <div className="flex items-center gap-1.5 text-[11px] font-semibold text-purple-700 uppercase tracking-wider mb-0.5">
+                              <CreditCard className="w-3.5 h-3.5" />
+                              Account Name / হিসাবের নাম
+                            </div>
+                            <span className="font-bold text-slate-900 block text-xs sm:text-sm">
+                              {selectedMethod.bankDetails.accountName}
+                            </span>
+                          </div>
+
+                          <div className="flex items-center justify-between border-t border-slate-200 pt-2.5">
+                            <div>
+                              <div className="flex items-center gap-1.5 text-[11px] font-semibold text-purple-700 uppercase tracking-wider mb-0.5">
+                                <CreditCard className="w-3.5 h-3.5" />
+                                Account Number / অ্যাকাউন্ট নম্বর
+                              </div>
+                              <span className="font-mono font-extrabold text-base text-slate-900">
+                                {selectedMethod.bankDetails.accountNo}
+                              </span>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => handleCopy(selectedMethod.bankDetails!.accountNo, 'accountNo')}
+                              className="px-2.5 py-1.5 rounded-lg bg-white hover:bg-purple-50 text-slate-600 hover:text-purple-700 border border-slate-200 transition-colors cursor-pointer flex items-center gap-1 text-xs font-medium shadow-xs"
+                            >
+                              {copiedField === 'accountNo' ? (
+                                <>
+                                  <Check className="w-3.5 h-3.5 text-green-600" />
+                                  <span className="text-green-600">Copied!</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Copy className="w-3.5 h-3.5" />
+                                  <span>Copy</span>
+                                </>
+                              )}
+                            </button>
+                          </div>
+
+                          <div className="flex items-center justify-between border-t border-slate-200 pt-2.5">
+                            <div>
+                              <div className="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-700 uppercase tracking-wider mb-0.5">
+                                <Binary className="w-3.5 h-3.5" />
+                                Routing Number / রাউটিং নম্বর
+                              </div>
+                              <span className="font-mono font-bold text-sm text-slate-800">
+                                {selectedMethod.bankDetails.routingNo}
+                              </span>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => handleCopy(selectedMethod.bankDetails!.routingNo, 'routingNo')}
+                              className="px-2.5 py-1.5 rounded-lg bg-white hover:bg-indigo-50 text-slate-600 hover:text-indigo-700 border border-slate-200 transition-colors cursor-pointer flex items-center gap-1 text-xs font-medium shadow-xs"
+                            >
+                              {copiedField === 'routingNo' ? (
+                                <>
+                                  <Check className="w-3.5 h-3.5 text-green-600" />
+                                  <span className="text-green-600">Copied!</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Copy className="w-3.5 h-3.5" />
+                                  <span>Copy</span>
+                                </>
+                              )}
+                            </button>
+                          </div>
+
+                          <div className="border-t border-slate-200 pt-2.5 flex items-center gap-1.5 text-xs text-slate-600">
+                            <GitBranch className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                            <span><strong>Branch:</strong> {selectedMethod.bankDetails.branch}</span>
+                          </div>
+                        </div>
                       </div>
-                    </div>
+                    ) : (
+                      /* ── Mobile Banking Header ── */
+                      <>
+                        <div
+                          className={`${selectedMethod.bgColor} rounded-xl p-5 flex items-center justify-center mb-5`}
+                        >
+                          <Image
+                            src={selectedMethod.image!}
+                            alt={selectedMethod.label}
+                            width={160}
+                            height={70}
+                            className="object-contain max-h-16 brightness-0 invert"
+                            unoptimized
+                          />
+                        </div>
 
-                    {/* Phone number input */}
+                        {/* Send-to number */}
+                        <div className="mb-5">
+                          <p className="text-sm text-slate-400 mb-1">Send money to:</p>
+                          <div className="flex items-center justify-between">
+                            <span className="text-2xl font-bold text-slate-900 tracking-wide">
+                              {selectedMethod.sendTo}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => handleCopy(selectedMethod.sendTo, 'sendTo')}
+                              className="p-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+                              aria-label="Copy number"
+                            >
+                              {copiedField === 'sendTo' ? (
+                                <Check className="w-5 h-5 text-green-500" />
+                              ) : (
+                                <Copy className="w-5 h-5 text-slate-400" />
+                              )}
+                            </button>
+                          </div>
+                        </div>
+                      </>
+                    )}
+
+                    {/* Phone / Account input */}
                     <div className="mb-4">
                       <label className="block text-sm font-medium text-slate-700 mb-2">
                         {selectedMethod.numberLabel}
@@ -339,21 +475,27 @@ export default function PaymentModal({
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
                         placeholder={selectedMethod.numberPlaceholder}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all text-slate-800"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all text-slate-800 text-sm"
                       />
                     </div>
 
                     {/* Transaction ID input */}
                     <div className="mb-6">
                       <label className="block text-sm font-medium text-slate-700 mb-2">
-                        Transaction ID (TrxID)
+                        {selectedMethod.bankDetails
+                          ? 'Transaction ID / Deposit Slip No / Reference'
+                          : 'Transaction ID (TrxID)'}
                       </label>
                       <input
                         type="text"
                         value={transactionId}
                         onChange={(e) => setTransactionId(e.target.value)}
-                        placeholder="e.g-abcd1234bdz"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all text-slate-800"
+                        placeholder={
+                          selectedMethod.bankDetails
+                            ? 'e.g. Deposit slip or ref number'
+                            : 'e.g-abcd1234bdz'
+                        }
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all text-slate-800 text-sm"
                       />
                     </div>
 
@@ -466,3 +608,4 @@ export default function PaymentModal({
     document.body
   );
 }
+
