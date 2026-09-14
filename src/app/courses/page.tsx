@@ -45,10 +45,10 @@ export default async function CoursesPage() {
                     Md. Hamidul Huq
                   </h3>
                   <p className="text-xs md:text-sm font-bold text-purple-600 mt-0.5">
-                    Mind Programmer
+                    Mind Programmer & Social Psychologist,
                   </p>
                   <p className="text-xs md:text-sm font-medium text-slate-600">
-                    Founder and Social Psychologist
+                    Founder & Chief Adviser 
                   </p>
                   <p className="text-xs text-slate-500 mt-1.5 font-medium border-t border-slate-100 pt-1.5">
                     Institute of Development, Education and Education (IDEA)
