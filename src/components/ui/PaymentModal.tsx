@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowLeft, Copy, Check, Shield, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import Image from 'next/image';
@@ -90,6 +91,7 @@ export default function PaymentModal({
   amount,
   currency = 'taka',
 }: PaymentModalProps) {
+  const [mounted, setMounted] = useState(false);
   const [step, setStep] = useState<Step>('select');
   const [selectedMethod, setSelectedMethod] = useState<MethodConfig | null>(null);
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -97,6 +99,10 @@ export default function PaymentModal({
   const [copied, setCopied] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [result, setResult] = useState<PaymentActionResult | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   /* ---- helpers ---- */
 
@@ -179,7 +185,9 @@ export default function PaymentModal({
     exit: { opacity: 0, scale: 0.95, y: 20 },
   };
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <motion.div
@@ -210,6 +218,7 @@ export default function PaymentModal({
             <div className="flex items-center justify-between p-6 pb-0">
               <h2 className="text-xl font-bold text-slate-900">Complete Payment</h2>
               <button
+                type="button"
                 onClick={handleClose}
                 className="p-2 rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
                 aria-label="Close"
@@ -238,7 +247,11 @@ export default function PaymentModal({
                       {PAYMENT_METHODS.map((method) => (
                         <button
                           key={method.id}
-                          onClick={() => handleSelectMethod(method)}
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleSelectMethod(method);
+                          }}
                           className="relative group border-2 border-gray-100 rounded-xl p-4 hover:border-purple-300 hover:shadow-md transition-all duration-200 flex items-center justify-center h-24 cursor-pointer"
                         >
                           <Image
@@ -272,6 +285,7 @@ export default function PaymentModal({
                   >
                     {/* Back link */}
                     <button
+                      type="button"
                       onClick={handleBackToMethods}
                       className="flex items-center gap-1 text-sm text-slate-500 hover:text-purple-600 mb-4 transition-colors cursor-pointer"
                     >
@@ -301,6 +315,7 @@ export default function PaymentModal({
                           {selectedMethod.sendTo}
                         </span>
                         <button
+                          type="button"
                           onClick={() => handleCopy(selectedMethod.sendTo)}
                           className="p-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
                           aria-label="Copy number"
@@ -344,6 +359,7 @@ export default function PaymentModal({
 
                     {/* Submit button */}
                     <button
+                      type="button"
                       onClick={handleSubmit}
                       disabled={isSubmitting || !transactionId.trim()}
                       className="w-full py-3.5 bg-purple-600 text-white rounded-xl font-semibold text-lg hover:bg-purple-700 transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
@@ -405,6 +421,7 @@ export default function PaymentModal({
                           </div>
                         )}
                         <button
+                          type="button"
                           onClick={handleClose}
                           className="w-full py-3 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 transition-colors cursor-pointer"
                         >
@@ -422,12 +439,14 @@ export default function PaymentModal({
                         <p className="text-slate-500 mb-6">{result.message}</p>
                         <div className="flex gap-3">
                           <button
+                            type="button"
                             onClick={handleBackToMethods}
                             className="flex-1 py-3 border-2 border-purple-600 text-purple-600 rounded-xl font-semibold hover:bg-purple-50 transition-colors cursor-pointer"
                           >
                             Try Again
                           </button>
                           <button
+                            type="button"
                             onClick={handleClose}
                             className="flex-1 py-3 bg-gray-100 text-slate-600 rounded-xl font-semibold hover:bg-gray-200 transition-colors cursor-pointer"
                           >
@@ -443,6 +462,7 @@ export default function PaymentModal({
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }
