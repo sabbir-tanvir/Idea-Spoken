@@ -3,9 +3,10 @@
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { ChevronDown, X } from 'lucide-react';
+import { ChevronDown, X, User, LayoutDashboard, LogOut } from 'lucide-react';
 import Image from 'next/image';
 import UserMenu from './UserMenu';
+import { logoutUser } from '@/lib/auth/actions';
 
 // Wings dropdown items - exact sequence and official wing names
 const wingsDropdownItems = [
@@ -34,6 +35,15 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
     setMobileMenuOpen(false);
     setMobileWingsOpen(false);
   };
+
+  const initials = userName
+    ? userName
+        .split(' ')
+        .map((n) => n[0])
+        .join('')
+        .toUpperCase()
+        .slice(0, 2)
+    : 'U';
 
   useEffect(() => {
     closeMobileMenu();
@@ -332,12 +342,12 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
 
       {/* Slide-in Panel */}
       <div
-        className={`fixed top-0 right-0 h-full w-[85%] max-w-sm bg-white z-50 transform transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-2xl lg:hidden flex flex-col ${
+        className={`fixed top-0 right-0 h-full h-dvh max-h-screen w-[85%] max-w-sm bg-white z-50 transform transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-2xl lg:hidden flex flex-col ${
           mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         {/* Panel Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 shrink-0">
           <Link href="/" onClick={closeMobileMenu} className="flex items-center gap-2">
             <div className="relative w-9 h-9">
               <Image
@@ -368,135 +378,186 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
           </button>
         </div>
 
-        {/* Nav Links */}
-        <nav className="flex-1 overflow-y-auto py-4 px-4">
-          <div className="space-y-1">
-            <Link
-              href="/"
-              onClick={closeMobileMenu}
-              className={`flex items-center px-4 py-3.5 rounded-xl text-[15px] font-medium transition-all ${
-                pathname === '/'
-                  ? 'bg-purple-50 text-purple-700 border-l-[3px] border-purple-600'
-                  : 'text-gray-700 hover:bg-gray-50 hover:text-purple-600 border-l-[3px] border-transparent'
-              }`}
-            >
-              Home
-            </Link>
-
-            <Link
-              href="/about"
-              onClick={closeMobileMenu}
-              className={`flex items-center px-4 py-3.5 rounded-xl text-[15px] font-medium transition-all ${
-                pathname === '/about'
-                  ? 'bg-purple-50 text-purple-700 border-l-[3px] border-purple-600'
-                  : 'text-gray-700 hover:bg-gray-50 hover:text-purple-600 border-l-[3px] border-transparent'
-              }`}
-            >
-              About Us
-            </Link>
-
-            <Link
-              href="/courses"
-              onClick={closeMobileMenu}
-              className={`flex items-center px-4 py-3.5 rounded-xl text-[15px] font-medium transition-all ${
-                pathname?.startsWith('/courses')
-                  ? 'bg-purple-50 text-purple-700 border-l-[3px] border-purple-600'
-                  : 'text-gray-700 hover:bg-gray-50 hover:text-purple-600 border-l-[3px] border-transparent'
-              }`}
-            >
-              Courses
-            </Link>
-
-            <Link
-              href="/notice-board"
-              onClick={closeMobileMenu}
-              className={`flex items-center px-4 py-3.5 rounded-xl text-[15px] font-medium transition-all ${
-                pathname?.startsWith('/notice-board')
-                  ? 'bg-purple-50 text-purple-700 border-l-[3px] border-purple-600'
-                  : 'text-gray-700 hover:bg-gray-50 hover:text-purple-600 border-l-[3px] border-transparent'
-              }`}
-            >
-              Notice Board
-            </Link>
-
-            {/* Our Wings - Mobile Accordion */}
-            <div>
-              <button
-                onClick={() => setMobileWingsOpen(!mobileWingsOpen)}
-                className={`flex items-center justify-between w-full px-4 py-3.5 rounded-xl text-[15px] font-medium transition-all ${
-                  isWingsActive
-                    ? 'bg-gradient-to-r from-purple-50 to-indigo-50 text-purple-700'
-                    : 'text-gray-700 hover:bg-gray-50 hover:text-purple-600'
-                }`}
-              >
-                <span className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-600 to-indigo-500"></span>
-                  Our Wings
-                </span>
-                <ChevronDown
-                  className={`w-4 h-4 transition-transform duration-300 ${mobileWingsOpen ? 'rotate-180' : ''}`}
-                />
-              </button>
-
-              {/* Wings sub-items with smooth height transition */}
-              <div
-                className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                  mobileWingsOpen ? 'max-h-[500px] opacity-100 mt-1' : 'max-h-0 opacity-0'
-                }`}
-              >
-                <div className="ml-4 pl-4 border-l-2 border-purple-200 space-y-0.5">
-                  {wingsDropdownItems.map((item, index) => {
-                    const href = getWingHref(item);
-                    const isActive = pathname === href || pathname?.startsWith(href + '/');
-                    return (
-                      <Link
-                        key={index}
-                        href={href}
-                        className={`block px-4 py-2.5 rounded-lg text-sm transition-all ${
-                          isActive
-                            ? 'bg-purple-50 text-purple-700 font-semibold'
-                            : 'text-gray-600 hover:bg-gray-50 hover:text-purple-600'
-                        }`}
-                        onClick={closeMobileMenu}
-                      >
-                        {item.title}
-                      </Link>
-                    );
-                  })}
+        {/* Scrollable Body: Profile Card at top + Nav Links */}
+        <div className="flex-1 overflow-y-auto overscroll-contain">
+          {/* User Profile / Login at the TOP */}
+          {isLoggedIn ? (
+            <div className="mx-4 mt-4 mb-2 p-3.5 bg-gradient-to-br from-purple-50/90 via-indigo-50/40 to-purple-50/90 rounded-2xl border border-purple-100/80 shadow-xs">
+              <div className="flex items-center gap-3">
+                <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-purple-700 to-[#704FE6] flex items-center justify-center text-white text-sm font-bold shadow-sm shrink-0">
+                  {initials}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-semibold text-gray-900 truncate">
+                    {userName || 'Student'}
+                  </p>
+                  <span className="inline-block px-2 py-0.5 bg-purple-100 text-purple-700 text-[11px] font-semibold rounded-md mt-0.5">
+                    Student
+                  </span>
                 </div>
               </div>
+
+              {/* Quick Action links */}
+              <div className="grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-purple-100/80">
+                <Link
+                  href="/dashboard"
+                  onClick={closeMobileMenu}
+                  className="flex items-center justify-center gap-1.5 py-2 px-3 bg-white hover:bg-purple-600 hover:text-white text-purple-700 rounded-xl text-xs font-semibold shadow-2xs border border-purple-100 transition-all"
+                >
+                  <LayoutDashboard className="w-3.5 h-3.5" />
+                  Dashboard
+                </Link>
+                <Link
+                  href="/dashboard/profile-settings"
+                  onClick={closeMobileMenu}
+                  className="flex items-center justify-center gap-1.5 py-2 px-3 bg-white hover:bg-purple-600 hover:text-white text-gray-700 rounded-xl text-xs font-semibold shadow-2xs border border-gray-200 transition-all"
+                >
+                  <User className="w-3.5 h-3.5" />
+                  Settings
+                </Link>
+              </div>
+
+              {/* Logout action */}
+              <div className="mt-2 pt-2 border-t border-purple-100/60">
+                <form action={logoutUser}>
+                  <button
+                    type="submit"
+                    className="w-full flex items-center justify-center gap-1.5 py-1 text-xs text-red-600 hover:text-red-700 font-medium transition-colors cursor-pointer"
+                  >
+                    <LogOut className="w-3.5 h-3.5" />
+                    Logout
+                  </button>
+                </form>
+              </div>
             </div>
-
-            <Link
-              href="/contact"
-              onClick={closeMobileMenu}
-              className={`flex items-center px-4 py-3.5 rounded-xl text-[15px] font-medium transition-all ${
-                pathname === '/contact'
-                  ? 'bg-purple-50 text-purple-700 border-l-[3px] border-purple-600'
-                  : 'text-gray-700 hover:bg-gray-50 hover:text-purple-600 border-l-[3px] border-transparent'
-              }`}
-            >
-              Contact
-            </Link>
-          </div>
-        </nav>
-
-        {/* CTA Buttons at bottom */}
-        <div className="px-4 py-5 border-t border-gray-100 space-y-3">
-          {!isLoggedIn ? (
-            <Link
-              href="/auth/login"
-              onClick={closeMobileMenu}
-              className="flex items-center justify-center h-12 border-2 border-purple-600 text-purple-600 rounded-full hover:bg-purple-50 transition-colors font-medium text-sm"
-            >
-              Student Login
-            </Link>
           ) : (
-            <div className="flex items-center justify-center">
-              <UserMenu userName={userName} />
+            <div className="px-4 pt-4 pb-2">
+              <Link
+                href="/auth/login"
+                onClick={closeMobileMenu}
+                className="flex items-center justify-center h-11 border-2 border-purple-600 text-purple-600 rounded-xl hover:bg-purple-50 transition-colors font-medium text-sm w-full"
+              >
+                Student Login
+              </Link>
             </div>
           )}
 
+          {/* Nav Links */}
+          <nav className="py-2 px-4">
+            <div className="space-y-1">
+              <Link
+                href="/"
+                onClick={closeMobileMenu}
+                className={`flex items-center px-4 py-3.5 rounded-xl text-[15px] font-medium transition-all ${
+                  pathname === '/'
+                    ? 'bg-purple-50 text-purple-700 border-l-[3px] border-purple-600'
+                    : 'text-gray-700 hover:bg-gray-50 hover:text-purple-600 border-l-[3px] border-transparent'
+                }`}
+              >
+                Home
+              </Link>
+
+              <Link
+                href="/about"
+                onClick={closeMobileMenu}
+                className={`flex items-center px-4 py-3.5 rounded-xl text-[15px] font-medium transition-all ${
+                  pathname === '/about'
+                    ? 'bg-purple-50 text-purple-700 border-l-[3px] border-purple-600'
+                    : 'text-gray-700 hover:bg-gray-50 hover:text-purple-600 border-l-[3px] border-transparent'
+                }`}
+              >
+                About Us
+              </Link>
+
+              <Link
+                href="/courses"
+                onClick={closeMobileMenu}
+                className={`flex items-center px-4 py-3.5 rounded-xl text-[15px] font-medium transition-all ${
+                  pathname?.startsWith('/courses')
+                    ? 'bg-purple-50 text-purple-700 border-l-[3px] border-purple-600'
+                    : 'text-gray-700 hover:bg-gray-50 hover:text-purple-600 border-l-[3px] border-transparent'
+                }`}
+              >
+                Courses
+              </Link>
+
+              <Link
+                href="/notice-board"
+                onClick={closeMobileMenu}
+                className={`flex items-center px-4 py-3.5 rounded-xl text-[15px] font-medium transition-all ${
+                  pathname?.startsWith('/notice-board')
+                    ? 'bg-purple-50 text-purple-700 border-l-[3px] border-purple-600'
+                    : 'text-gray-700 hover:bg-gray-50 hover:text-purple-600 border-l-[3px] border-transparent'
+                }`}
+              >
+                Notice Board
+              </Link>
+
+              {/* Our Wings - Mobile Accordion */}
+              <div>
+                <button
+                  onClick={() => setMobileWingsOpen(!mobileWingsOpen)}
+                  className={`flex items-center justify-between w-full px-4 py-3.5 rounded-xl text-[15px] font-medium transition-all ${
+                    isWingsActive
+                      ? 'bg-gradient-to-r from-purple-50 to-indigo-50 text-purple-700'
+                      : 'text-gray-700 hover:bg-gray-50 hover:text-purple-600'
+                  }`}
+                >
+                  <span className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-600 to-indigo-500"></span>
+                    Our Wings
+                  </span>
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform duration-300 ${mobileWingsOpen ? 'rotate-180' : ''}`}
+                  />
+                </button>
+
+                {/* Wings sub-items with smooth height transition */}
+                <div
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    mobileWingsOpen ? 'max-h-[500px] opacity-100 mt-1' : 'max-h-0 opacity-0'
+                  }`}
+                >
+                  <div className="ml-4 pl-4 border-l-2 border-purple-200 space-y-0.5">
+                    {wingsDropdownItems.map((item, index) => {
+                      const href = getWingHref(item);
+                      const isActive = pathname === href || pathname?.startsWith(href + '/');
+                      return (
+                        <Link
+                          key={index}
+                          href={href}
+                          className={`block px-4 py-2.5 rounded-lg text-sm transition-all ${
+                            isActive
+                              ? 'bg-purple-50 text-purple-700 font-semibold'
+                              : 'text-gray-600 hover:bg-gray-50 hover:text-purple-600'
+                          }`}
+                          onClick={closeMobileMenu}
+                        >
+                          {item.title}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              <Link
+                href="/contact"
+                onClick={closeMobileMenu}
+                className={`flex items-center px-4 py-3.5 rounded-xl text-[15px] font-medium transition-all ${
+                  pathname === '/contact'
+                    ? 'bg-purple-50 text-purple-700 border-l-[3px] border-purple-600'
+                    : 'text-gray-700 hover:bg-gray-50 hover:text-purple-600 border-l-[3px] border-transparent'
+                }`}
+              >
+                Contact
+              </Link>
+            </div>
+          </nav>
+        </div>
+
+        {/* CTA Button at bottom */}
+        <div className="p-4 border-t border-gray-100 bg-white shrink-0 pb-6 sm:pb-4">
           <Link
             href="/courses"
             onClick={closeMobileMenu}
