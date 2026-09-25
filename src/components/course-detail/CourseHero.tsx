@@ -5,9 +5,12 @@ import { ApiCourseDetail } from "@/lib/api/courses";
 import { motion } from "framer-motion";
 import { Play, Users, Clock, BookOpen } from "lucide-react";
 import PaymentModal from "@/components/ui/PaymentModal";
+import { CourseVideoConfig, getCourseHeroVideo } from "@/lib/courseVideos";
+import { getFullImageUrl } from "@/lib/getFullImageUrl";
 
 interface CourseHeroProps {
     courseDetail?: ApiCourseDetail | null;
+    videoConfig?: CourseVideoConfig | null;
 }
 
 const containerVariants = {
@@ -27,8 +30,9 @@ const itemVariants = {
     },
 };
 
-export default function CourseHero({ courseDetail }: CourseHeroProps) {
+export default function CourseHero({ courseDetail, videoConfig }: CourseHeroProps) {
     const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false);
 
     const title = courseDetail?.title ?? "Course Title";
     const description =
@@ -44,6 +48,9 @@ export default function CourseHero({ courseDetail }: CourseHeroProps) {
     const durationHrs = courseDetail?.duration
         ? `${Math.round(courseDetail.duration / 3600)} Hours`
         : "Self-paced";
+
+    const heroVideo = videoConfig ?? getCourseHeroVideo(courseDetail?.id, courseDetail?.title);
+    const thumbnailUrl = courseDetail?.thumbnail ? getFullImageUrl(courseDetail.thumbnail) : null;
 
     return (
         <section className="bg-purple-50 min-h-150 flex items-center overflow-hidden w-full">
@@ -140,38 +147,70 @@ export default function CourseHero({ courseDetail }: CourseHeroProps) {
                     />
                 </motion.div>
 
-                {/* Right Side: Video Placeholder */}
+                {/* Right Side: Video Player */}
                 <motion.div
                     initial={{ opacity: 0, x: 50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
                     className="relative"
                 >
-                    <div className="relative aspect-video bg-purple-200 rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center group cursor-pointer hover:shadow-purple-200/50 transition-shadow duration-300">
-                        {/* Play Button */}
-                        <div className="w-20 h-20 bg-purple-600 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 z-10">
-                            <Play className="w-8 h-8 text-white ml-1" fill="currentColor" />
+                    {heroVideo && isPlaying ? (
+                        <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl bg-black border-2 border-purple-200">
+                            <iframe
+                                src={`${heroVideo.embedUrl}?autoplay=true&preload=true&responsive=true`}
+                                loading="lazy"
+                                title={heroVideo.title || `${title} Preview`}
+                                className="absolute inset-0 w-full h-full border-0"
+                                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                                allowFullScreen
+                            />
                         </div>
+                    ) : (
+                        <div
+                            onClick={() => {
+                                if (heroVideo) setIsPlaying(true);
+                            }}
+                            className={`relative aspect-video rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center group ${
+                                heroVideo ? "cursor-pointer hover:shadow-purple-300/60" : ""
+                            } transition-all duration-300 bg-slate-900 border-2 border-purple-100`}
+                        >
+                            {/* Thumbnail Image */}
+                            {thumbnailUrl ? (
+                                <img
+                                    src={thumbnailUrl}
+                                    alt={title}
+                                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                />
+                            ) : (
+                                <div className="absolute inset-0 bg-gradient-to-br from-purple-800 via-indigo-900 to-slate-900" />
+                            )}
 
-                        {/* Placeholder Text */}
-                        <div className="absolute bottom-1/3 text-purple-900 font-medium mt-4">
-                            Watch Free Intro Video
+                            {/* Dark Gradient Overlay */}
+                            <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors" />
+
+                            {/* Play Button & Text */}
+                            <div className="relative z-10 flex flex-col items-center gap-3">
+                                <div className="w-20 h-20 bg-purple-600 group-hover:bg-purple-500 text-white rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300 ring-4 ring-white/40">
+                                    <Play className="w-8 h-8 text-white ml-1" fill="currentColor" />
+                                </div>
+                                <span className="text-white font-semibold text-sm tracking-wide bg-black/50 px-4 py-1.5 rounded-full backdrop-blur-md border border-white/20 shadow-sm">
+                                    {heroVideo ? "Watch Free Intro Video" : "Preview Coming Soon"}
+                                </span>
+                            </div>
                         </div>
-
-                        {/* Gradient Overlay */}
-                        <div className="absolute inset-0 bg-linear-to-tr from-purple-300/50 to-transparent mix-blend-multiply"></div>
-                    </div>
+                    )}
 
                     {/* Floating Badge */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 1, duration: 0.5 }}
-                        className="absolute -bottom-6 -right-6 lg:bottom-8 lg:-right-8 bg-purple-600 text-white px-6 py-3 rounded-xl shadow-lg font-medium text-sm flex items-center gap-2 z-20"
+                        className="absolute -bottom-6 -right-6 lg:bottom-8 lg:-right-8 bg-purple-600 text-white px-6 py-3 rounded-xl shadow-lg font-medium text-sm flex items-center gap-2 z-20 pointer-events-none"
                     >
                         Free Preview Available
                     </motion.div>
                 </motion.div>
+
             </div>
         </section>
     );

@@ -43,7 +43,7 @@ export default function DebateHero({
 
     const previewEmbedUrl = firstLesson?.video_id && firstLesson?.library_id
         ? `https://iframe.mediadelivery.net/embed/${firstLesson.library_id}/${firstLesson.video_id}?autoplay=false&preload=true&responsive=true`
-        : undefined;
+        : `https://iframe.mediadelivery.net/embed/738203/6dd621e1-5dfe-47bb-a345-7bac7e8eb19c?autoplay=false&preload=true&responsive=true`;
 
     // Animation variants
     const containerVariants = {

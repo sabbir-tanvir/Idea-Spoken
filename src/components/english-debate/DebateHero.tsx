@@ -37,7 +37,7 @@ export default function DebateHero({ data, courseDetail }: DebateHeroProps) {
 
     const previewEmbedUrl = firstLesson?.video_id && firstLesson?.library_id
         ? `https://iframe.mediadelivery.net/embed/${firstLesson.library_id}/${firstLesson.video_id}?autoplay=false&preload=true&responsive=true`
-        : undefined;
+        : `https://iframe.mediadelivery.net/embed/738203/5c12fc44-749e-4f78-a5a3-7a43319d2332?autoplay=false&preload=true&responsive=true`;
 
     // Animation variants
     const containerVariants = {

@@ -1,9 +1,10 @@
 // src/lib/getFullImageUrl.ts
 
-const BACKEND_ORIGIN = (process.env.NEXT_PUBLIC_BACKEND_URL ?? "").replace(
-  /\/+$/,
-  ""
-);
+const BACKEND_ORIGIN = (
+  process.env.NEXT_PUBLIC_BACKEND_URL ||
+  process.env.PUBLIC_BASE_URL ||
+  "https://api.idealessons.com"
+).replace(/\/+$/, "");
 
 /**
  * Returns an absolute URL for API media paths and keeps local public paths untouched.
@@ -31,9 +32,6 @@ export function getFullImageUrl(path?: string | null): string {
     return normalizedPath;
   }
 
-  if (!BACKEND_ORIGIN) {
-    throw new Error("NEXT_PUBLIC_BACKEND_URL is required for media URLs.");
-  }
-
   return `${BACKEND_ORIGIN}${normalizedPath.startsWith("/") ? "" : "/"}${normalizedPath}`;
 }
+

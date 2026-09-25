@@ -6,6 +6,7 @@ import CourseWhatYoullLearn from '@/components/course-detail/CourseWhatYoullLear
 import CourseHighlights from '@/components/course-detail/CourseHighlights';
 import CourseModules from '@/components/course-detail/CourseModules';
 import CourseOffer from '@/components/course-detail/CourseOffer';
+import { getCourseHeroVideo } from '@/lib/courseVideos';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,10 +20,11 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
 
   // Fetch course from API; components handle null with fallback data
   const courseDetail = await getCourseById(numericId);
+  const videoConfig = getCourseHeroVideo(numericId, courseDetail?.title);
 
   return (
     <main className="min-h-screen bg-white">
-      <CourseHero courseDetail={courseDetail} />
+      <CourseHero courseDetail={courseDetail} videoConfig={videoConfig} />
       <CoursePhilosophy courseDetail={courseDetail} />
       {/* <CourseWhatYoullLearn courseDetail={courseDetail} /> */}
       <CourseHighlights courseDetail={courseDetail} />
