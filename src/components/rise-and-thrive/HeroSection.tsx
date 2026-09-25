@@ -55,7 +55,7 @@ export default function HeroSection({
           priority
         />
         <motion.div 
-          className="absolute inset-0 bg-[#704FE6]/70"
+          className="absolute inset-0 bg-[#704FE6]/95"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}

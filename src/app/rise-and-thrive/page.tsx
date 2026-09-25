@@ -14,6 +14,7 @@ import { getWingMediaBySlug } from "@/lib/api";
 import { getEvents } from "@/lib/api/events";
 import WingLeadership, { Leader } from "@/components/WingLeadership";
 import RiseAndThriveDocumentary from "@/components/rise-and-thrive/RiseAndThriveDocumentary";
+import PdfViewerSection from "@/components/rise-and-thrive/PdfViewerSection";
 
 const riseAndThriveLeaders: Leader[] = [
   {
@@ -51,6 +52,7 @@ export default async function Home() {
             />
             <CountUpSection />
             <RiseAndThriveDocumentary />
+            <PdfViewerSection />
             <WhyRiseAndThrive />
             <WhoIsItFor />
             <WhatYouWillLearn />
