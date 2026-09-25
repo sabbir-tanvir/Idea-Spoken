@@ -6,6 +6,7 @@ export interface ApiCourse {
   description: string;
   thumbnail: string;
   price: string;
+  salePrice?: string | null;
   rating: number | null;
   level: 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED';
   language: string;

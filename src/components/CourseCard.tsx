@@ -37,7 +37,9 @@ export default function CourseCard({ course }: CourseCardProps) {
   }, [rating]);
 
   const instructorName = course.instructor?.name ?? "IDEA Team";
-  const price = course.price ? `৳${course.price}` : "Free";
+  const hasSale = course.salePrice != null && course.salePrice !== "";
+  const displayPrice = hasSale ? `৳${course.salePrice}` : (course.price ? `৳${course.price}` : "Free");
+  const originalPrice = course.price ? `৳${course.price}` : null;
   const duration =
     course.totalHours > 0 ? `${course.totalHours}h` : "Self-paced";
 
@@ -82,7 +84,7 @@ export default function CourseCard({ course }: CourseCardProps) {
               alt={course.title}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-cover"
+              className="object-cover object-top"
             />
           ) : (
             <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-purple-300">
@@ -130,7 +132,10 @@ export default function CourseCard({ course }: CourseCardProps) {
                 {rating > 0 ? rating.toFixed(1) : "New"}
               </span>
             </div>
-            <div className="text-2xl font-bold text-purple-600">{price}</div>
+            <div className="flex items-end gap-2">
+              {hasSale && <span className="text-sm font-medium text-slate-400 line-through mb-0.5">{originalPrice}</span>}
+              <span className="text-2xl font-bold text-purple-600">{displayPrice}</span>
+            </div>
           </div>
 
           {/* Title */}
@@ -170,9 +175,19 @@ export default function CourseCard({ course }: CourseCardProps) {
           {/* Footer: Instructor & CTA */}
           <div className="flex items-center justify-between pt-6 border-t border-slate-200">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold text-sm border-2 border-white shadow-sm">
-                {instructorName.charAt(0).toUpperCase()}
-              </div>
+              {course.instructor?.avatar ? (
+                 <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white shadow-sm relative">
+                    <Image src={getFullImageUrl(course.instructor.avatar)} alt={instructorName} fill className="object-cover" />
+                 </div>
+              ) : instructorName === "IDEA Team" ? (
+                 <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white shadow-sm relative bg-white p-1">
+                    <Image src="/images/logo.png" alt="IDEA Team Logo" fill className="object-contain" />
+                 </div>
+              ) : (
+                <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold text-sm border-2 border-white shadow-sm">
+                  {instructorName.charAt(0).toUpperCase()}
+                </div>
+              )}
               <span className="font-bold text-slate-900 text-sm">
                 {instructorName}
               </span>
@@ -200,7 +215,7 @@ export default function CourseCard({ course }: CourseCardProps) {
         onClose={() => setIsPaymentOpen(false)}
         courseName={course.title}
         courseId={course.id}
-        amount={course.price ? Number(course.price) : 0}
+        amount={hasSale ? Number(course.salePrice) : (course.price ? Number(course.price) : 0)}
       />
     </>
   );
