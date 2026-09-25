@@ -62,7 +62,7 @@ const PAYMENT_METHODS: MethodConfig[] = [
     label: 'bKash',
     image: 'https://freelogopng.com/images/all_img/1656234841bkash-icon-png.png',
     bgColor: 'bg-gradient-to-r from-pink-500 to-pink-600',
-    sendTo: '01990-822023',
+    sendTo: '০১৯২৯-১৭৯২১৮',
     numberLabel: 'Your bKash Number',
     numberPlaceholder: '01XXXXXXXXX',
   },
