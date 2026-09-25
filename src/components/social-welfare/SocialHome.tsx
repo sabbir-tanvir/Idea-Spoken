@@ -69,7 +69,7 @@ export default function SocialHome({
           priority
         />
         <motion.div
-          className="absolute inset-0 bg-[#704FE6]/80 backdrop-blur-[2px]"
+          className="absolute inset-0 bg-[#704FE6]/95 backdrop-blur-[2px]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}

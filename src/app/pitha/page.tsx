@@ -34,7 +34,7 @@ const pithaParkLeaders: Leader[] = [
     name: 'তানজিয়া জাহান মমতাজ',
     role: 'উদ্যোক্তা',
     designation: 'হেড অফ অ্যাকাউন্টস, আইডিয়া পিঠা পার্ক',
-    image: '/images/pitha/mamtaj.jpg',
+    image: '/images/pitha/mamtaj.png',
   },
   {
     name: 'নাবিলা সুলতানা',
