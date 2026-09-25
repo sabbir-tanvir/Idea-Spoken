@@ -158,7 +158,7 @@ export default function AmaderKarjokrom({
                         </div>
                         <div>
                             <h3 className="text-2xl font-bold text-slate-900">
-                                আইডিয়া ও স্যারকে নিয়ে গণমাধ্যমের বিভিন্ন রিপোর্ট লিংক
+                                আইডিয়া ও জনাব মোঃ হামিদুল হক কে নিয়ে গণমাধ্যমের রিপোর্ট লিংক
                             </h3>
                             <p className="text-sm text-slate-500 font-medium">টিভি চ্যানেল ও অনলাইন নিউজে প্রচারিত বিষয়ভিত্তিক প্রতিবেদন</p>
                         </div>
@@ -235,7 +235,7 @@ export default function AmaderKarjokrom({
                                 <Newspaper className="w-5 h-5" />
                             </div>
                             <div>
-                                <h3 className="text-2xl font-bold text-slate-900">আইডিয়ার পত্র-পত্রিকাদি</h3>
+                                <h3 className="text-2xl font-bold text-slate-900">পত্র-পত্রিকায় আইডিয়া</h3>
                                 <p className="text-sm text-slate-500 font-medium">পত্র-পত্রিকায় প্রকাশিত আইডিয়ার বিভিন্ন সংবাদ ও ছবি (ক্লিক করে বড় করে দেখুন)</p>
                             </div>
                         </div>
