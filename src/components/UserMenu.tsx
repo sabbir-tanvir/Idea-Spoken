@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { logoutUser } from '@/lib/auth/actions';
 import { User, ChevronDown, LayoutDashboard, LogOut } from 'lucide-react';
+import { getAvatarUrl } from '@/lib/auth/avatar';
 
 interface UserMenuProps {
   userName?: string;
@@ -12,7 +13,14 @@ interface UserMenuProps {
 
 export default function UserMenu({ userName, avatar }: UserMenuProps) {
   const [open, setOpen] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+
+  const avatarUrl = getAvatarUrl(avatar);
+
+  useEffect(() => {
+    setImageError(false);
+  }, [avatarUrl]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -41,10 +49,11 @@ export default function UserMenu({ userName, avatar }: UserMenuProps) {
         className="flex items-center gap-2 px-3 py-2 rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
       >
         {/* Avatar */}
-        {avatar ? (
+        {avatarUrl && !imageError ? (
           <img
-            src={avatar.startsWith('http') ? avatar : `${process.env.NEXT_PUBLIC_API_URL || 'https://api.ideaspoken.com'}${avatar}`}
+            src={avatarUrl}
             alt={userName || 'Account'}
+            onError={() => setImageError(true)}
             className="w-9 h-9 rounded-full object-cover"
           />
         ) : (
@@ -67,10 +76,11 @@ export default function UserMenu({ userName, avatar }: UserMenuProps) {
           {/* User info */}
           <div className="px-4 py-3 border-b border-gray-100">
             <div className="flex items-center gap-3">
-              {avatar ? (
+              {avatarUrl && !imageError ? (
                 <img
-                  src={avatar.startsWith('http') ? avatar : `${process.env.NEXT_PUBLIC_API_URL || 'https://api.ideaspoken.com'}${avatar}`}
+                  src={avatarUrl}
                   alt={userName || 'User'}
+                  onError={() => setImageError(true)}
                   className="w-10 h-10 rounded-full object-cover"
                 />
               ) : (

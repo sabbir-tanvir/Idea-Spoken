@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import { setAuthToken, removeAuthToken, getAuthToken } from './session';
 import { ActionResult, AuthResponse, RegisterRequest, LoginRequest, ForgotPasswordRequest, UpdatePasswordRequest, User } from './types';
 
-const BASE_URL = process.env.BASE_URL;
+const BASE_URL = (process.env.BASE_URL || 'https://api.idealessons.com/api/v1').replace(/\/+$/, '');
 
 /**
  * Server Action: Register a new user
@@ -354,7 +354,8 @@ export async function getCurrentUser(): Promise<User | null> {
     if (!response.ok) return null;
     const data = await response.json();
     if (data.success) {
-      return data.data as User;
+      const user = (data.data || data.user) as User;
+      return user || null;
     }
     return null;
   } catch (error) {
@@ -366,7 +367,7 @@ export async function getCurrentUser(): Promise<User | null> {
 /**
  * Server Action: Update profile details (and optionally avatar)
  */
-export async function updateProfileDetails(formData: FormData): Promise<ActionResult> {
+export async function updateProfileDetails(formData: FormData): Promise<ActionResult & { user?: User }> {
   const token = await getAuthToken();
   if (!token) return { success: false, errors: { general: ['Not authenticated'] } };
 
@@ -374,10 +375,13 @@ export async function updateProfileDetails(formData: FormData): Promise<ActionRe
     const newFormData = new FormData();
     const name = formData.get('name');
     const phone = formData.get('phone');
+    const avatar = formData.get('avatar');
     if (name) newFormData.append('name', name);
     if (phone) newFormData.append('phone', phone);
+    if (avatar && avatar instanceof Blob && avatar.size > 0) {
+      newFormData.append('avatar', avatar);
+    }
     
-    // Some backend APIs require explicit headers for FormData if not standard fetch, but standard fetch handles it.
     const response = await fetch(`${BASE_URL}/auth/updatedetails`, {
       method: 'PUT',
       headers: {
@@ -388,9 +392,13 @@ export async function updateProfileDetails(formData: FormData): Promise<ActionRe
     
     const data = await response.json();
     if (response.ok && data.success) {
-      return { success: true, message: 'Profile updated successfully!' };
+      return { 
+        success: true, 
+        message: data.message || 'Profile updated successfully!',
+        user: (data.data || data.user) as User
+      };
     }
-    return { success: false, errors: { general: [data.message || 'Failed to update profile'] } };
+    return { success: false, errors: { general: [data.message || data.error || 'Failed to update profile'] } };
   } catch (error) {
     console.error('Update profile error:', error);
     return { success: false, errors: { general: ['Network error'] } };
@@ -400,7 +408,7 @@ export async function updateProfileDetails(formData: FormData): Promise<ActionRe
 /**
  * Server Action: Update avatar only
  */
-export async function updateAvatar(formData: FormData): Promise<ActionResult> {
+export async function updateAvatar(formData: FormData): Promise<ActionResult & { user?: User }> {
   const token = await getAuthToken();
   if (!token) return { success: false, errors: { general: ['Not authenticated'] } };
 
@@ -423,9 +431,13 @@ export async function updateAvatar(formData: FormData): Promise<ActionResult> {
     
     const data = await response.json();
     if (response.ok && data.success) {
-      return { success: true, message: 'Avatar updated successfully!' };
+      return { 
+        success: true, 
+        message: data.message || 'Avatar updated successfully!',
+        user: (data.data || data.user) as User
+      };
     }
-    return { success: false, errors: { general: [data.message || 'Failed to update avatar'] } };
+    return { success: false, errors: { general: [data.message || data.error || 'Failed to update avatar'] } };
   } catch (error) {
     console.error('Update avatar error:', error);
     return { success: false, errors: { general: ['Network error'] } };
@@ -449,11 +461,12 @@ export async function deleteAvatar(): Promise<ActionResult> {
     
     const data = await response.json();
     if (response.ok && data.success) {
-      return { success: true, message: 'Avatar removed successfully!' };
+      return { success: true, message: data.message || 'Avatar removed successfully!' };
     }
-    return { success: false, errors: { general: [data.message || 'Failed to remove avatar'] } };
+    return { success: false, errors: { general: [data.message || data.error || 'Failed to remove avatar'] } };
   } catch (error) {
     console.error('Delete avatar error:', error);
     return { success: false, errors: { general: ['Network error'] } };
   }
 }
+

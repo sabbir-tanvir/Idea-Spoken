@@ -5,13 +5,17 @@ import DashboardSidebar from '@/components/DashboardSidebar';
 import { User, Mail, Phone, Lock, Eye, EyeOff, CheckCircle, AlertCircle, Loader2, KeyRound, Upload, Trash2, X } from 'lucide-react';
 import { updatePassword, getCurrentUser, updateProfileDetails, updateAvatar, deleteAvatar } from '@/lib/auth/actions';
 import { User as UserType } from '@/lib/auth/types';
+import { getAvatarUrl } from '@/lib/auth/avatar';
 import Cropper from 'react-easy-crop';
 
 // Helper to create the cropped image
 const getCroppedImg = async (imageSrc: string, pixelCrop: any): Promise<File | null> => {
   const image = new Image();
   image.src = imageSrc;
-  await new Promise((resolve) => (image.onload = resolve));
+  await new Promise((resolve, reject) => {
+    image.onload = resolve;
+    image.onerror = reject;
+  });
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
   if (!ctx) return null;
@@ -48,9 +52,16 @@ export default function ProfileSettingsPage() {
   const [emailValue, setEmailValue] = useState('');
   const [phone, setPhone] = useState('');
   const [avatar, setAvatar] = useState<string | null>(null);
+  const [avatarImageError, setAvatarImageError] = useState(false);
   const [isUpdatingProfile, setIsUpdatingProfile] = useState(false);
   const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
   const [profileResult, setProfileResult] = useState<{ success: boolean; message: string } | null>(null);
+
+  const avatarUrl = getAvatarUrl(avatar);
+
+  useEffect(() => {
+    setAvatarImageError(false);
+  }, [avatarUrl]);
 
   /* ---- crop state ---- */
   const [imageToCrop, setImageToCrop] = useState<string | null>(null);
@@ -144,14 +155,12 @@ export default function ProfileSettingsPage() {
 
     if (res.success) {
       setProfileResult({ success: true, message: res.message ?? 'Profile updated successfully!' });
-      // Refresh user to get updated data across app if needed
       const currentUser = await getCurrentUser();
       if (currentUser) {
         setUser(currentUser);
-        // Dispatch custom event to tell Header/UserMenu to re-fetch if needed, or rely on page reload.
-        // A full page reload is a simple way to update Header state.
-        window.location.reload();
       }
+      window.dispatchEvent(new Event('user-updated'));
+      window.location.reload();
     } else {
       setProfileResult({ success: false, message: res.errors?.general?.[0] ?? 'Failed to update profile.' });
     }
@@ -164,10 +173,9 @@ export default function ProfileSettingsPage() {
     
     const file = e.target.files[0];
     
-    // 1MB file size limit
-    if (file.size > 1 * 1024 * 1024) {
-      setProfileResult({ success: false, message: 'Image must be smaller than 1MB' });
-      // Clear input
+    // 5MB file size limit (matching backend documentation)
+    if (file.size > 5 * 1024 * 1024) {
+      setProfileResult({ success: false, message: 'Image must be smaller than 5MB' });
       e.target.value = '';
       return;
     }
@@ -204,11 +212,16 @@ export default function ProfileSettingsPage() {
 
       if (res.success) {
         setProfileResult({ success: true, message: 'Profile photo updated successfully!' });
-        const currentUser = await getCurrentUser();
-        if (currentUser) {
-          setAvatar(currentUser.avatar || null);
-          window.location.reload();
+        if (res.user?.avatar !== undefined) {
+          setAvatar(res.user.avatar);
+        } else {
+          const currentUser = await getCurrentUser();
+          if (currentUser) {
+            setAvatar(currentUser.avatar || null);
+          }
         }
+        window.dispatchEvent(new Event('user-updated'));
+        window.location.reload();
       } else {
         setProfileResult({ success: false, message: res.errors?.general?.[0] ?? 'Failed to upload photo.' });
       }
@@ -228,6 +241,7 @@ export default function ProfileSettingsPage() {
     if (res.success) {
       setProfileResult({ success: true, message: 'Profile photo removed successfully!' });
       setAvatar(null);
+      window.dispatchEvent(new Event('user-updated'));
       window.location.reload();
     } else {
       setProfileResult({ success: false, message: res.errors?.general?.[0] ?? 'Failed to remove photo.' });
@@ -235,6 +249,7 @@ export default function ProfileSettingsPage() {
 
     setIsUploadingAvatar(false);
   };
+
 
   return (
     <div className="min-h-screen bg-gray-50 py-6 md:py-16">
@@ -304,7 +319,11 @@ export default function ProfileSettingsPage() {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar */}
           <div className="lg:w-90 shrink-0">
-            <DashboardSidebar />
+            <DashboardSidebar 
+              userName={name} 
+              userEmail={emailValue} 
+              avatar={avatar} 
+            />
           </div>
 
           {/* Main Content */}
@@ -344,10 +363,11 @@ export default function ProfileSettingsPage() {
                 {/* Avatar Section */}
                 <div className="flex flex-col sm:flex-row items-center gap-6 mb-8 p-6 bg-purple-50/50 rounded-2xl border border-purple-100/50">
                   <div className="relative shrink-0">
-                    {avatar ? (
+                    {avatarUrl && !avatarImageError ? (
                       <img 
-                        src={avatar.startsWith('http') ? avatar : `${process.env.NEXT_PUBLIC_API_URL || 'https://api.ideaspoken.com'}${avatar}`} 
+                        src={avatarUrl} 
                         alt={name || 'User'} 
+                        onError={() => setAvatarImageError(true)}
                         className="w-28 h-28 rounded-full object-cover border-4 border-white shadow-md" 
                       />
                     ) : (
@@ -360,7 +380,7 @@ export default function ProfileSettingsPage() {
                   <div className="flex flex-col gap-3 text-center sm:text-left">
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900">Profile Photo</h3>
-                      <p className="text-sm text-gray-500 mt-1">Upload a new photo (JPEG, PNG, WebP) up to 1MB.</p>
+                      <p className="text-sm text-gray-500 mt-1">Upload a new photo (JPEG, PNG, WebP) up to 5MB.</p>
                     </div>
                     
                     <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 mt-2">

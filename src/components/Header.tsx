@@ -6,7 +6,8 @@ import { usePathname } from 'next/navigation';
 import { ChevronDown, X, User, LayoutDashboard, LogOut } from 'lucide-react';
 import Image from 'next/image';
 import UserMenu from './UserMenu';
-import { logoutUser } from '@/lib/auth/actions';
+import { logoutUser, getCurrentUser } from '@/lib/auth/actions';
+import { getAvatarUrl } from '@/lib/auth/avatar';
 
 // Wings dropdown items - exact sequence and official wing names
 const wingsDropdownItems = [
@@ -29,16 +30,54 @@ export default function Header({ isLoggedIn = false, userName, avatar }: HeaderP
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [wingsDropdownOpen, setWingsDropdownOpen] = useState(false);
   const [mobileWingsOpen, setMobileWingsOpen] = useState(false);
+  const [mobileImageError, setMobileImageError] = useState(false);
+  const [currentUser, setCurrentUser] = useState<{ name?: string; avatar?: string | null }>({
+    name: userName,
+    avatar: avatar,
+  });
   const pathname = usePathname();
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    setCurrentUser({ name: userName, avatar: avatar });
+  }, [userName, avatar]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      getCurrentUser().then((u) => {
+        if (u) {
+          setCurrentUser({ name: u.name, avatar: u.avatar ?? null });
+        }
+      });
+    }
+
+    const handleUserUpdate = () => {
+      getCurrentUser().then((u) => {
+        if (u) {
+          setCurrentUser({ name: u.name, avatar: u.avatar ?? null });
+        }
+      });
+    };
+
+    window.addEventListener('user-updated', handleUserUpdate);
+    return () => window.removeEventListener('user-updated', handleUserUpdate);
+  }, [isLoggedIn]);
+
+  const activeName = currentUser.name || userName;
+  const activeAvatar = currentUser.avatar !== undefined ? currentUser.avatar : avatar;
+  const mobileAvatarUrl = getAvatarUrl(activeAvatar);
+
+  useEffect(() => {
+    setMobileImageError(false);
+  }, [mobileAvatarUrl]);
 
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
     setMobileWingsOpen(false);
   };
 
-  const initials = userName
-    ? userName
+  const initials = activeName
+    ? activeName
         .split(' ')
         .map((n) => n[0])
         .join('')
@@ -313,7 +352,7 @@ export default function Header({ isLoggedIn = false, userName, avatar }: HeaderP
               </Link>
 
               {isLoggedIn && (
-                <UserMenu userName={userName} avatar={avatar} />
+                <UserMenu userName={activeName} avatar={activeAvatar} />
               )}
 
             </div>
@@ -385,10 +424,11 @@ export default function Header({ isLoggedIn = false, userName, avatar }: HeaderP
           {isLoggedIn ? (
             <div className="mx-4 mt-4 mb-2 p-3.5 bg-gradient-to-br from-purple-50/90 via-indigo-50/40 to-purple-50/90 rounded-2xl border border-purple-100/80 shadow-xs">
               <div className="flex items-center gap-3">
-                {avatar ? (
+                {mobileAvatarUrl && !mobileImageError ? (
                   <img
-                    src={avatar.startsWith('http') ? avatar : `${process.env.NEXT_PUBLIC_API_URL || 'https://api.ideaspoken.com'}${avatar}`}
-                    alt={userName || 'Student'}
+                    src={mobileAvatarUrl}
+                    alt={activeName || 'Student'}
+                    onError={() => setMobileImageError(true)}
                     className="w-11 h-11 rounded-full object-cover shadow-sm shrink-0"
                   />
                 ) : (
@@ -398,12 +438,13 @@ export default function Header({ isLoggedIn = false, userName, avatar }: HeaderP
                 )}
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-semibold text-gray-900 truncate">
-                    {userName || 'Student'}
+                    {activeName || 'Student'}
                   </p>
                   <span className="inline-block px-2 py-0.5 bg-purple-100 text-purple-700 text-[11px] font-semibold rounded-md mt-0.5">
                     Student
                   </span>
                 </div>
+
               </div>
 
               {/* Quick Action links */}

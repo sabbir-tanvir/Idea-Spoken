@@ -1,16 +1,21 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { BookOpen, Award, CreditCard, Settings, LogOut, User, ChevronDown, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { logoutUser } from '@/lib/auth/actions';
 
+import { User as UserType } from '@/lib/auth/types';
+import { getCurrentUser } from '@/lib/auth/actions';
+import { getAvatarUrl } from '@/lib/auth/avatar';
+
 interface DashboardSidebarProps {
   userName?: string;
   userEmail?: string;
   userStatus?: string;
+  avatar?: string | null;
   onLogout?: () => void;
 }
 
@@ -18,10 +23,37 @@ export default function DashboardSidebar({
   userName = "Student Name",
   userEmail = "Student@Email.Com",
   userStatus = "Active Student",
+  avatar = null,
   onLogout
 }: DashboardSidebarProps) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [imageError, setImageError] = useState(false);
+  
+  const [localUser, setLocalUser] = useState<UserType | null>(null);
+
+  useEffect(() => {
+    async function fetchUser() {
+      const u = await getCurrentUser();
+      if (u) setLocalUser(u);
+    }
+    fetchUser();
+
+    const handleUserUpdate = () => {
+      fetchUser();
+    };
+    window.addEventListener('user-updated', handleUserUpdate);
+    return () => window.removeEventListener('user-updated', handleUserUpdate);
+  }, []);
+
+  const displayUserName = (userName && userName !== "Student Name") ? userName : (localUser?.name || userName);
+  const displayUserEmail = (userEmail && userEmail !== "Student@Email.Com") ? userEmail : (localUser?.email || userEmail);
+  const rawAvatar = avatar !== null ? avatar : (localUser?.avatar ?? null);
+  const avatarUrl = getAvatarUrl(rawAvatar);
+
+  useEffect(() => {
+    setImageError(false);
+  }, [avatarUrl]);
 
   const menuItems = [
     { href: '/dashboard', label: 'My Courses', icon: BookOpen },
@@ -90,12 +122,21 @@ export default function DashboardSidebar({
       <aside className="hidden lg:block w-full lg:w-90 bg-white rounded-3xl shadow-lg p-6 h-fit">
         {/* User Profile Section */}
         <div className="flex items-center gap-4 pb-6 border-b border-gray-200 mb-6">
-          <div className="w-14 h-14 bg-purple-200 rounded-full flex items-center justify-center shrink-0">
-            <User className="w-7 h-7 text-purple-600" />
-          </div>
+          {avatarUrl && !imageError ? (
+            <img 
+              src={avatarUrl} 
+              alt={displayUserName} 
+              onError={() => setImageError(true)}
+              className="w-14 h-14 rounded-full object-cover shadow-sm shrink-0" 
+            />
+          ) : (
+            <div className="w-14 h-14 bg-purple-200 rounded-full flex items-center justify-center shrink-0">
+              <User className="w-7 h-7 text-purple-600" />
+            </div>
+          )}
           <div className="flex-1 min-w-0">
-            <h3 className="font-bold text-gray-900 truncate">{userName}</h3>
-            <p className="text-sm text-gray-600 truncate">{userEmail}</p>
+            <h3 className="font-bold text-gray-900 truncate">{displayUserName}</h3>
+            <p className="text-sm text-gray-600 truncate">{displayUserEmail}</p>
             <span className="inline-block mt-1 px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">
               {userStatus}
             </span>
@@ -111,11 +152,20 @@ export default function DashboardSidebar({
           onClick={() => setMobileOpen((v) => !v)}
           className="w-full flex items-center gap-3 px-4 py-3 text-left"
         >
-          <div className="w-10 h-10 bg-purple-200 rounded-full flex items-center justify-center shrink-0">
-            <User className="w-5 h-5 text-purple-600" />
-          </div>
+          {avatarUrl && !imageError ? (
+            <img 
+              src={avatarUrl} 
+              alt={displayUserName} 
+              onError={() => setImageError(true)}
+              className="w-10 h-10 rounded-full object-cover shadow-sm shrink-0" 
+            />
+          ) : (
+            <div className="w-10 h-10 bg-purple-200 rounded-full flex items-center justify-center shrink-0">
+              <User className="w-5 h-5 text-purple-600" />
+            </div>
+          )}
           <div className="flex-1 min-w-0">
-            <h3 className="text-sm font-bold text-gray-900 truncate">{userName}</h3>
+            <h3 className="text-sm font-bold text-gray-900 truncate">{displayUserName}</h3>
             <span className="text-xs text-green-600 font-medium">{userStatus}</span>
           </div>
           <ChevronDown
@@ -136,7 +186,7 @@ export default function DashboardSidebar({
               className="overflow-hidden"
             >
               <div className="px-4 pb-4 pt-1 border-t border-gray-100">
-                <p className="text-xs text-gray-500 mb-3 truncate">{userEmail}</p>
+                <p className="text-xs text-gray-500 mb-3 truncate">{displayUserEmail}</p>
                 {navContent}
               </div>
             </motion.div>
