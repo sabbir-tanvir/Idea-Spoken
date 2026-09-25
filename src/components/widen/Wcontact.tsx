@@ -6,7 +6,7 @@ const Wcontact = () => {
     <ContactCard
       title="Join The WINI Community"
       subtitle="আমাদের গ্রুপে যোগ দিন এবং আমাদের উদ্যোগগুলো সম্পর্কে জানুন"
-      buttonLabel="Join WIDEN Group"
+      buttonLabel="Join WINI Group"
       buttonHref="https://web.facebook.com/groups/2908320882628536"
       buttonTarget="_blank"
     />

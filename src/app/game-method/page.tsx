@@ -1,3 +1,4 @@
+import Contact from '@/components/Contact';
 import PhotoGallery from '@/components/PhotoGallery'
 import WingActivities from '@/components/WingActivities'
 import GameMethodApproachProvider from '@/components/game-method/GameMethodApproachProvider'
@@ -42,6 +43,7 @@ export default async function GameMethodPage() {
       <GameMethodApproachProvider />
       <WingActivities activities={media.activities} />
       <PhotoGallery images={media.gallery} />
+      <Contact phone="০১৯৯০-৮২২০২৩" />
     </>
   )
 }

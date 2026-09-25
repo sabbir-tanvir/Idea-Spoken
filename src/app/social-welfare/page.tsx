@@ -1,3 +1,4 @@
+import Contact from '@/components/Contact';
 import PEvent from '@/components/bangla-pitha-research-institute/BanglaPithaEvent';
 import PhotoGallery from '@/components/PhotoGallery';
 import WingActivities from '@/components/WingActivities';
@@ -54,6 +55,7 @@ export default async function Home() {
       <OurImpactText />
 
       <PEvent />
+      <Contact phone="০১৯২৮-৭০৭৮৬৪" />
 
     </>
   );

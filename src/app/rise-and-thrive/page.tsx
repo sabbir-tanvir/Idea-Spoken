@@ -62,7 +62,7 @@ export default async function Home() {
             <UpcomingWorkshop events={events} />
             <AboutHamidul />
             <Review />
-            <Contact />
+            <Contact phone="০১৬১৬-০৩১৪০২" />
         </>
 
     );

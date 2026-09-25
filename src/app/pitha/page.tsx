@@ -1,3 +1,4 @@
+import Contact from '@/components/Contact';
 import React from 'react';
 import HeroSection from '@/components/pitha/PheroSection';
 import CountUpSection from '@/components/pitha/PCountUp';
@@ -68,6 +69,7 @@ async function PithaPatsala() {
       <OurImpact />
       <PReview />
       <Wcontact />
+      <Contact phone="০১৭৮৩-৪১৪৩৫৪" />
     </>
   );
 }

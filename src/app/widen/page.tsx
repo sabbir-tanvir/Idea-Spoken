@@ -1,3 +1,4 @@
+import Contact from '@/components/Contact';
 import PhotoGallery from '@/components/PhotoGallery'
 import WingActivities from '@/components/WingActivities'
 import Wcontact from '@/components/widen/Wcontact'
@@ -46,6 +47,7 @@ export default async function WidenPage() {
       <WKeyHighlight />
       <WBankDetails />
       <Wcontact />
+      <Contact phone="০১৬১৬-০৩১৪০২" />
     </> 
   )
 }
