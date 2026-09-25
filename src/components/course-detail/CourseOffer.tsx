@@ -17,7 +17,10 @@ export default function CourseOffer({ courseDetail }: CourseOfferProps) {
     const subtitle =
         courseDetail?.description ??
         "Enroll now and start your learning journey with expert-guided content and hands-on practice.";
-    const discountedPrice = courseDetail?.price ? `৳${courseDetail.price}` : "৳2,500";
+    const salePriceVal = courseDetail?.salePrice ?? (courseDetail as any)?.selePrice ?? (courseDetail as any)?.selesPrice ?? (courseDetail as any)?.salesPrice;
+    const hasSale = salePriceVal != null && salePriceVal !== "";
+    const displayPrice = hasSale ? `৳${salePriceVal}` : (courseDetail?.price ? `৳${courseDetail.price}` : "৳2,500");
+    const originalPrice = courseDetail?.price ? `৳${courseDetail.price}` : null;
 
     return (
         <section className="bg-white w-full pb-20 px-4 md:px-8">
@@ -44,9 +47,12 @@ export default function CourseOffer({ courseDetail }: CourseOfferProps) {
 
                         <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12">
                             {/* Price */}
-                            <div className="text-center md:text-left">
-                                <div className="text-4xl md:text-5xl font-bold text-slate-900">
-                                    {discountedPrice}
+                            <div className="text-center md:text-left flex flex-col items-center md:items-start">
+                                <div className="flex items-end gap-3 justify-center md:justify-start">
+                                    {hasSale && <span className="text-xl font-medium text-slate-400 line-through mb-1">{originalPrice}</span>}
+                                    <div className="text-4xl md:text-5xl font-bold text-slate-900">
+                                        {displayPrice}
+                                    </div>
                                 </div>
                                 <div className="text-xs text-slate-400 mt-1">
                                     One-time payment
@@ -75,7 +81,7 @@ export default function CourseOffer({ courseDetail }: CourseOfferProps) {
                         onClose={() => setIsPaymentOpen(false)}
                         courseName={title}
                         courseId={courseDetail?.id ?? 0}
-                        amount={courseDetail?.price ? Number(courseDetail.price) : 2500}
+                        amount={hasSale ? Number(salePriceVal) : (courseDetail?.price ? Number(courseDetail.price) : 2500)}
                     />
                 </motion.div>
             </div>

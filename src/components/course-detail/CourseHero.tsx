@@ -34,7 +34,10 @@ export default function CourseHero({ courseDetail }: CourseHeroProps) {
     const description =
         courseDetail?.description ??
         "Join this comprehensive course and elevate your skills to the next level with expert-guided content.";
-    const price = courseDetail?.price ? `৳${courseDetail.price}` : "৳2,500";
+    const salePriceVal = courseDetail?.salePrice ?? (courseDetail as any)?.selePrice ?? (courseDetail as any)?.selesPrice ?? (courseDetail as any)?.salesPrice;
+    const hasSale = salePriceVal != null && salePriceVal !== "";
+    const displayPrice = hasSale ? `৳${salePriceVal}` : (courseDetail?.price ? `৳${courseDetail.price}` : "৳2,500");
+    const originalPrice = courseDetail?.price ? `৳${courseDetail.price}` : null;
     const lessonCount = courseDetail
         ? courseDetail.modules.reduce((sum, m) => sum + m.lessons.length, 0)
         : 0;
@@ -113,8 +116,9 @@ export default function CourseHero({ courseDetail }: CourseHeroProps) {
                         className="flex flex-wrap items-center gap-4 pt-2"
                         variants={itemVariants}
                     >
-                        <div className="px-6 py-3 bg-purple-100 text-purple-700 text-2xl font-bold rounded-xl">
-                            {price}
+                        <div className="px-6 py-3 bg-purple-100 text-purple-700 text-2xl font-bold rounded-xl flex items-center gap-3">
+                            {hasSale && <span className="text-base font-medium text-purple-400/80 line-through">{originalPrice}</span>}
+                            <span>{displayPrice}</span>
                         </div>
                         <button
                             onClick={() => setIsPaymentOpen(true)}
@@ -132,7 +136,7 @@ export default function CourseHero({ courseDetail }: CourseHeroProps) {
                         onClose={() => setIsPaymentOpen(false)}
                         courseName={title}
                         courseId={courseDetail?.id ?? 0}
-                        amount={courseDetail?.price ? Number(courseDetail.price) : 0}
+                        amount={hasSale ? Number(salePriceVal) : (courseDetail?.price ? Number(courseDetail.price) : 0)}
                     />
                 </motion.div>
 

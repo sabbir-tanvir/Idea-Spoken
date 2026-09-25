@@ -18,7 +18,11 @@ export default function OfferCard({ data, courseDetail }: OfferCardProps) {
 
     const title = courseDetail?.title ?? data.offer.title;
     const subtitle = courseDetail?.description ?? data.offer.subtitle;
-    const discountedPrice = courseDetail?.price ? `৳${courseDetail.price}` : data.offer.discountedPrice;
+    
+    const salePriceVal = courseDetail?.salePrice ?? (courseDetail as any)?.selePrice ?? (courseDetail as any)?.selesPrice ?? (courseDetail as any)?.salesPrice;
+    const hasSale = salePriceVal != null && salePriceVal !== "";
+    const displayPrice = hasSale ? `৳${salePriceVal}` : (courseDetail?.price ? `৳${courseDetail.price}` : data.offer.discountedPrice);
+    const originalPrice = courseDetail?.price ? `৳${courseDetail.price}` : data.offer.originalPrice;
 
     return (
         <section className="bg-white w-full pb-20 px-4 md:px-8">
@@ -49,11 +53,13 @@ export default function OfferCard({ data, courseDetail }: OfferCardProps) {
                         <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12">
                             {/* Price */}
                             <div className="text-center md:text-left">
-                                <div className="text-slate-400 text-lg line-through decoration-slate-400 decoration-1">
-                                    {data.offer.originalPrice}
-                                </div>
+                                {originalPrice && (
+                                    <div className="text-slate-400 text-lg line-through decoration-slate-400 decoration-1">
+                                        {originalPrice}
+                                    </div>
+                                )}
                                 <div className="text-4xl md:text-5xl font-bold text-slate-900">
-                                    {discountedPrice}
+                                    {displayPrice}
                                 </div>
                                 <div className="text-xs text-slate-400 mt-1">
                                     {data.offer.paymentText}
@@ -82,7 +88,7 @@ export default function OfferCard({ data, courseDetail }: OfferCardProps) {
                         onClose={() => setIsPaymentOpen(false)}
                         courseName={title}
                         courseId={courseDetail?.id ?? 0}
-                        amount={courseDetail?.price ? Number(courseDetail.price) : 2500}
+                        amount={hasSale ? Number(salePriceVal) : (courseDetail?.price ? Number(courseDetail.price) : 2500)}
                     />
                 </motion.div>
             </div>

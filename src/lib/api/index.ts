@@ -23,7 +23,7 @@ export interface EnglishDebateData {
   lessons: string;
   duration: string;
   students: string;
-  price: string;
+  salePrice: string;
   philosophy: {
     title: string;
     description: string;

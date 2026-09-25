@@ -37,8 +37,9 @@ export default function CourseCard({ course }: CourseCardProps) {
   }, [rating]);
 
   const instructorName = course.instructor?.name ?? "IDEA Team";
-  const hasSale = course.salePrice != null && course.salePrice !== "";
-  const displayPrice = hasSale ? `৳${course.salePrice}` : (course.price ? `৳${course.price}` : "Free");
+  const salePriceVal = course.salePrice ?? (course as any).selePrice ?? (course as any).selesPrice ?? (course as any).salesPrice;
+  const hasSale = salePriceVal != null && salePriceVal !== "";
+  const displayPrice = hasSale ? `৳${salePriceVal}` : (course.price ? `৳${course.price}` : "Free");
   const originalPrice = course.price ? `৳${course.price}` : null;
   const duration =
     course.totalHours > 0 ? `${course.totalHours}h` : "Self-paced";
@@ -215,7 +216,7 @@ export default function CourseCard({ course }: CourseCardProps) {
         onClose={() => setIsPaymentOpen(false)}
         courseName={course.title}
         courseId={course.id}
-        amount={hasSale ? Number(course.salePrice) : (course.price ? Number(course.price) : 0)}
+        amount={hasSale ? Number(salePriceVal) : (course.price ? Number(course.price) : 0)}
       />
     </>
   );

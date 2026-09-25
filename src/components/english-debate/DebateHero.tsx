@@ -16,7 +16,12 @@ export default function DebateHero({ data, courseDetail }: DebateHeroProps) {
     const [isPaymentOpen, setIsPaymentOpen] = useState(false);
     const title = courseDetail?.title ?? data.title;
     const description = courseDetail?.description ?? data.description;
-    const price = courseDetail?.price ? `৳${courseDetail.price}` : data.price;
+    
+    const salePriceVal = courseDetail?.salePrice ?? (courseDetail as any)?.selePrice ?? (courseDetail as any)?.selesPrice ?? (courseDetail as any)?.salesPrice ?? data.salePrice;
+    const priceVal = courseDetail?.price ?? data.price;
+    const hasSale = salePriceVal != null && salePriceVal !== "";
+    const displayPrice = hasSale ? (salePriceVal.toString().includes('৳') ? salePriceVal : `৳${salePriceVal}`) : (priceVal ? (priceVal.toString().includes('৳') ? priceVal : `৳${priceVal}`) : "৳2,500");
+    const originalPrice = priceVal ? (priceVal.toString().includes('৳') ? priceVal : `৳${priceVal}`) : null;
     const lessonCount = courseDetail
         ? courseDetail.modules.reduce((sum, m) => sum + m.lessons.length, 0)
         : data.lessons;
@@ -117,8 +122,9 @@ export default function DebateHero({ data, courseDetail }: DebateHeroProps) {
                         className="flex flex-wrap items-center gap-4 pt-2"
                         variants={itemVariants}
                     >
-                        <div className="px-6 py-3 bg-purple-100 text-purple-700 text-2xl font-bold rounded-xl">
-                            {price}
+                        <div className="px-6 py-3 bg-purple-100 text-purple-700 text-2xl font-bold rounded-xl flex items-center gap-3">
+                            {hasSale && <span className="text-base font-medium text-purple-400/80 line-through">{originalPrice}</span>}
+                            <span>{displayPrice}</span>
                         </div>
                         <button
                             onClick={() => setIsPaymentOpen(true)}
@@ -136,7 +142,7 @@ export default function DebateHero({ data, courseDetail }: DebateHeroProps) {
                         onClose={() => setIsPaymentOpen(false)}
                         courseName={title}
                         courseId={courseDetail?.id ?? 0}
-                        amount={courseDetail?.price ? Number(courseDetail.price) : 2500}
+                        amount={hasSale ? Number(salePriceVal.toString().replace(/[^0-9]/g, '')) : (priceVal ? Number(priceVal.toString().replace(/[^0-9]/g, '')) : 2500)}
                     />
                 </motion.div>
 

@@ -56,6 +56,7 @@ export interface ApiCourseDetail {
   level: string;
   language: string;
   price: string;
+  salePrice?: string | null;
   rating: number | null;
   status: string;
   instructorId: number | null;
@@ -73,6 +74,7 @@ export interface ApiCourseProgressCourse {
   level: string;
   language: string;
   price: string;
+  salePrice?: string | null;
   rating: number | null;
   status: string;
   createdAt: string;
