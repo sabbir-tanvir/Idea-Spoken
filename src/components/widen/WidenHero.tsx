@@ -13,9 +13,17 @@ interface HeroSectionProps {
 }
 
 const defaultCarouselImages = [
-  "/images/wini/1.webp",
-  "/images/wini/2.webp",
-  "/images/wini/3.webp",
+  "/images/spoken/asa.jpg",
+  "/images/spoken/dadsas.jpg",
+  "/images/spoken/dawas.jpg",
+  "/images/spoken/dwa.png",
+  "/images/spoken/dwqa.jpg",
+  "/images/spoken/dwqsa.jpg",
+  "/images/spoken/sadas.jpg",
+  "/images/spoken/wada.jpg",
+  "/images/spoken/wasw.jpg",
+  "/images/spoken/waw.jpg",
+  "/images/spoken/wda.jpg",
 ];
 
 export default function HeroSection({
@@ -47,14 +55,14 @@ export default function HeroSection({
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/home/bgg.jpg"
+          src="/images/spoken/wada.jpg"
           alt="Background"
           fill
           className="object-cover"
           priority
         />
         <motion.div 
-          className="absolute inset-0 bg-[#704FE6]/70"
+          className="absolute inset-0 bg-[#704FE6]/95"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
