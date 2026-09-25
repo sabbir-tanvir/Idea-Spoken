@@ -7,9 +7,10 @@ import { User, ChevronDown, LayoutDashboard, LogOut } from 'lucide-react';
 
 interface UserMenuProps {
   userName?: string;
+  avatar?: string | null;
 }
 
-export default function UserMenu({ userName }: UserMenuProps) {
+export default function UserMenu({ userName, avatar }: UserMenuProps) {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -40,9 +41,17 @@ export default function UserMenu({ userName }: UserMenuProps) {
         className="flex items-center gap-2 px-3 py-2 rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
       >
         {/* Avatar */}
-        <div className="w-9 h-9 rounded-full bg-purple-600 flex items-center justify-center text-white text-sm font-semibold">
-          {initials}
-        </div>
+        {avatar ? (
+          <img
+            src={avatar.startsWith('http') ? avatar : `${process.env.NEXT_PUBLIC_API_URL || 'https://api.ideaspoken.com'}${avatar}`}
+            alt={userName || 'Account'}
+            className="w-9 h-9 rounded-full object-cover"
+          />
+        ) : (
+          <div className="w-9 h-9 rounded-full bg-purple-600 flex items-center justify-center text-white text-sm font-semibold">
+            {initials}
+          </div>
+        )}
         {/* Name (hidden on small screens) */}
         <span className="hidden lg:block text-sm font-medium text-gray-700 max-w-[120px] truncate">
           {userName || 'Account'}
@@ -58,9 +67,17 @@ export default function UserMenu({ userName }: UserMenuProps) {
           {/* User info */}
           <div className="px-4 py-3 border-b border-gray-100">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center text-white text-sm font-semibold">
-                {initials}
-              </div>
+              {avatar ? (
+                <img
+                  src={avatar.startsWith('http') ? avatar : `${process.env.NEXT_PUBLIC_API_URL || 'https://api.ideaspoken.com'}${avatar}`}
+                  alt={userName || 'User'}
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center text-white text-sm font-semibold">
+                  {initials}
+                </div>
+              )}
               <div className="min-w-0">
                 <p className="text-sm font-semibold text-gray-900 truncate">{userName || 'User'}</p>
                 <p className="text-xs text-gray-500">Student</p>

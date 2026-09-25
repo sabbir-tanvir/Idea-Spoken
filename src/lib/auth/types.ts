@@ -36,6 +36,7 @@ export interface User {
   email: string;
   phone: string;
   role: 'STUDENT' | 'ADMIN';
+  avatar?: string | null;
 }
 
 export interface ActionResult {

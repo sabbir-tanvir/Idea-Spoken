@@ -1,11 +1,63 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import DashboardSidebar from '@/components/DashboardSidebar';
-import { User, Mail, Phone, Lock, Eye, EyeOff, CheckCircle, AlertCircle, Loader2, KeyRound } from 'lucide-react';
-import { updatePassword } from '@/lib/auth/actions';
+import { User, Mail, Phone, Lock, Eye, EyeOff, CheckCircle, AlertCircle, Loader2, KeyRound, Upload, Trash2, X } from 'lucide-react';
+import { updatePassword, getCurrentUser, updateProfileDetails, updateAvatar, deleteAvatar } from '@/lib/auth/actions';
+import { User as UserType } from '@/lib/auth/types';
+import Cropper from 'react-easy-crop';
+
+// Helper to create the cropped image
+const getCroppedImg = async (imageSrc: string, pixelCrop: any): Promise<File | null> => {
+  const image = new Image();
+  image.src = imageSrc;
+  await new Promise((resolve) => (image.onload = resolve));
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return null;
+
+  canvas.width = pixelCrop.width;
+  canvas.height = pixelCrop.height;
+  ctx.drawImage(
+    image,
+    pixelCrop.x,
+    pixelCrop.y,
+    pixelCrop.width,
+    pixelCrop.height,
+    0,
+    0,
+    pixelCrop.width,
+    pixelCrop.height
+  );
+
+  return new Promise((resolve) => {
+    canvas.toBlob((blob) => {
+      if (!blob) {
+        resolve(null);
+        return;
+      }
+      resolve(new File([blob], "avatar.jpg", { type: "image/jpeg" }));
+    }, "image/jpeg");
+  });
+};
 
 export default function ProfileSettingsPage() {
+  /* ---- user state ---- */
+  const [user, setUser] = useState<UserType | null>(null);
+  const [name, setName] = useState('');
+  const [emailValue, setEmailValue] = useState('');
+  const [phone, setPhone] = useState('');
+  const [avatar, setAvatar] = useState<string | null>(null);
+  const [isUpdatingProfile, setIsUpdatingProfile] = useState(false);
+  const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
+  const [profileResult, setProfileResult] = useState<{ success: boolean; message: string } | null>(null);
+
+  /* ---- crop state ---- */
+  const [imageToCrop, setImageToCrop] = useState<string | null>(null);
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+
   /* ---- change-password state ---- */
   const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [email, setEmail] = useState('');
@@ -18,6 +70,21 @@ export default function ProfileSettingsPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [result, setResult] = useState<{ success: boolean; message: string } | null>(null);
 
+  useEffect(() => {
+    async function loadUser() {
+      const currentUser = await getCurrentUser();
+      if (currentUser) {
+        setUser(currentUser);
+        setName(currentUser.name || '');
+        setEmailValue(currentUser.email || '');
+        setPhone(currentUser.phone || '');
+        setAvatar(currentUser.avatar || null);
+        setEmail(currentUser.email || ''); // Pre-fill password email field
+      }
+    }
+    loadUser();
+  }, []);
+
   // Clear result message after 5 seconds
   useEffect(() => {
     if (result) {
@@ -25,6 +92,13 @@ export default function ProfileSettingsPage() {
       return () => clearTimeout(timer);
     }
   }, [result]);
+  
+  useEffect(() => {
+    if (profileResult) {
+      const timer = setTimeout(() => setProfileResult(null), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [profileResult]);
 
   const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,8 +131,175 @@ export default function ProfileSettingsPage() {
     setIsSubmitting(false);
   };
 
+  const handleProfileSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsUpdatingProfile(true);
+    setProfileResult(null);
+
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('phone', phone);
+
+    const res = await updateProfileDetails(formData);
+
+    if (res.success) {
+      setProfileResult({ success: true, message: res.message ?? 'Profile updated successfully!' });
+      // Refresh user to get updated data across app if needed
+      const currentUser = await getCurrentUser();
+      if (currentUser) {
+        setUser(currentUser);
+        // Dispatch custom event to tell Header/UserMenu to re-fetch if needed, or rely on page reload.
+        // A full page reload is a simple way to update Header state.
+        window.location.reload();
+      }
+    } else {
+      setProfileResult({ success: false, message: res.errors?.general?.[0] ?? 'Failed to update profile.' });
+    }
+
+    setIsUpdatingProfile(false);
+  };
+
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+    
+    const file = e.target.files[0];
+    
+    // 1MB file size limit
+    if (file.size > 1 * 1024 * 1024) {
+      setProfileResult({ success: false, message: 'Image must be smaller than 1MB' });
+      // Clear input
+      e.target.value = '';
+      return;
+    }
+
+    // Set image for cropping
+    const imageUrl = URL.createObjectURL(file);
+    setImageToCrop(imageUrl);
+    // Reset crop state
+    setCrop({ x: 0, y: 0 });
+    setZoom(1);
+    // Clear input so same file can be selected again
+    e.target.value = '';
+  };
+
+  const onCropComplete = useCallback((croppedArea: any, croppedAreaPixels: any) => {
+    setCroppedAreaPixels(croppedAreaPixels);
+  }, []);
+
+  const handleCropAndUpload = async () => {
+    if (!imageToCrop || !croppedAreaPixels) return;
+    
+    setIsUploadingAvatar(true);
+    setImageToCrop(null); // Close crop modal
+    setProfileResult(null);
+
+    try {
+      const croppedFile = await getCroppedImg(imageToCrop, croppedAreaPixels);
+      if (!croppedFile) throw new Error('Failed to crop image');
+
+      const formData = new FormData();
+      formData.append('avatar', croppedFile);
+
+      const res = await updateAvatar(formData);
+
+      if (res.success) {
+        setProfileResult({ success: true, message: 'Profile photo updated successfully!' });
+        const currentUser = await getCurrentUser();
+        if (currentUser) {
+          setAvatar(currentUser.avatar || null);
+          window.location.reload();
+        }
+      } else {
+        setProfileResult({ success: false, message: res.errors?.general?.[0] ?? 'Failed to upload photo.' });
+      }
+    } catch (error) {
+      setProfileResult({ success: false, message: 'Error cropping or uploading image.' });
+    }
+
+    setIsUploadingAvatar(false);
+  };
+
+  const handleAvatarDelete = async () => {
+    setIsUploadingAvatar(true);
+    setProfileResult(null);
+
+    const res = await deleteAvatar();
+
+    if (res.success) {
+      setProfileResult({ success: true, message: 'Profile photo removed successfully!' });
+      setAvatar(null);
+      window.location.reload();
+    } else {
+      setProfileResult({ success: false, message: res.errors?.general?.[0] ?? 'Failed to remove photo.' });
+    }
+
+    setIsUploadingAvatar(false);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 py-6 md:py-16">
+      
+      {/* --- CROP MODAL --- */}
+      {imageToCrop && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl flex flex-col">
+            <div className="flex items-center justify-between p-4 border-b border-gray-100">
+              <h3 className="text-lg font-bold text-gray-900">Crop Profile Photo</h3>
+              <button onClick={() => setImageToCrop(null)} className="p-2 bg-gray-100 rounded-full hover:bg-gray-200 text-gray-600 transition-colors">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            
+            <div className="relative w-full h-[350px] sm:h-[400px] bg-gray-900">
+              <Cropper
+                image={imageToCrop}
+                crop={crop}
+                zoom={zoom}
+                aspect={1}
+                cropShape="round"
+                showGrid={false}
+                onCropChange={setCrop}
+                onCropComplete={onCropComplete}
+                onZoomChange={setZoom}
+              />
+            </div>
+            
+            <div className="p-6 bg-white space-y-4">
+              <div>
+                <label className="text-sm font-medium text-gray-700 mb-2 block">Zoom</label>
+                <input
+                  type="range"
+                  value={zoom}
+                  min={1}
+                  max={3}
+                  step={0.1}
+                  aria-labelledby="Zoom"
+                  onChange={(e) => setZoom(Number(e.target.value))}
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-600"
+                />
+              </div>
+              
+              <div className="flex justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setImageToCrop(null)}
+                  className="px-6 py-2.5 bg-gray-100 text-gray-700 font-medium rounded-full hover:bg-gray-200 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleCropAndUpload}
+                  className="px-6 py-2.5 bg-purple-600 text-white font-medium rounded-full hover:bg-purple-700 transition-colors shadow-sm shadow-purple-200"
+                >
+                  Crop & Upload
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar */}
@@ -82,7 +323,80 @@ export default function ProfileSettingsPage() {
                 </div>
               </div>
 
-              <form className="space-y-6 p-8">
+              <div className="p-8 pb-4">
+                {profileResult && (
+                  <div
+                    className={`flex items-center gap-3 p-4 rounded-xl mb-6 ${
+                      profileResult.success
+                        ? 'bg-green-50 text-green-700 border border-green-200'
+                        : 'bg-red-50 text-red-700 border border-red-200'
+                    }`}
+                  >
+                    {profileResult.success ? (
+                      <CheckCircle className="w-5 h-5 shrink-0" />
+                    ) : (
+                      <AlertCircle className="w-5 h-5 shrink-0" />
+                    )}
+                    <span className="text-sm font-medium">{profileResult.message}</span>
+                  </div>
+                )}
+
+                {/* Avatar Section */}
+                <div className="flex flex-col sm:flex-row items-center gap-6 mb-8 p-6 bg-purple-50/50 rounded-2xl border border-purple-100/50">
+                  <div className="relative shrink-0">
+                    {avatar ? (
+                      <img 
+                        src={avatar.startsWith('http') ? avatar : `${process.env.NEXT_PUBLIC_API_URL || 'https://api.ideaspoken.com'}${avatar}`} 
+                        alt={name || 'User'} 
+                        className="w-28 h-28 rounded-full object-cover border-4 border-white shadow-md" 
+                      />
+                    ) : (
+                      <div className="w-28 h-28 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center text-white text-4xl font-bold border-4 border-white shadow-md">
+                        {name ? name[0].toUpperCase() : 'U'}
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="flex flex-col gap-3 text-center sm:text-left">
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900">Profile Photo</h3>
+                      <p className="text-sm text-gray-500 mt-1">Upload a new photo (JPEG, PNG, WebP) up to 1MB.</p>
+                    </div>
+                    
+                    <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 mt-2">
+                      <label className={`relative px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-full cursor-pointer transition-colors flex items-center justify-center gap-2 overflow-hidden shadow-sm shadow-purple-200 ${isUploadingAvatar ? 'opacity-80 cursor-not-allowed' : ''}`}>
+                        {isUploadingAvatar ? (
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                        ) : (
+                          <Upload className="w-4 h-4" />
+                        )}
+                        <span>{isUploadingAvatar ? 'Uploading...' : (avatar ? 'Change Photo' : 'Upload Photo')}</span>
+                        <input 
+                          type="file" 
+                          className="hidden" 
+                          accept="image/jpeg,image/png,image/webp" 
+                          onChange={handleAvatarChange}
+                          disabled={isUploadingAvatar}
+                        />
+                      </label>
+                      
+                      {avatar && (
+                        <button 
+                          type="button" 
+                          onClick={handleAvatarDelete}
+                          disabled={isUploadingAvatar}
+                          className="px-5 py-2.5 bg-white border border-red-200 text-red-600 hover:bg-red-50 font-medium rounded-full transition-colors flex items-center justify-center gap-2 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                          <span>Remove Photo</span>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <form onSubmit={handleProfileSubmit} className="space-y-6 px-8 pb-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
@@ -91,21 +405,24 @@ export default function ProfileSettingsPage() {
                     </label>
                     <input
                       type="text"
+                      required
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
                       placeholder="Student Name"
-                      defaultValue="Student Name"
                     />
                   </div>
                   <div>
                     <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
                       <Mail className="w-4 h-4" />
-                      Email Address
+                      Email Address (Cannot be changed)
                     </label>
                     <input
                       type="email"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
-                      placeholder="Student@Gmail.Com"
-                      defaultValue="Student@Gmail.Com"
+                      readOnly
+                      value={emailValue}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-50 text-gray-500 cursor-not-allowed"
+                      placeholder="student@gmail.com"
                     />
                   </div>
                 </div>
@@ -118,18 +435,27 @@ export default function ProfileSettingsPage() {
                     </label>
                     <input
                       type="tel"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
                       placeholder="0172345672"
-                      defaultValue="0172345672"
                     />
                   </div>
 
                   <div className="flex justify-end items-end">
                     <button
                       type="submit"
-                      className="px-10 py-3 bg-white border-2 border-gray-900 text-gray-900 rounded-full font-semibold hover:bg-gray-50 transition-colors cursor-pointer"
+                      disabled={isUpdatingProfile}
+                      className="px-10 py-3 bg-white border-2 border-gray-900 text-gray-900 rounded-full font-semibold hover:bg-gray-50 transition-colors cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed w-full md:w-auto"
                     >
-                      Save Change
+                      {isUpdatingProfile ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          Saving...
+                        </>
+                      ) : (
+                        'Save Changes'
+                      )}
                     </button>
                   </div>
                 </div>
@@ -175,7 +501,7 @@ export default function ProfileSettingsPage() {
                   <button
                     type="button"
                     onClick={() => setShowPasswordForm(true)}
-                    className="flex items-center gap-2 px-8 py-3 bg-white border-2 border-gray-900 text-gray-900 rounded-full font-semibold hover:bg-gray-50 transition-colors cursor-pointer"
+                    className="flex items-center justify-center md:justify-start gap-2 px-8 py-3 bg-white border-2 border-gray-900 text-gray-900 rounded-full font-semibold hover:bg-gray-50 transition-colors cursor-pointer w-full md:w-auto"
                   >
                     <KeyRound className="w-4 h-4" />
                     Change Password
@@ -284,11 +610,11 @@ export default function ProfileSettingsPage() {
                     </div>
 
                     {/* Actions */}
-                    <div className="flex items-center gap-3 pt-2">
+                    <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="flex items-center gap-2 px-8 py-3 bg-red-600 text-white rounded-full font-semibold hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                        className="flex items-center justify-center gap-2 px-8 py-3 w-full sm:w-auto bg-red-600 text-white rounded-full font-semibold hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                       >
                         {isSubmitting ? (
                           <>
@@ -309,7 +635,7 @@ export default function ProfileSettingsPage() {
                           setEmail('');
                           setResult(null);
                         }}
-                        className="px-8 py-3 bg-white border-2 border-gray-300 text-gray-600 rounded-full font-semibold hover:bg-gray-50 transition-colors cursor-pointer"
+                        className="px-8 py-3 w-full sm:w-auto bg-white border-2 border-gray-300 text-gray-600 rounded-full font-semibold hover:bg-gray-50 transition-colors cursor-pointer"
                       >
                         Cancel
                       </button>

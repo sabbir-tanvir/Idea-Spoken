@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { getAuthToken, decodeToken } from "@/lib/auth/session";
+import { getCurrentUser } from "@/lib/auth/actions";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,11 +30,19 @@ export default async function RootLayout({
   const token = await getAuthToken();
   const isLoggedIn = !!token;
 
-  // Decode user name from JWT payload
+  // Decode user name from JWT payload or fetch user
   let userName: string | undefined;
+  let avatar: string | null = null;
+  
   if (token) {
-    const payload = decodeToken(token);
-    userName = payload?.name;
+    const user = await getCurrentUser();
+    if (user) {
+      userName = user.name;
+      avatar = user.avatar ?? null;
+    } else {
+      const payload = decodeToken(token);
+      userName = payload?.name;
+    }
   }
 
   return (
@@ -41,7 +50,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header isLoggedIn={isLoggedIn} userName={userName} />
+        <Header isLoggedIn={isLoggedIn} userName={userName} avatar={avatar} />
         {children}
         <Footer />
       </body>

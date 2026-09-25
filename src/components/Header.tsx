@@ -22,9 +22,10 @@ const wingsDropdownItems = [
 interface HeaderProps {
   isLoggedIn?: boolean;
   userName?: string;
+  avatar?: string | null;
 }
 
-export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
+export default function Header({ isLoggedIn = false, userName, avatar }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [wingsDropdownOpen, setWingsDropdownOpen] = useState(false);
   const [mobileWingsOpen, setMobileWingsOpen] = useState(false);
@@ -312,7 +313,7 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
               </Link>
 
               {isLoggedIn && (
-                <UserMenu userName={userName} />
+                <UserMenu userName={userName} avatar={avatar} />
               )}
 
             </div>
@@ -384,9 +385,17 @@ export default function Header({ isLoggedIn = false, userName }: HeaderProps) {
           {isLoggedIn ? (
             <div className="mx-4 mt-4 mb-2 p-3.5 bg-gradient-to-br from-purple-50/90 via-indigo-50/40 to-purple-50/90 rounded-2xl border border-purple-100/80 shadow-xs">
               <div className="flex items-center gap-3">
-                <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-purple-700 to-[#704FE6] flex items-center justify-center text-white text-sm font-bold shadow-sm shrink-0">
-                  {initials}
-                </div>
+                {avatar ? (
+                  <img
+                    src={avatar.startsWith('http') ? avatar : `${process.env.NEXT_PUBLIC_API_URL || 'https://api.ideaspoken.com'}${avatar}`}
+                    alt={userName || 'Student'}
+                    className="w-11 h-11 rounded-full object-cover shadow-sm shrink-0"
+                  />
+                ) : (
+                  <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-purple-700 to-[#704FE6] flex items-center justify-center text-white text-sm font-bold shadow-sm shrink-0">
+                    {initials}
+                  </div>
+                )}
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-semibold text-gray-900 truncate">
                     {userName || 'Student'}

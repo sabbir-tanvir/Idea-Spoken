@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation';
 import { setAuthToken, removeAuthToken, getAuthToken } from './session';
-import { ActionResult, AuthResponse, RegisterRequest, LoginRequest, ForgotPasswordRequest, UpdatePasswordRequest } from './types';
+import { ActionResult, AuthResponse, RegisterRequest, LoginRequest, ForgotPasswordRequest, UpdatePasswordRequest, User } from './types';
 
 const BASE_URL = process.env.BASE_URL;
 
@@ -334,4 +334,126 @@ export async function logoutUser(): Promise<void> {
 
   await removeAuthToken();
   redirect('/auth/login');
+}
+
+/**
+ * Server Action: Get current user
+ */
+export async function getCurrentUser(): Promise<User | null> {
+  const token = await getAuthToken();
+  if (!token) return null;
+
+  try {
+    const response = await fetch(`${BASE_URL}/auth/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: 'no-store',
+    });
+    
+    if (!response.ok) return null;
+    const data = await response.json();
+    if (data.success) {
+      return data.data as User;
+    }
+    return null;
+  } catch (error) {
+    console.error('Get current user error:', error);
+    return null;
+  }
+}
+
+/**
+ * Server Action: Update profile details (and optionally avatar)
+ */
+export async function updateProfileDetails(formData: FormData): Promise<ActionResult> {
+  const token = await getAuthToken();
+  if (!token) return { success: false, errors: { general: ['Not authenticated'] } };
+
+  try {
+    const newFormData = new FormData();
+    const name = formData.get('name');
+    const phone = formData.get('phone');
+    if (name) newFormData.append('name', name);
+    if (phone) newFormData.append('phone', phone);
+    
+    // Some backend APIs require explicit headers for FormData if not standard fetch, but standard fetch handles it.
+    const response = await fetch(`${BASE_URL}/auth/updatedetails`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: newFormData,
+    });
+    
+    const data = await response.json();
+    if (response.ok && data.success) {
+      return { success: true, message: 'Profile updated successfully!' };
+    }
+    return { success: false, errors: { general: [data.message || 'Failed to update profile'] } };
+  } catch (error) {
+    console.error('Update profile error:', error);
+    return { success: false, errors: { general: ['Network error'] } };
+  }
+}
+
+/**
+ * Server Action: Update avatar only
+ */
+export async function updateAvatar(formData: FormData): Promise<ActionResult> {
+  const token = await getAuthToken();
+  if (!token) return { success: false, errors: { general: ['Not authenticated'] } };
+
+  try {
+    const file = formData.get('avatar');
+    if (!file) {
+      return { success: false, errors: { general: ['No file provided'] } };
+    }
+    
+    const newFormData = new FormData();
+    newFormData.append('avatar', file);
+
+    const response = await fetch(`${BASE_URL}/auth/avatar`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: newFormData,
+    });
+    
+    const data = await response.json();
+    if (response.ok && data.success) {
+      return { success: true, message: 'Avatar updated successfully!' };
+    }
+    return { success: false, errors: { general: [data.message || 'Failed to update avatar'] } };
+  } catch (error) {
+    console.error('Update avatar error:', error);
+    return { success: false, errors: { general: ['Network error'] } };
+  }
+}
+
+/**
+ * Server Action: Delete avatar
+ */
+export async function deleteAvatar(): Promise<ActionResult> {
+  const token = await getAuthToken();
+  if (!token) return { success: false, errors: { general: ['Not authenticated'] } };
+
+  try {
+    const response = await fetch(`${BASE_URL}/auth/avatar`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    
+    const data = await response.json();
+    if (response.ok && data.success) {
+      return { success: true, message: 'Avatar removed successfully!' };
+    }
+    return { success: false, errors: { general: [data.message || 'Failed to remove avatar'] } };
+  } catch (error) {
+    console.error('Delete avatar error:', error);
+    return { success: false, errors: { general: ['Network error'] } };
+  }
 }
