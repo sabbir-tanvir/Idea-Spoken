@@ -142,7 +142,7 @@ export default function DebateHero({ data, courseDetail }: DebateHeroProps) {
                         onClose={() => setIsPaymentOpen(false)}
                         courseName={title}
                         courseId={courseDetail?.id ?? 0}
-                        amount={hasSale ? Number(salePriceVal.toString().replace(/[^0-9]/g, '')) : (priceVal ? Number(priceVal.toString().replace(/[^0-9]/g, '')) : 2500)}
+                        amount={hasSale && salePriceVal ? Number(salePriceVal.toString().replace(/[^0-9]/g, '')) : (priceVal ? Number(priceVal.toString().replace(/[^0-9]/g, '')) : 2500)}
                     />
                 </motion.div>
 
