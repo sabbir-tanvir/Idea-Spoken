@@ -7,7 +7,7 @@ const Wcontact = () => {
       title="অর্থায়ন, ফ্র্যাঞ্চাইজি বা পার্টনারশিপে আগ্রহী?"
       subtitle="আমাদের সাথে যোগাযোগ করুন এবং এই উদ্যোগের অংশ হন"
       buttonLabel="Contact for Franchise / Partnership"
-      buttonHref="https://www.facebook.com/groups/widen"
+      buttonHref="https://www.facebook.com/groups/wini"
       buttonTarget="_blank"
     />
   );
