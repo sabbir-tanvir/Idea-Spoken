@@ -6,7 +6,7 @@ const OurJourney = () => {
     {
       year: '2017',
       title: 'যাত্রা শুরু',
-      description: 'যান ও পাকশাল টাকা ও ৬৪ জন শিল্পগথি নিয়ে'
+      description: ''
     }
   ];
 
