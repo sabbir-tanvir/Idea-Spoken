@@ -69,7 +69,7 @@ async function PithaPatsala() {
       <OurImpact />
       <PReview />
       <Wcontact />
-      <Contact phone="০১৭৮৩-৪১৪৩৫৪" />
+      {/* <Contact phone="০১৭৮৩-৪১৪৩৫৪" /> */}
     </>
   );
 }
