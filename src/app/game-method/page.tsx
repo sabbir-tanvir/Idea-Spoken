@@ -2,11 +2,11 @@ import Contact from '@/components/Contact';
 import PhotoGallery from '@/components/PhotoGallery'
 import WingActivities from '@/components/WingActivities'
 import GameMethodApproachProvider from '@/components/game-method/GameMethodApproachProvider'
-import HeroSection from '@/components/widen/WidenHero'
 import React from 'react'
 import { getWingMediaBySlug } from '@/lib/api'
 import WingLeadership, { Leader } from '@/components/WingLeadership'
 import GameMethodDocumentary from '@/components/game-method/GameMethodDocumentary'
+import HeroSection from '@/components/game-method/GameHero';
 
 const gameMethodLeaders: Leader[] = [
   {

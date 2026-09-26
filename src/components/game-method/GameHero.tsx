@@ -13,9 +13,17 @@ interface HeroSectionProps {
 }
 
 const defaultCarouselImages = [
-  "/images/wini/1.webp",
-  "/images/wini/2.webp",
-  "/images/wini/3.webp"
+  "/images/spoken/asa.jpg",
+  "/images/spoken/dadsas.jpg",
+  "/images/spoken/dawas.jpg",
+  "/images/spoken/dwa.png",
+  "/images/spoken/dwqa.jpg",
+  "/images/spoken/dwqsa.jpg",
+  "/images/spoken/sadas.jpg",
+  "/images/spoken/wada.jpg",
+  "/images/spoken/wasw.jpg",
+  "/images/spoken/waw.jpg",
+  "/images/spoken/wda.jpg",
 ];
 
 export default function HeroSection({
