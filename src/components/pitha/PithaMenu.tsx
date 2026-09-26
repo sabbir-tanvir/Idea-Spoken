@@ -76,7 +76,7 @@ export default function PithaMenu() {
           </div>
 
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight leading-tight">
-            আমাদের পিঠার মেন্যু তালিকা
+            আমাদের পিঠার মেন্যু
           </h2>
           <p className="mt-3 text-lg text-gray-600 font-medium">
             শিক্ষার্থীদের দ্বারা পরিচালিত বিকল্প কর্মসংস্থান সৃষ্টির একটি অনন্য প্রকল্প
