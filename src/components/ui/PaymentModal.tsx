@@ -47,6 +47,7 @@ interface MethodConfig {
   image?: string;
   bgColor: string;
   sendTo: string;
+  sendInstruction?: string;
   numberLabel: string;
   numberPlaceholder: string;
   bankDetails?: BankDetails;
@@ -62,8 +63,9 @@ const PAYMENT_METHODS: MethodConfig[] = [
     label: 'bKash',
     image: 'https://freelogopng.com/images/all_img/1656234841bkash-icon-png.png',
     bgColor: 'bg-gradient-to-r from-pink-500 to-pink-600',
-    sendTo: '০১৯২৯-১৭৯২১৮',
-    numberLabel: 'Your bKash Number',
+    sendTo: '01990-822023',
+    sendInstruction: 'বিকাশে যেয়ে Payment/পেমেন্ট করুন এই নম্বরে',
+    numberLabel: 'Your Bkash Number - যে নম্বর থেকে বিকাশ করা হয়েছে সেই নম্বর দিন',
     numberPlaceholder: '01XXXXXXXXX',
   },
   {
@@ -443,7 +445,9 @@ export default function PaymentModal({
 
                         {/* Send-to number */}
                         <div className="mb-5">
-                          <p className="text-sm text-slate-400 mb-1">Send money to:</p>
+                          <p className="text-sm font-medium text-slate-600 mb-1">
+                            {selectedMethod.sendInstruction || 'Send money to:'}
+                          </p>
                           <div className="flex items-center justify-between">
                             <span className="text-2xl font-bold text-slate-900 tracking-wide">
                               {selectedMethod.sendTo}
@@ -465,24 +469,28 @@ export default function PaymentModal({
                       </>
                     )}
 
-                    {/* Phone / Account input */}
-                    <div className="mb-4">
-                      <label className="block text-sm font-medium text-slate-700 mb-2">
-                        {selectedMethod.numberLabel}
-                      </label>
-                      <input
-                        type="text"
-                        value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
-                        placeholder={selectedMethod.numberPlaceholder}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all text-slate-800 text-sm"
-                      />
-                    </div>
+                    {/* Phone / Account input (for non-bKash methods) */}
+                    {selectedMethod.id !== 'bkash' && (
+                      <div className="mb-4">
+                        <label className="block text-sm font-medium text-slate-700 mb-2">
+                          {selectedMethod.numberLabel}
+                        </label>
+                        <input
+                          type="text"
+                          value={phoneNumber}
+                          onChange={(e) => setPhoneNumber(e.target.value)}
+                          placeholder={selectedMethod.numberPlaceholder}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all text-slate-800 text-sm"
+                        />
+                      </div>
+                    )}
 
-                    {/* Transaction ID input */}
+                    {/* Transaction ID / Sender Verification input */}
                     <div className="mb-6">
                       <label className="block text-sm font-medium text-slate-700 mb-2">
-                        {selectedMethod.bankDetails
+                        {selectedMethod.id === 'bkash'
+                          ? selectedMethod.numberLabel
+                          : selectedMethod.bankDetails
                           ? 'Transaction ID / Deposit Slip No / Reference'
                           : 'Transaction ID (TrxID)'}
                       </label>
@@ -491,7 +499,9 @@ export default function PaymentModal({
                         value={transactionId}
                         onChange={(e) => setTransactionId(e.target.value)}
                         placeholder={
-                          selectedMethod.bankDetails
+                          selectedMethod.id === 'bkash'
+                            ? selectedMethod.numberPlaceholder
+                            : selectedMethod.bankDetails
                             ? 'e.g. Deposit slip or ref number'
                             : 'e.g-abcd1234bdz'
                         }
@@ -549,7 +559,11 @@ export default function PaymentModal({
                               </span>
                             </p>
                             <p>
-                              <span className="text-slate-400">Transaction ID:</span>{' '}
+                              <span className="text-slate-400">
+                                {selectedMethod?.id === 'bkash'
+                                  ? 'bKash Number:'
+                                  : 'Transaction ID:'}
+                              </span>{' '}
                               <span className="font-medium text-slate-700">
                                 {result.data.transactionId}
                               </span>
