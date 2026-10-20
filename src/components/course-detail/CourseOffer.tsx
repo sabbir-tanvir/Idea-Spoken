@@ -1,17 +1,30 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { ApiCourseDetail } from "@/lib/api/courses";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import PaymentModal from "@/components/ui/PaymentModal";
+import { checkAuth } from "@/lib/auth/actions";
 
 interface CourseOfferProps {
     courseDetail?: ApiCourseDetail | null;
 }
 
 export default function CourseOffer({ courseDetail }: CourseOfferProps) {
+    const router = useRouter();
     const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+
+    const handleEnrollClick = async () => {
+        const isAuthed = await checkAuth();
+        if (!isAuthed) {
+            const returnUrl = typeof window !== "undefined" ? `${window.location.pathname}?buy=true` : "/courses";
+            router.push(`/auth/register?callbackUrl=${encodeURIComponent(returnUrl)}`);
+            return;
+        }
+        setIsPaymentOpen(true);
+    };
 
     const title = courseDetail?.title ?? "Ready to Get Started?";
     const subtitle =
@@ -61,7 +74,7 @@ export default function CourseOffer({ courseDetail }: CourseOfferProps) {
 
                             {/* CTA Button */}
                             <button
-                                onClick={() => setIsPaymentOpen(true)}
+                                onClick={handleEnrollClick}
                                 className="w-full md:w-auto cursor-pointer"
                             >
                                 <motion.div

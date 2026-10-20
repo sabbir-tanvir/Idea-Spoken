@@ -90,6 +90,11 @@ export async function registerUser(
     };
   }
 
+  const callbackUrl = (formData.get('callbackUrl') as string)?.trim();
+  if (callbackUrl && callbackUrl.startsWith('/') && !callbackUrl.startsWith('//')) {
+    redirect(callbackUrl);
+  }
+
   // Redirect to dashboard on success
   redirect('/dashboard');
 }
@@ -163,6 +168,11 @@ export async function loginUser(
         general: ['Network error. Please check your connection and try again.'],
       },
     };
+  }
+
+  const callbackUrl = (formData.get('callbackUrl') as string)?.trim();
+  if (callbackUrl && callbackUrl.startsWith('/') && !callbackUrl.startsWith('//')) {
+    redirect(callbackUrl);
   }
 
   // Redirect to dashboard on success
@@ -334,6 +344,14 @@ export async function logoutUser(): Promise<void> {
 
   await removeAuthToken();
   redirect('/auth/login');
+}
+
+/**
+ * Server Action: Check if user is currently authenticated
+ */
+export async function checkAuth(): Promise<boolean> {
+  const token = await getAuthToken();
+  return !!token;
 }
 
 /**

@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { ApiCourseDetail } from "@/lib/api/courses";
 import { motion } from "framer-motion";
 import { Play, Users, Clock, BookOpen } from "lucide-react";
 import PaymentModal from "@/components/ui/PaymentModal";
 import { CourseVideoConfig, getCourseHeroVideo } from "@/lib/courseVideos";
 import { getFullImageUrl } from "@/lib/getFullImageUrl";
+import { checkAuth } from "@/lib/auth/actions";
 
 interface CourseHeroProps {
     courseDetail?: ApiCourseDetail | null;
@@ -31,8 +33,36 @@ const itemVariants = {
 };
 
 export default function CourseHero({ courseDetail, videoConfig }: CourseHeroProps) {
+    const router = useRouter();
     const [isPaymentOpen, setIsPaymentOpen] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get("buy") === "true" || params.get("buy") === "1") {
+                checkAuth().then((isAuthed) => {
+                    if (isAuthed) {
+                        setIsPaymentOpen(true);
+                        window.history.replaceState({}, "", window.location.pathname);
+                    } else {
+                        const returnUrl = `${window.location.pathname}?buy=true`;
+                        router.push(`/auth/register?callbackUrl=${encodeURIComponent(returnUrl)}`);
+                    }
+                });
+            }
+        }
+    }, [router]);
+
+    const handleBuyClick = async () => {
+        const isAuthed = await checkAuth();
+        if (!isAuthed) {
+            const returnUrl = `${window.location.pathname}?buy=true`;
+            router.push(`/auth/register?callbackUrl=${encodeURIComponent(returnUrl)}`);
+            return;
+        }
+        setIsPaymentOpen(true);
+    };
 
     const title = courseDetail?.title ?? "Course Title";
     const description =
@@ -128,7 +158,7 @@ export default function CourseHero({ courseDetail, videoConfig }: CourseHeroProp
                             <span>{displayPrice}</span>
                         </div>
                         <button
-                            onClick={() => setIsPaymentOpen(true)}
+                            onClick={handleBuyClick}
                             className="group flex items-center gap-2 px-8 py-4 bg-purple-200 text-purple-900 rounded-xl font-semibold hover:bg-purple-300 transition-colors duration-300 cursor-pointer"
                         >
                             Pay &amp; Unlock Course

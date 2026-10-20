@@ -18,6 +18,7 @@ import {
   Binary,
 } from 'lucide-react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { submitPayment, PaymentMethod, PaymentActionResult } from '@/lib/api/payments';
 
 /* ------------------------------------------------------------------ */
@@ -121,6 +122,7 @@ export default function PaymentModal({
   amount,
   currency = 'taka',
 }: PaymentModalProps) {
+  const router = useRouter();
   const [mounted, setMounted] = useState(false);
   const [step, setStep] = useState<Step>('select');
   const [selectedMethod, setSelectedMethod] = useState<MethodConfig | null>(null);
@@ -590,25 +592,67 @@ export default function PaymentModal({
                           <AlertCircle className="w-8 h-8 text-red-600" />
                         </div>
                         <h3 className="text-xl font-bold text-slate-900 mb-2">
-                          Payment Failed
+                          {result.message.toLowerCase().includes('logged in')
+                            ? 'Account Required'
+                            : 'Payment Failed'}
                         </h3>
-                        <p className="text-slate-500 mb-6">{result.message}</p>
-                        <div className="flex gap-3">
-                          <button
-                            type="button"
-                            onClick={handleBackToMethods}
-                            className="flex-1 py-3 border-2 border-purple-600 text-purple-600 rounded-xl font-semibold hover:bg-purple-50 transition-colors cursor-pointer"
-                          >
-                            Try Again
-                          </button>
-                          <button
-                            type="button"
-                            onClick={handleClose}
-                            className="flex-1 py-3 bg-gray-100 text-slate-600 rounded-xl font-semibold hover:bg-gray-200 transition-colors cursor-pointer"
-                          >
-                            Cancel
-                          </button>
-                        </div>
+                        <p className="text-slate-500 mb-6">
+                          {result.message.toLowerCase().includes('logged in')
+                            ? 'You need to register or log in to complete your course enrollment.'
+                            : result.message}
+                        </p>
+                        {result.message.toLowerCase().includes('logged in') ? (
+                          <div className="flex flex-col gap-3">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const returnUrl = typeof window !== 'undefined'
+                                  ? `${window.location.pathname}?buy=true`
+                                  : '/courses';
+                                router.push(`/auth/register?callbackUrl=${encodeURIComponent(returnUrl)}`);
+                              }}
+                              className="w-full py-3 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 transition-colors cursor-pointer"
+                            >
+                              Register to Enroll
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const returnUrl = typeof window !== 'undefined'
+                                  ? `${window.location.pathname}?buy=true`
+                                  : '/courses';
+                                router.push(`/auth/login?callbackUrl=${encodeURIComponent(returnUrl)}`);
+                              }}
+                              className="w-full py-3 border border-purple-600 text-purple-600 rounded-xl font-semibold hover:bg-purple-50 transition-colors cursor-pointer"
+                            >
+                              Login with Existing Account
+                            </button>
+                            <button
+                              type="button"
+                              onClick={handleClose}
+                              className="w-full py-2.5 text-slate-500 hover:text-slate-700 text-sm font-medium transition-colors cursor-pointer"
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        ) : (
+                          <div className="flex gap-3">
+                            <button
+                              type="button"
+                              onClick={handleBackToMethods}
+                              className="flex-1 py-3 border-2 border-purple-600 text-purple-600 rounded-xl font-semibold hover:bg-purple-50 transition-colors cursor-pointer"
+                            >
+                              Try Again
+                            </button>
+                            <button
+                              type="button"
+                              onClick={handleClose}
+                              className="flex-1 py-3 bg-gray-100 text-slate-600 rounded-xl font-semibold hover:bg-gray-200 transition-colors cursor-pointer"
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        )}
                       </>
                     )}
                   </motion.div>

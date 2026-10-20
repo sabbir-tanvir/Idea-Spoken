@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { EnglishDebateData } from "@/lib/api";
 import { ApiCourseDetail } from "@/lib/api/courses";
 import { motion } from "framer-motion";
 import { Users, Clock, BookOpen } from "lucide-react";
 import PaymentModal from "@/components/ui/PaymentModal";
+import { checkAuth } from "@/lib/auth/actions";
 
 interface DebateHeroProps {
     data: EnglishDebateData;
@@ -13,7 +15,35 @@ interface DebateHeroProps {
 }
 
 export default function DebateHero({ data, courseDetail }: DebateHeroProps) {
+    const router = useRouter();
     const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get("buy") === "true" || params.get("buy") === "1") {
+                checkAuth().then((isAuthed) => {
+                    if (isAuthed) {
+                        setIsPaymentOpen(true);
+                        window.history.replaceState({}, "", window.location.pathname);
+                    } else {
+                        const returnUrl = `${window.location.pathname}?buy=true`;
+                        router.push(`/auth/register?callbackUrl=${encodeURIComponent(returnUrl)}`);
+                    }
+                });
+            }
+        }
+    }, [router]);
+
+    const handleBuyClick = async () => {
+        const isAuthed = await checkAuth();
+        if (!isAuthed) {
+            const returnUrl = `${window.location.pathname}?buy=true`;
+            router.push(`/auth/register?callbackUrl=${encodeURIComponent(returnUrl)}`);
+            return;
+        }
+        setIsPaymentOpen(true);
+    };
     const title = courseDetail?.title ?? data.title;
     const description = courseDetail?.description ?? data.description;
     
@@ -127,7 +157,7 @@ export default function DebateHero({ data, courseDetail }: DebateHeroProps) {
                             <span>{displayPrice}</span>
                         </div>
                         <button
-                            onClick={() => setIsPaymentOpen(true)}
+                            onClick={handleBuyClick}
                             className="group flex items-center gap-2 px-8 py-4 bg-purple-200 text-purple-900 rounded-xl font-semibold hover:bg-purple-300 transition-colors duration-300 cursor-pointer"
                         >
                             Pay & Unlock Course

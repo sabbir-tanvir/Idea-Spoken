@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { EnglishDebateData } from "@/lib/api";
 import { ApiCourseDetail } from "@/lib/api/courses";
 import { motion } from "framer-motion";
 import { Play, Users, Clock, BookOpen } from "lucide-react";
 import PaymentModal from "@/components/ui/PaymentModal";
+import { checkAuth } from "@/lib/auth/actions";
 
 interface DebateHeroProps {
     data: EnglishDebateData;
@@ -24,7 +26,35 @@ export default function DebateHero({
     coverImageUrl,
     coverImageAlt = "IDEA SPOKEN cover image",
 }: DebateHeroProps) {
+    const router = useRouter();
     const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get("buy") === "true" || params.get("buy") === "1") {
+                checkAuth().then((isAuthed) => {
+                    if (isAuthed) {
+                        setIsPaymentOpen(true);
+                        window.history.replaceState({}, "", window.location.pathname);
+                    } else {
+                        const returnUrl = `${window.location.pathname}?buy=true`;
+                        router.push(`/auth/register?callbackUrl=${encodeURIComponent(returnUrl)}`);
+                    }
+                });
+            }
+        }
+    }, [router]);
+
+    const handleBuyClick = async () => {
+        const isAuthed = await checkAuth();
+        if (!isAuthed) {
+            const returnUrl = `${window.location.pathname}?buy=true`;
+            router.push(`/auth/register?callbackUrl=${encodeURIComponent(returnUrl)}`);
+            return;
+        }
+        setIsPaymentOpen(true);
+    };
     const title = heroTitle ?? courseDetail?.title ?? "IDEA SPOKEN – The Game Method";
     const description = heroDescription ?? courseDetail?.description ?? "English শেখা কঠিন না, যদি শিখো গেমের মতো করে। IDEA SPOKEN – The Game Method এমন একটি কোর্স, যেখানে Vocabulary, Grammar আর Fluency সবকিছু গেম ও Activity–এর মাধ্যমে শেখানো হয়।";
     const price = courseDetail?.price ? `৳${courseDetail.price}` : data.price;
@@ -132,7 +162,7 @@ export default function DebateHero({
                             {price}
                         </div>
                         <button
-                            onClick={() => setIsPaymentOpen(true)}
+                            onClick={handleBuyClick}
                             className="group flex items-center gap-2 px-8 py-4 bg-purple-200 text-purple-900 rounded-xl font-semibold hover:bg-purple-300 transition-colors duration-300 cursor-pointer"
                         >
                             Pay & Unlock Course

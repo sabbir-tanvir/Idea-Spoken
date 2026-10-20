@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { getFullImageUrl } from "@/lib/getFullImageUrl";
 import PaymentModal from "@/components/ui/PaymentModal";
+import { checkAuth } from "@/lib/auth/actions";
 
 interface CourseCardProps {
   course: ApiCourse;
@@ -53,6 +54,18 @@ export default function CourseCard({ course }: CourseCardProps) {
       e.preventDefault();
       router.push(getCourseRoute(course));
     }
+  };
+
+  const handleEnrollClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const isAuthed = await checkAuth();
+    if (!isAuthed) {
+      const targetRoute = getCourseRoute(course);
+      router.push(`/auth/register?callbackUrl=${encodeURIComponent(`${targetRoute}?buy=true`)}`);
+      return;
+    }
+    setIsPaymentOpen(true);
   };
 
   return (
@@ -196,11 +209,7 @@ export default function CourseCard({ course }: CourseCardProps) {
 
             <button
               type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setIsPaymentOpen(true);
-              }}
+              onClick={handleEnrollClick}
               className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-6 py-2.5 rounded-full font-medium transition-colors shadow-md shadow-purple-200 hover:shadow-purple-300 cursor-pointer"
             >
               Enroll

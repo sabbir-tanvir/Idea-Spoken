@@ -1,17 +1,26 @@
 'use client';
 
 import Link from 'next/link';
-import { useActionState, useState } from 'react';
+import { useActionState, useState, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { loginUser } from '@/lib/auth/actions';
 import { ActionResult } from '@/lib/auth/types';
 import { Eye, EyeOff } from 'lucide-react';
 
-export default function LoginPage() {
+function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') || searchParams.get('redirect') || '';
+  const isEnrolling = callbackUrl.includes('buy=true') || callbackUrl.includes('buy=1');
+
   const [state, formAction, isPending] = useActionState<ActionResult | null, FormData>(
     loginUser,
     null
   );
+
+  const registerHref = callbackUrl
+    ? `/auth/register?callbackUrl=${encodeURIComponent(callbackUrl)}`
+    : '/auth/register';
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-white">
@@ -26,8 +35,8 @@ export default function LoginPage() {
         <div className="relative z-10 text-center text-white space-y-6 max-w-md">
           <h1 className="text-4xl md:text-5xl font-bold">Hello Welcome !</h1>
           <p className="text-lg md:text-xl">Don&apos;t Have an account?</p>
-          <Link href="/auth/register">
-            <button className="px-8 py-3 border-2 border-white text-white rounded-lg hover:bg-white hover:text-[#704FE6] transition-colors font-medium text-lg">
+          <Link href={registerHref}>
+            <button className="px-8 py-3 border-2 border-white text-white rounded-lg hover:bg-white hover:text-[#704FE6] transition-colors font-medium text-lg cursor-pointer">
               Register
             </button>
           </Link>
@@ -37,7 +46,14 @@ export default function LoginPage() {
       {/* Right Side - White Background with Login Form */}
       <div className="w-full md:w-1/2 bg-white flex items-center justify-center p-8 md:p-16">
         <div className="w-full max-w-md space-y-8">
-          <h2 className="text-4xl font-bold text-gray-900">Login</h2>
+          <div>
+            <h2 className="text-4xl font-bold text-gray-900">Login</h2>
+            {isEnrolling && (
+              <p className="mt-2 text-sm text-purple-600 font-medium bg-purple-50 p-3 rounded-lg border border-purple-200">
+                Please log in to continue with your course enrollment and payment.
+              </p>
+            )}
+          </div>
           
           {/* General Error Message */}
           {state?.errors?.general && (
@@ -47,6 +63,10 @@ export default function LoginPage() {
           )}
           
           <form action={formAction} className="mt-8 space-y-6">
+            {callbackUrl && (
+              <input type="hidden" name="callbackUrl" value={callbackUrl} />
+            )}
+
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                 Email
@@ -134,5 +154,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Loading...</div>}>
+      <LoginForm />
+    </Suspense>
   );
 }

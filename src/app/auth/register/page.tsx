@@ -1,24 +1,40 @@
 'use client';
 
 import Link from 'next/link';
-import { useActionState, useState } from 'react';
+import { useActionState, useState, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { registerUser } from '@/lib/auth/actions';
 import { ActionResult } from '@/lib/auth/types';
 import { Eye, EyeOff } from 'lucide-react';
 
-export default function RegisterPage() {
+function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') || searchParams.get('redirect') || '';
+  const isEnrolling = callbackUrl.includes('buy=true') || callbackUrl.includes('buy=1');
+
   const [state, formAction, isPending] = useActionState<ActionResult | null, FormData>(
     registerUser,
     null
   );
+
+  const loginHref = callbackUrl
+    ? `/auth/login?callbackUrl=${encodeURIComponent(callbackUrl)}`
+    : '/auth/login';
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-white">
       {/* Left Side - White Background with Register Form */}
       <div className="w-full md:w-1/2 bg-white flex items-center justify-center p-8 md:p-16 order-2 md:order-1">
         <div className="w-full max-w-md space-y-6">
-          <h2 className="text-4xl font-bold text-gray-900">Register</h2>
+          <div>
+            <h2 className="text-4xl font-bold text-gray-900">Register</h2>
+            {isEnrolling && (
+              <p className="mt-2 text-sm text-purple-600 font-medium bg-purple-50 p-3 rounded-lg border border-purple-200">
+                Please create your account to proceed with course enrollment and payment.
+              </p>
+            )}
+          </div>
           
           {/* General Error Message */}
           {state?.errors?.general && (
@@ -28,6 +44,10 @@ export default function RegisterPage() {
           )}
           
           <form action={formAction} className="mt-8 space-y-5">
+            {callbackUrl && (
+              <input type="hidden" name="callbackUrl" value={callbackUrl} />
+            )}
+
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                 Full Name *
@@ -134,7 +154,7 @@ export default function RegisterPage() {
 
             <p className="text-center text-sm text-gray-600">
               Already have an account?{' '}
-              <Link href="/auth/login" className="text-[#704FE6] hover:underline font-medium">
+              <Link href={loginHref} className="text-[#704FE6] hover:underline font-medium">
                 Login
               </Link>
             </p>
@@ -144,23 +164,29 @@ export default function RegisterPage() {
 
       {/* Right Side - Purple Background with Rounded Corner */}
       <div className="w-full md:w-1/2 bg-[#704FE6] flex items-center justify-center p-8 md:p-16 relative order-1 md:order-2"
-
         style={{
           borderTopLeftRadius: '25%',
           borderBottomLeftRadius: '25%'
         }}
       >
-
         <div className="relative z-10 text-center text-white space-y-6 max-w-md">
           <h1 className="text-4xl md:text-5xl font-bold">Welcome Back!</h1>
           <p className="text-lg md:text-xl">Already Have an account?</p>
-          <Link href="/auth/login">
-            <button className="px-8 py-3 border-2 border-white text-white rounded-lg hover:bg-white hover:text-[#704FE6] transition-colors font-medium text-lg">
+          <Link href={loginHref}>
+            <button className="px-8 py-3 border-2 border-white text-white rounded-lg hover:bg-white hover:text-[#704FE6] transition-colors font-medium text-lg cursor-pointer">
               Login
             </button>
           </Link>
         </div>
       </div>
     </div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-500">Loading...</div>}>
+      <RegisterForm />
+    </Suspense>
   );
 }
