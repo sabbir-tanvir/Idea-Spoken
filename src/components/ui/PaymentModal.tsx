@@ -66,8 +66,8 @@ const PAYMENT_METHODS: MethodConfig[] = [
     bgColor: 'bg-gradient-to-r from-pink-500 to-pink-600',
     sendTo: '01990-822023',
     sendInstruction: 'বিকাশে যেয়ে Payment/পেমেন্ট করুন এই নম্বরে',
-    numberLabel: 'Your Bkash Number - যে নম্বর থেকে বিকাশ করা হয়েছে সেই নম্বর দিন',
-    numberPlaceholder: '01XXXXXXXXX',
+    numberLabel: 'Sender Mobile Number (টাকা পাঠানোর নম্বর)',
+    numberPlaceholder: 'e.g. 017XXXXXXXX',
   },
   {
     id: 'nagad',
@@ -75,8 +75,8 @@ const PAYMENT_METHODS: MethodConfig[] = [
     image: 'https://freelogopng.com/images/all_img/1679248828Nagad-Logo-PNG.png',
     bgColor: 'bg-gradient-to-r from-orange-400 to-orange-500',
     sendTo: '01712-784041',
-    numberLabel: 'Your Nagad Number',
-    numberPlaceholder: '01XXXXXXXXX',
+    numberLabel: 'Sender Mobile Number (টাকা পাঠানোর নম্বর)',
+    numberPlaceholder: 'e.g. 017XXXXXXXX',
   },
   {
     id: 'rocket',
@@ -84,8 +84,8 @@ const PAYMENT_METHODS: MethodConfig[] = [
     image: 'https://static.vecteezy.com/system/resources/thumbnails/068/706/013/small_2x/rocket-color-logo-mobile-banking-icon-free-png.png',
     bgColor: 'bg-gradient-to-r from-purple-500 to-purple-600',
     sendTo: '01990-822023',
-    numberLabel: 'Your Rocket Number',
-    numberPlaceholder: '01XXXXXXXXX',
+    numberLabel: 'Sender Mobile Number (টাকা পাঠানোর নম্বর)',
+    numberPlaceholder: 'e.g. 017XXXXXXXX',
   },
   {
     id: 'brac_bank',
@@ -126,8 +126,9 @@ export default function PaymentModal({
   const [mounted, setMounted] = useState(false);
   const [step, setStep] = useState<Step>('select');
   const [selectedMethod, setSelectedMethod] = useState<MethodConfig | null>(null);
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [senderNumber, setSenderNumber] = useState('');
   const [transactionId, setTransactionId] = useState('');
+  const [formError, setFormError] = useState<string | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [result, setResult] = useState<PaymentActionResult | null>(null);
@@ -141,8 +142,9 @@ export default function PaymentModal({
   const reset = useCallback(() => {
     setStep('select');
     setSelectedMethod(null);
-    setPhoneNumber('');
+    setSenderNumber('');
     setTransactionId('');
+    setFormError(null);
     setCopiedField(null);
     setIsSubmitting(false);
     setResult(null);
@@ -155,14 +157,16 @@ export default function PaymentModal({
 
   const handleSelectMethod = useCallback((method: MethodConfig) => {
     setSelectedMethod(method);
+    setFormError(null);
     setStep('form');
   }, []);
 
   const handleBackToMethods = useCallback(() => {
     setStep('select');
     setSelectedMethod(null);
-    setPhoneNumber('');
+    setSenderNumber('');
     setTransactionId('');
+    setFormError(null);
     setCopiedField(null);
   }, []);
 
@@ -177,12 +181,25 @@ export default function PaymentModal({
   }, []);
 
   const handleSubmit = useCallback(async () => {
-    if (!selectedMethod || !transactionId.trim()) return;
+    if (!selectedMethod) return;
+    setFormError(null);
+
+    const trimmedSender = senderNumber.trim();
+    const trimmedTrx = transactionId.trim();
+
+    if (!trimmedTrx && !trimmedSender) {
+      setFormError('Please enter your sender number or transaction ID');
+      return;
+    }
+
+    // Backend is backward-compatible: if TrxID is empty, use senderNumber
+    const effectiveTrxId = trimmedTrx || trimmedSender;
 
     setIsSubmitting(true);
 
     const res = await submitPayment({
-      transactionId: transactionId.trim(),
+      senderNumber: trimmedSender,
+      transactionId: effectiveTrxId,
       courseId,
       paymentMethod: selectedMethod.id,
       amount,
@@ -192,7 +209,7 @@ export default function PaymentModal({
     setResult(res);
     setStep('result');
     setIsSubmitting(false);
-  }, [selectedMethod, transactionId, courseId, amount, currency]);
+  }, [selectedMethod, senderNumber, transactionId, courseId, amount, currency]);
 
   const formattedPrice = `৳${amount.toLocaleString('en-IN')}`;
 
@@ -471,52 +488,91 @@ export default function PaymentModal({
                       </>
                     )}
 
-                    {/* Phone / Account input (for non-bKash methods) */}
-                    {selectedMethod.id !== 'bkash' && (
-                      <div className="mb-4">
-                        <label className="block text-sm font-medium text-slate-700 mb-2">
-                          {selectedMethod.numberLabel}
-                        </label>
-                        <input
-                          type="text"
-                          value={phoneNumber}
-                          onChange={(e) => setPhoneNumber(e.target.value)}
-                          placeholder={selectedMethod.numberPlaceholder}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all text-slate-800 text-sm"
-                        />
+                    {/* Form Error Alert */}
+                    {formError && (
+                      <div className="mb-4 flex items-center gap-2 text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+                        <AlertCircle className="w-4 h-4 shrink-0" />
+                        <span>{formError}</span>
                       </div>
                     )}
 
-                    {/* Transaction ID / Sender Verification input */}
+                    {/* Field 1: Sender Mobile Number / Account Name */}
+                    <div className="mb-4">
+                      <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                        {selectedMethod.bankDetails ? (
+                          'Sender Bank / Account Name'
+                        ) : (
+                          <>
+                            Sender Mobile Number{' '}
+                            <span className="text-xs text-slate-500 font-normal">
+                              (টাকা পাঠানোর নম্বর)
+                            </span>
+                          </>
+                        )}
+                      </label>
+                      <input
+                        type="text"
+                        inputMode="tel"
+                        value={senderNumber}
+                        onChange={(e) => {
+                          setSenderNumber(e.target.value);
+                          if (formError) setFormError(null);
+                        }}
+                        placeholder={
+                          selectedMethod.bankDetails
+                            ? 'e.g. Sonali Bank / Rahim Uddin'
+                            : 'e.g. 017XXXXXXXX'
+                        }
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all text-slate-800 text-sm"
+                      />
+                      <p className="text-xs text-slate-500 mt-1">
+                        {selectedMethod.bankDetails
+                          ? 'The bank and account name used to send money'
+                          : `The ${selectedMethod.label} number used to send money`}
+                      </p>
+                    </div>
+
+                    {/* Field 2: Transaction ID (TrxID) */}
                     <div className="mb-6">
-                      <label className="block text-sm font-medium text-slate-700 mb-2">
-                        {selectedMethod.id === 'bkash'
-                          ? selectedMethod.numberLabel
-                          : selectedMethod.bankDetails
-                          ? 'Transaction ID / Deposit Slip No / Reference'
-                          : 'Transaction ID (TrxID)'}
+                      <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                        {selectedMethod.bankDetails ? (
+                          'Transaction ID / Deposit Slip No / Reference'
+                        ) : (
+                          <>
+                            Transaction ID (TrxID){' '}
+                            <span className="text-xs text-slate-500 font-normal">
+                              (ট্রানজেকশন আইডি)
+                            </span>
+                          </>
+                        )}
                       </label>
                       <input
                         type="text"
                         value={transactionId}
-                        onChange={(e) => setTransactionId(e.target.value)}
+                        onChange={(e) => {
+                          setTransactionId(e.target.value);
+                          if (formError) setFormError(null);
+                        }}
                         placeholder={
-                          selectedMethod.id === 'bkash'
-                            ? selectedMethod.numberPlaceholder
-                            : selectedMethod.bankDetails
+                          selectedMethod.bankDetails
                             ? 'e.g. Deposit slip or ref number'
-                            : 'e.g-abcd1234bdz'
+                            : 'e.g. BLM872KJ9A or phone number'
                         }
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all text-slate-800 text-sm"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all text-slate-800 text-sm font-mono placeholder:font-sans"
                       />
+                      <p className="text-xs text-slate-500 mt-1">
+                        {selectedMethod.bankDetails
+                          ? 'Enter the deposit slip number or transaction reference'
+                          : 'If you paid from a personal number and did not receive a TrxID, you can enter your mobile number here as well.'}
+                      </p>
                     </div>
 
                     {/* Submit button */}
                     <button
                       type="button"
                       onClick={handleSubmit}
-                      disabled={isSubmitting || !transactionId.trim()}
-                      className="w-full py-3.5 bg-purple-600 text-white rounded-xl font-semibold text-lg hover:bg-purple-700 transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                      disabled={isSubmitting || (!senderNumber.trim() && !transactionId.trim())}
+                      className="w-full py-3.5 bg-purple-600 text-white rounded-xl font-semibold text-lg hover:bg-purple-700 transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-md hover:shadow-lg"
                     >
                       {isSubmitting ? (
                         <>
@@ -553,29 +609,37 @@ export default function PaymentModal({
                         </h3>
                         <p className="text-slate-500 mb-2">{result.message}</p>
                         {result.data && (
-                          <div className="bg-gray-50 rounded-xl p-4 text-left text-sm space-y-1 mt-4 mb-6">
-                            <p>
-                              <span className="text-slate-400">Status:</span>{' '}
-                              <span className="font-medium text-amber-600">
+                          <div className="bg-gray-50 rounded-xl p-4 text-left text-sm space-y-2 mt-4 mb-6">
+                            <div className="flex justify-between items-center text-slate-600">
+                              <span className="text-slate-400">Status:</span>
+                              <span className="font-semibold text-amber-600 capitalize">
                                 {result.data.status}
                               </span>
-                            </p>
-                            <p>
+                            </div>
+                            {(result.data.senderNumber || senderNumber) && (
+                              <div className="flex justify-between items-center text-slate-600">
+                                <span className="text-slate-400">
+                                  {selectedMethod?.bankDetails ? 'Sender Account:' : 'Sender Number:'}
+                                </span>
+                                <span className="font-medium text-slate-800">
+                                  {result.data.senderNumber || senderNumber}
+                                </span>
+                              </div>
+                            )}
+                            <div className="flex justify-between items-center text-slate-600">
                               <span className="text-slate-400">
-                                {selectedMethod?.id === 'bkash'
-                                  ? 'bKash Number:'
-                                  : 'Transaction ID:'}
-                              </span>{' '}
-                              <span className="font-medium text-slate-700">
+                                {selectedMethod?.bankDetails ? 'Transaction Ref:' : 'Transaction ID:'}
+                              </span>
+                              <span className="font-medium text-slate-800 font-mono">
                                 {result.data.transactionId}
                               </span>
-                            </p>
-                            <p>
-                              <span className="text-slate-400">Amount:</span>{' '}
-                              <span className="font-medium text-slate-700">
+                            </div>
+                            <div className="flex justify-between items-center text-slate-600">
+                              <span className="text-slate-400">Amount:</span>
+                              <span className="font-medium text-slate-800">
                                 ৳{Number(result.data.amount).toLocaleString('en-IN')}
                               </span>
-                            </p>
+                            </div>
                           </div>
                         )}
                         <button

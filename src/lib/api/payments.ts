@@ -12,6 +12,7 @@ export interface PaymentRequest {
   paymentMethod: PaymentMethod;
   amount: number;
   currency: string;
+  senderNumber?: string;
 }
 
 export interface PaymentResponseData {
@@ -19,6 +20,7 @@ export interface PaymentResponseData {
   amount: string;
   currency: string | null;
   paymentMethod: string;
+  senderNumber?: string;
   transactionId: string;
   status: string;
   createdAt: string;
