@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import CourseCard from '@/components/CourseCard';
 import { getCourses } from '@/lib/api/courses';
+import CoursePurchaseVideoModal from '@/components/courses/CoursePurchaseVideoModal';
 
 export default async function CoursesPage() {
   const courses = await getCourses();
@@ -61,35 +62,7 @@ export default async function CoursesPage() {
       </section>
 
       {/* Play Button - Centered between sections */}
-      <div className="relative z-30 -mt-16 flex justify-center md:-mt-20">
-        <div className="relative flex h-40 w-40 items-center justify-center md:h-48 md:w-48">
-          {/* Rotating text circle */}
-          <svg
-            className="absolute h-full w-full animate-spin-slow"
-            viewBox="0 0 100 100"
-          >
-            <defs>
-              <path
-                id="circlePath"
-                d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
-              />
-            </defs>
-            <text className="fill-purple-700 text-[8.5px] font-bold uppercase tracking-[0.22em]">
-              <textPath href="#circlePath">
-                How to Purchase our courses ? Video •{' '}
-              </textPath>
-            </text>
-          </svg>
-          {/* Center play button */}
-          <div className="absolute flex h-20 w-20 cursor-pointer items-center justify-center rounded-full bg-purple-600 text-white shadow-xl transition-transform hover:scale-110 md:h-24 md:w-24">
-            <svg viewBox="0 0 24 24" className="h-8 w-8 md:h-10 md:w-10">
-              <path d="M8 5v14l11-7z" fill="currentColor" />
-            </svg>
-          </div>
-          {/* Outer ring with white background */}
-          <div className="absolute h-full w-full rounded-full border-2 border-purple-200 bg-white/90 backdrop-blur-sm" style={{ zIndex: -1 }} />
-        </div>
-      </div>
+      <CoursePurchaseVideoModal />
 
       {/* Courses Section */}
       <section className="px-4 py-20 md:py-24 lg:py-32">
